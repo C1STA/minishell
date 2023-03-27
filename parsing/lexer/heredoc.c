@@ -1,4 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/27 19:16:50 by wcista            #+#    #+#             */
+/*   Updated: 2023/03/27 19:23:45 by wcista           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
+
+static bool	free_heredoc(t_heredoc *h, bool n)
+{
+	if (h->fd)
+		close(h->fd);
+	if (h->file_name)
+		free(h->file_name);
+	if (h->input)
+		free(h->input);
+	if (h)
+		free(h);
+	return (n);
+}
 
 static char	*heredoc_file_name(int i, int j)
 {
@@ -10,7 +35,6 @@ static char	*heredoc_file_name(int i, int j)
 	l = ft_itoa(j);
 	file_name = ft_strjoin("", ".data_heredoc_");
 	file_name = ft_strjoin(file_name, k);
-	printf("%s, %s\n", k, l);
 	file_name = ft_strjoin(file_name, "_");
 	file_name = ft_strjoin(file_name, l);
 	return (file_name);
@@ -24,14 +48,9 @@ static bool	init_heredoc(t_redir *redir, int i, int j)
 	if (!h)
 		return (false);
 	h->file_name = heredoc_file_name(i, j);
-	printf("\n%s\n", h->file_name);
 	h->fd = open(h->file_name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (h->fd == -1)
-	{
-		free(h->file_name);
-		free(h);
-		return (false);
-	}
+		return (free_heredoc(h, false));
 	redir = redir->next_sibling;
 	while (1)
 	{
@@ -40,30 +59,13 @@ static bool	init_heredoc(t_redir *redir, int i, int j)
 			break ;
 		h->reader = write(h->fd, h->input, ft_strlen(h->input));
 		if (h->reader == -1)
-		{
-			free(h->file_name);
-			free(h->input);
-			close(h->fd);
-			free(h);
-			return (false);
-		}
+			return (free_heredoc(h, false));
 		h->reader = write(h->fd, "\n", 1);
 		if (h->reader == -1)
-		{
-			free(h->file_name);
-			free(h->input);
-			close(h->fd);
-			free(h);
-			return (false);
-		}
+			return (free_heredoc(h, false));
 		free(h->input);
 	}
-	close (h->fd);
-	printf("REDIR:::%s:::\n", redir->txt);
-	free(h->file_name);
-	free(h->input);
-	free(h);
-	return (true);
+	return (free_heredoc(h, true));
 }
 
 bool	define_heredocs(t_final *cmds)
