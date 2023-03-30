@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 20:57:56 by imrane            #+#    #+#             */
-/*   Updated: 2023/03/27 18:49:24 by wcista           ###   ########.fr       */
+/*   Updated: 2023/03/30 17:14:13 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,8 @@ int main(int argc, char *argv[], char *env[])
 				printf("c5\n");
 				printf_final_ast(final);
 				printf("c6\n");
-				define_heredocs(final);
+				define_heredoc(final);
+				remove_heredoc(final);
 			}
 			ft_free(NULL, &root, &src,&info);
 			ft_free_final_ast(&final);

@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 19:16:50 by wcista            #+#    #+#             */
-/*   Updated: 2023/03/27 19:23:45 by wcista           ###   ########.fr       */
+/*   Updated: 2023/03/30 17:13:47 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,13 @@ static char	*heredoc_file_name(int i, int j)
 	char	*file_name;
 
 	k = ft_itoa(i);
-	l = ft_itoa(j);
+	l = ft_itoa(j / 2);
 	file_name = ft_strjoin("", ".data_heredoc_");
 	file_name = ft_strjoin(file_name, k);
 	file_name = ft_strjoin(file_name, "_");
 	file_name = ft_strjoin(file_name, l);
+	free(k);
+	free(l);
 	return (file_name);
 }
 
@@ -68,28 +70,55 @@ static bool	init_heredoc(t_redir *redir, int i, int j)
 	return (free_heredoc(h, true));
 }
 
-bool	define_heredocs(t_final *cmds)
+bool	define_heredoc(t_final *cmds)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	t_redir	*redir;
 
 	i = 0;
 	while (cmds)
 	{
 		j = 0;
-		if (cmds->redir)
+		redir = cmds->redir;
+		while (redir)
 		{
-			while (cmds->redir)
-			{
-				if (cmds->redir->heredoc == 1)
-					if (!init_heredoc(cmds->redir, i, j))
-						return (false);
-				j++;
-				cmds->redir = cmds->redir->next_sibling;
-			}
+			if (redir->heredoc == 1)
+				if (!init_heredoc(redir, i, j))
+					return (false);
+			j++;
+			redir = redir->next_sibling;
 		}
 		i++;
 		cmds = cmds->next_sibling;
 	}
 	return (true);
+}
+
+void	remove_heredoc(t_final *cmds)
+{
+	int		i;
+	int		j;
+	char	*file_name;
+	t_redir	*redir;
+
+	i = 0;
+	while (cmds)
+	{
+		j = 0;
+		redir = cmds->redir;
+		while (redir)
+		{
+			if (redir->heredoc == 1)
+			{
+				file_name = heredoc_file_name(i, j);
+				unlink(file_name);
+				free(file_name);
+			}
+			j++;
+			redir = redir->next_sibling;
+		}
+		i++;
+		cmds = cmds->next_sibling;
+	}
 }

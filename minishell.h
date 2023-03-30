@@ -210,7 +210,10 @@ char **break_linked_list_in_double_tab(t_com *com);
 int ft_com_len(t_com *com);
 void printf_final_ast(t_final *final);
 
-bool	define_heredocs(t_final *cmds);
+/*heredoc.c*/
+bool	define_heredoc(t_final *cmds);
+void	remove_heredoc(t_final *cmds);
+
 #endif
 
 // je suis << bob 
