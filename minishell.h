@@ -11,21 +11,15 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "libft/libft.h"
-
-typedef struct s_heredoc
-{
-	char	*file_name;
-	char	*input;
-	int		reader;
-	int		fd;
-}	t_heredoc;
+# include <sys/wait.h>
+# include <sys/types.h>
 
 // structure de l'input de l'user
 typedef struct source_s
 {   
-    char	*buffer;       /* the input text */
-    long	bufsize;       /* size of the input text */
-    long	curpos;       /* index position in source */
+	char	*buffer;       /* the input text */
+	long	bufsize;       /* size of the input text */
+	long	curpos;       /* index position in source */
 	int		end_input;
 	int		exit;
 } t_source;
@@ -33,9 +27,9 @@ typedef struct source_s
 // structure of a token
 typedef struct token_s
 {
-    t_source	*src;       /* source of input */
-    int			text_len;            /* length of token text */
-    char		*text;             /* token text */
+	t_source	*src;       /* source of input */
+	int			text_len;            /* length of token text */
+	char		*text;             /* token text */
 } t_token;
 
 // structure d'information global pour créer un token
@@ -49,56 +43,58 @@ typedef struct info_tok_s
 /* structure of a node in first AST*/
 typedef struct node_s
 {
-    char *txt;        /* value of this node */
-    int    children;            /* number of child nodes */
-    struct node_s *first_child; /* first child node */
-    struct node_s *next_sibling;
+	char *txt;        /* value of this node */
+	int    children;            /* number of child nodes */
+	struct node_s *first_child; /* first child node */
+	struct node_s *next_sibling;
 	struct node_s *prev_sibling;
 } t_node;
 /*node of a redirection*/
 typedef struct redir_node
 {
-    char *txt;
-    int heredoc;
-    int in_file;
-    int out_file;
+	char *txt;
+	int heredoc;
+	int in_file;
+	int out_file;
 	int append;
-    int file;
-    struct redir_node *next_sibling;
+	int file;
+	int	fd_in;
+	int	fd_out;
+	struct redir_node *next_sibling;
 } t_redir;
 
 /*node of a command*/
 typedef struct com_node
 {
-    char *txt;
-    t_redir *redir;
-    struct com_node *next_sibling;
+	char *txt;
+	t_redir *redir;
+	struct com_node *next_sibling;
 } t_com;
 
 /*node de la structure final qui sera donne a l'executeur*/
 typedef struct final
 {
-    char **cmds;
-    t_redir *redir;
-    
-    struct final *next_sibling;
+	char **cmds;
+	t_redir *redir;
+	
+	struct final *next_sibling;
 } t_final;
 
 
 /*node of a command*/
 typedef struct ast
 {
-    t_com *command;
-    t_redir *redir;
+	t_com *command;
+	t_redir *redir;
 	t_node *save_ptr;
 } t_ast;
 
 /* structure of env linked list*/
 typedef struct env_s
 {
-    char *txt;
-    char* var_name;
-    char *var_value;
+	char *txt;
+	char* var_name;
+	char *var_value;
 	struct env_s *next;
 } t_env;
 
@@ -154,7 +150,7 @@ int     is_nbr(char c);
 int is_here_doc(t_node *node);
 
 /*signaux*/
-void	ft_sigint(int sigint, siginfo_t *pid, void *idontknow);
+void	ft_signal(int i);
 
 /*builtin exit*/
 void ft_exit(t_env **mini_env,t_node **root, t_source **src, t_info_tok **info);
@@ -210,9 +206,13 @@ char **break_linked_list_in_double_tab(t_com *com);
 int ft_com_len(t_com *com);
 void printf_final_ast(t_final *final);
 
-/*heredoc.c*/
-bool	define_heredoc(t_final *cmds);
+/*EXEC*/
 void	remove_heredoc(t_final *cmds);
+void	executor(t_final *cmds, t_env *env);
+/*heredoc_signal.c*/
+
+/*pipex*/
+
 
 #endif
 

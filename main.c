@@ -6,11 +6,20 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 20:57:56 by imrane            #+#    #+#             */
-/*   Updated: 2023/03/30 17:14:13 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/04 05:22:07 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_exit_status;
+
+bool	ft_builtin_check(t_final *cmds)
+{
+	if ((!ft_strcmp(cmds->cmds[0], "test")) && cmds->cmds[1] == NULL)
+		return (false);
+	return (true);
+}
 
 int main(int argc, char *argv[], char *env[])
 {
@@ -23,25 +32,22 @@ int main(int argc, char *argv[], char *env[])
 	t_final *final;
 	(void)argc;
     (void)argv;
-	
-	// signal exit
-	struct sigaction action_exit;
-	sigset_t	sigmask;
 
-	sigemptyset(&sigmask);
-	action_exit.sa_flags = SA_SIGINFO;
-	action_exit.sa_mask = sigmask;
-	action_exit.sa_sigaction = ft_sigint;
-	sigaction(SIGINT, &action_exit, NULL);
+	// signal exit
+//	ft_signal(1);
+	//g_exit_status = 0;
+
 	// programme hors signaux
 	mini_env = copy_env(env);
     src = NULL;
 	info = NULL;
 	root = NULL;
 	ast = NULL;
-		
+
 	while (1)
     {
+		printf("ggggg=%d\n", g_exit_status);
+		ft_signal(1);
         input = readline("minishell> ");
 		if (single_enter(input) == 0)
 		{
@@ -52,9 +58,9 @@ int main(int argc, char *argv[], char *env[])
 			{
 				is_env_var(mini_env, root);
 				//afficher env apres que j'ai ajouté var env
-        		printf("----------------------\n");
+        		printf("1----------------------\n");
 				print_env(mini_env);
-				printf("----------------------\n");
+				printf("2----------------------\n");
 				// afficher ast avant expand
 				print_ast(root);
 				printf("----------------------\n");
@@ -105,8 +111,16 @@ int main(int argc, char *argv[], char *env[])
 				printf("c5\n");
 				printf_final_ast(final);
 				printf("c6\n");
-				define_heredoc(final);
+				executor(final, mini_env);
 				remove_heredoc(final);
+/* 				if (ft_builtin_check(final) == false)
+					printf("OKkk\n");
+				else
+					printf("kkKO\n"); */
+				
+				//printf ("redir ==___%s____\n", final->redir->txt);
+				//final->redir = final->redir->next_sibling;
+				//printf("2ND_redir==========___%s___=\n", final->redir->txt);
 			}
 			ft_free(NULL, &root, &src,&info);
 			ft_free_final_ast(&final);

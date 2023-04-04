@@ -1,11 +1,10 @@
 NAME = minishell
-CC = gcc -Wall -Werror -Wextra -g
+CC = gcc -Wall -Wextra -Werror -g
 SRC = main.c \
 	parsing/lexer/manipulate_input.c \
 	parsing/lexer/init_src_token.c \
 	parsing/lexer/manipulate_token.c \
 	parsing/lexer/manipulate_token2.c \
-	parsing/lexer/heredoc.c \
 	parsing/parser/parser.c \
 	parsing/parser/ft_pipe.c \
 	parsing/parser/guillemets.c \
@@ -19,7 +18,16 @@ SRC = main.c \
 	signaux/signal.c \
 	builtin/exit.c \
 	ft_free/ft_free.c \
-	error_pars.c 
+	error_pars.c  \
+	exe/redir.c \
+	exe/heredoc.c \
+	exe/heredoc_signal.c \
+	exe/pipex.c \
+	exe/pipex_init.c \
+	exe/pipex_errors.c \
+	exe/struct.c \
+	exe/exec.c \
+	exe/childs.c
 
 OBJ = $(SRC:%.c=%.o) 
 

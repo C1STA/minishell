@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 20:31:15 by imrane            #+#    #+#             */
-/*   Updated: 2023/03/27 13:54:23 by wcista           ###   ########.fr       */
+/*   Updated: 2023/03/31 21:22:09 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,9 @@ t_com **create_ast_command_redir(t_node *root)
 	// jvai creer une valeur de save 
 	// jvai passer le vrai a la fonction puis free la valeur de save
 	// voir le moment opportun pour free 
+
+	/* PROBLEME DE SEGFAULT (pas tout le temps) DANS LA BOUCLE SUIVANTE
+			TEST EXECUTE : << l*/
 	while (nbr_pipe >= 0)
 	{
 		if (save_ast)
