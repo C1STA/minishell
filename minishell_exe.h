@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 15:56:53 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/04 05:25:41 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/04 19:32:49 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,12 @@ void	print_struct(t_final *cmds);
 int		lenlist(t_final *L);
 
 //pipex.c
-void	pipex(t_final *cmds, t_env *env);
+void	pipex(t_final *cmds);
 void	close_unused_pipes(t_pipex *p, int i);
 
 //pipex_init.c
 bool	init_pipes(t_pipex *p);
-bool	init_forks(t_final *cmds, t_pipex *p, t_env *env);
+bool	init_forks(t_final *cmds, t_pipex *p);
 
 //pipex_errors.c
 void	free_pipex(t_pipex *p);
@@ -62,9 +62,13 @@ bool	ft_heredoc(t_final *cmds);
 void	remove_heredoc(t_final *cmds);
 
 //childs.c
-void	child_processs(t_final *cmds, t_pipex *p, int i, t_env *env);
+void	child_processs(t_final *cmds, t_pipex *p, int i);
 
 //redir.c
 void	redir(t_redir *redir, t_indice *indice);
+
+//strjoin_free
+char	*ft_strjoin_free(char *s1, char *s2);
+int	ft_strcmp(const char *s1, const char *s2);
 
 #endif

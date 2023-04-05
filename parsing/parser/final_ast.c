@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   final_ast.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
+/*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 21:53:16 by imoumini          #+#    #+#             */
-/*   Updated: 2023/03/27 13:58:00 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/02 19:03:16 by imoumini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,18 @@ t_final *create_final_ast(t_com **ast)
 	t_final *final;
 	int i;
 
+	printf("c4.1\n");
 	final = NULL;
 	i = 0;
+	printf("c4.2\n");
 	while (ast[i])
 	{
+		printf("c4.3\n");
 		final = create_list_final_ast(final, ast[i]);
+		printf("c4.4\n");
 		i++;
 	}
+	printf("c4.5\n");
 	return (final);
 }
 
@@ -74,6 +79,7 @@ char **break_linked_list_in_double_tab(t_com *com)
 			ft_strlcpy(tab[i], follow -> txt, (ft_strlen(follow -> txt) + 1));
 			follow = follow -> next_sibling;
 			i++;
+			tab[i] = NULL;
 		}
 		else
 		{
@@ -120,8 +126,7 @@ void printf_final_ast(t_final *final)
 		ft_printf("command is : \n");
 		while (follow -> cmds[i])
 		{
-			//ft_printf("%s\n", follow -> cmds[i]);
-			printf("\nCMDS : __%s__\n\n", follow->cmds[i]);
+			ft_printf("%s\n", follow -> cmds[i]);
 			i++;
 		}
 		ft_printf("redir is : \n");

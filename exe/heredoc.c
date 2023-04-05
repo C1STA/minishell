@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 19:16:50 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/04 02:21:55 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/04 20:06:45 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ static char	*heredoc_file_name(int i, int j)
 
 	k = ft_itoa(i);
 	l = ft_itoa(j / 2);
-	file_name = ft_strjoin("", ".data_heredoc_");
-	file_name = ft_strjoin(file_name, k);
-	file_name = ft_strjoin(file_name, "_");
-	file_name = ft_strjoin(file_name, l);
+	file_name = ft_strjoin_free("", ".data_heredoc_");
+	file_name = ft_strjoin_free(file_name, k);
+	file_name = ft_strjoin_free(file_name, "_");
+	file_name = ft_strjoin_free(file_name, l);
 	free(k);
 	free(l);
 	return (file_name);
@@ -78,6 +78,7 @@ static void	define_heredoc(t_final *cmds)
 	int		i;
 	int		j;
 
+	printf("LE PID DU PROCESSUS HEREDOC EST : __________________%d\n", getpid());
 	i = 0;
 	while (cmds)
 	{

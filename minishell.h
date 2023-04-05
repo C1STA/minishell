@@ -1,9 +1,6 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <fcntl.h>
-# include <stddef.h>
-# include <stdbool.h>
 # include <unistd.h>
 # include <signal.h>
 #include <stdio.h>
@@ -11,15 +8,20 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "libft/libft.h"
+//walid
+# include <fcntl.h>
+# include <stddef.h>
+# include <stdbool.h>
 # include <sys/wait.h>
 # include <sys/types.h>
+
 
 // structure de l'input de l'user
 typedef struct source_s
 {   
-	char	*buffer;       /* the input text */
-	long	bufsize;       /* size of the input text */
-	long	curpos;       /* index position in source */
+    char	*buffer;       /* the input text */
+    long	bufsize;       /* size of the input text */
+    long	curpos;       /* index position in source */
 	int		end_input;
 	int		exit;
 } t_source;
@@ -27,9 +29,9 @@ typedef struct source_s
 // structure of a token
 typedef struct token_s
 {
-	t_source	*src;       /* source of input */
-	int			text_len;            /* length of token text */
-	char		*text;             /* token text */
+    t_source	*src;       /* source of input */
+    int			text_len;            /* length of token text */
+    char		*text;             /* token text */
 } t_token;
 
 // structure d'information global pour créer un token
@@ -43,58 +45,58 @@ typedef struct info_tok_s
 /* structure of a node in first AST*/
 typedef struct node_s
 {
-	char *txt;        /* value of this node */
-	int    children;            /* number of child nodes */
-	struct node_s *first_child; /* first child node */
-	struct node_s *next_sibling;
+    char *txt;        /* value of this node */
+    int    children;            /* number of child nodes */
+    struct node_s *first_child; /* first child node */
+    struct node_s *next_sibling;
 	struct node_s *prev_sibling;
 } t_node;
 /*node of a redirection*/
 typedef struct redir_node
 {
-	char *txt;
-	int heredoc;
-	int in_file;
-	int out_file;
+    char *txt;
+    int heredoc;
+    int in_file;
+    int out_file;
 	int append;
-	int file;
+    int file;
 	int	fd_in;
 	int	fd_out;
-	struct redir_node *next_sibling;
+    struct redir_node *next_sibling;
 } t_redir;
 
 /*node of a command*/
 typedef struct com_node
 {
-	char *txt;
-	t_redir *redir;
-	struct com_node *next_sibling;
+    char *txt;
+    t_redir *redir;
+    struct com_node *next_sibling;
 } t_com;
 
 /*node de la structure final qui sera donne a l'executeur*/
 typedef struct final
 {
-	char **cmds;
-	t_redir *redir;
-	
-	struct final *next_sibling;
+    char **cmds;
+    t_redir *redir;
+    
+    struct final *next_sibling;
 } t_final;
 
 
 /*node of a command*/
 typedef struct ast
 {
-	t_com *command;
-	t_redir *redir;
+    t_com *command;
+    t_redir *redir;
 	t_node *save_ptr;
 } t_ast;
 
 /* structure of env linked list*/
 typedef struct env_s
 {
-	char *txt;
-	char* var_name;
-	char *var_value;
+    char *txt;
+    char* var_name;
+    char *var_value;
 	struct env_s *next;
 } t_env;
 
@@ -110,12 +112,9 @@ t_source	**init_src(t_source **src, char *input); // init input struct
 t_info_tok **init_global_info_token(t_info_tok **info);
 t_token	*tokenize(t_source *src, t_info_tok *info);
 int tokenize_space(char c, t_source *src, t_info_tok *info);
-int tokenize_dollars(char c, t_source *src, t_info_tok *info);
 int tokenize_pipe(char c, t_source *src, t_info_tok *info);
 void tokenize_end(char c, t_source *src, t_info_tok *info);
 int tokenize_in_out(char c, t_source *src, t_info_tok *info);
-int tokenize_single_quote(char c, t_source *src, t_info_tok *info);
-int tokenize_double_quote(char c, t_source *src, t_info_tok *info);
 void	free_token(t_token *tok);
 void	add_to_buf(char c, t_info_tok *info);
 t_token	*create_token(char *str , t_source *src, t_info_tok *info);
@@ -126,14 +125,15 @@ t_node	*new_node(t_token *tok);
 t_node	*add_node_to_ast(t_node *root, t_node *node);
 void    print_ast(t_node *node);
 int single_enter(char *input);
+int check_space_append_heredoc(char *str);
 
 /*env*/
 t_env   *copy_env(char *original[]);
 t_env   *add_node_env(t_env *head);
 t_env   *new_node_env(void);
 void    print_env(t_env *head);
-void    is_env_var(t_env *mini_env, t_node *root);
-void    insert_input_env(t_env *head, t_node *root);
+int    is_env_var(t_env *mini_env, t_node *root);
+int    insert_input_env(t_env **head, t_node *root, int pipe);
 void    expand_env(t_env *head, t_node *root);
 char    *ft_strcpy(char *str);
 char    *ft_strcpy_env(char *str);
@@ -148,9 +148,23 @@ char	*return_matching_value(t_env *head, char *str);
 void	cut_dollar_sign(char *str);
 int     is_nbr(char c);
 int is_here_doc(t_node *node);
-
+void expand_job(t_env *head, t_node *ptr);
+char *after_dollar(char *str);
+char *before_dollar(char *str);
+char *catch_var(char *str);
+int nbr_of_dollar_suite(t_node *ptr);
+char *add_nbr(int nbr);
+char *after_multiple_dollar(char *str, int nbr);
+int more_than_one_dollars_suite(t_node *ptr);
+void expand_job_multiple_dollar(t_node *ptr, int nbr);
+int pars_env_name(char *str, char *env_input);
+int pars_env_value(char *str, char *env_input);
+int count_nbr_equal(char *str, char *env_input);
+int check_if_exist(t_env *head, char *str);
+void supp_env(t_env **head, char *str);
+void     is_unset(t_env **head, t_node *root);
 /*signaux*/
-void	ft_signal(int i);
+void	ft_sigint(int sigint, siginfo_t *pid, void *idontknow);
 
 /*builtin exit*/
 void ft_exit(t_env **mini_env,t_node **root, t_source **src, t_info_tok **info);
@@ -205,14 +219,19 @@ t_final *create_list_final_ast(t_final *final, t_com *ast);
 char **break_linked_list_in_double_tab(t_com *com);
 int ft_com_len(t_com *com);
 void printf_final_ast(t_final *final);
+void final_expand(t_final *final);
+int double_tab_as_space(char **tab);
+int tab_as_space(char *tab);
+void free_double_tab(char **str);
+int nbr_space(char *str);
+char *return_right_tab(char *str, int begin, int end);
+char **tab_without_space(char *str, int nbr);
+char **recreate_tab_without_space(char **tab);
+int double_tab_as_export(char **tab);
 
 /*EXEC*/
 void	remove_heredoc(t_final *cmds);
-void	executor(t_final *cmds, t_env *env);
-/*heredoc_signal.c*/
-
-/*pipex*/
-
+void	executor(t_final *cmds);
 
 #endif
 

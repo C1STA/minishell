@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manipulate_token.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
+/*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 21:23:13 by imrane            #+#    #+#             */
-/*   Updated: 2023/03/31 20:12:58 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/02 15:49:35 by imoumini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,24 +66,9 @@ t_token	*tokenize(t_source *src, t_info_tok *info)
 			if (tokenize_space(c, src, info) == 1)
 				break;
 		}
-		else if (c == '$')
-		{
-			if (tokenize_dollars(c, src, info) == 1)
-				break;
-		}
 		else if (c == '|')
 		{
 			if (tokenize_pipe(c, src, info) == 1)
-				break;
-		}
-		else if (c == '\'')
-		{
-			if (tokenize_single_quote(c, src, info) == 1)
-				break;
-		}
-		else if (c == '\"')
-		{
-			if (tokenize_double_quote(c, src, info) == 1)
 				break;
 		}
 		else if (c == '<' || c == '>')
@@ -120,3 +105,4 @@ t_token *create_token(char *str, t_source *src, t_info_tok *info)
 	ft_strlcpy(tok->text, info -> tok_buf, tok->text_len + 1);
 	return (tok);
 }
+

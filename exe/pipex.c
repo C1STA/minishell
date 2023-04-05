@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 17:47:53 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/04 05:24:36 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/05 02:53:26 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void	wait_childs(t_pipex *p)
 	}
 }
 
-void	pipex(t_final *cmds, t_env *env)
+void	pipex(t_final *cmds)
 {
 	t_pipex	*p;
 
@@ -66,7 +66,7 @@ void	pipex(t_final *cmds, t_env *env)
 	p->len = lenlist(cmds);
 	if (!init_pipes(p))
 		return ;
-	if (!init_forks(cmds, p, env))
+	if (!init_forks(cmds, p))
 		return ;
 	/*Si besoin de quelque chose dans le process parent,
 	on ne ferme que les pipes que l'on utilise pas en laissant

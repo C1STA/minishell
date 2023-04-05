@@ -6,11 +6,11 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 17:16:57 by wcista            #+#    #+#             */
-/*   Updated: 2023/03/27 17:42:27 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/04 19:34:20 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell_exe.h"
 
 int	ft_strcmp(const char *s1, const char *s2)
 {
