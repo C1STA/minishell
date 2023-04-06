@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 18:00:36 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/04 20:30:01 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/05 22:16:06 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern int	g_exit_status;
 
-bool	init_forks(t_final *cmds, t_pipex *p)
+bool	init_forks(t_final *cmds, t_pipex *p, char *env[])
 {
 	int	i;
 
@@ -28,7 +28,7 @@ bool	init_forks(t_final *cmds, t_pipex *p)
 		if (p->child[i] == -1)
 			return (fork_error(p));
 		if (p->child[i] == 0)
-			child_processs(cmds, p, i);
+			child_processs(cmds, p, i, env);
 		i++;
 	}
 	return (true);
@@ -69,6 +69,6 @@ bool	init_pipes(t_pipex *p)
 			return (pipe_error(p, i));
 		i++;
 	}
-	print_pipes(p);
+	//print_pipes(p);
 	return (true);
 }

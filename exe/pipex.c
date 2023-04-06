@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 17:47:53 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/05 02:53:26 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/05 20:30:50 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,15 @@ void	close_unused_pipes(t_pipex *p, int i)
 	while (j < p->len + 1)
 	{
 		if (i != j)
+		{
+			printf("__________________________________Unused pipes : p->fd[%d][%d]\n", j, 0);
 			close(p->fd[j][0]);
+		}
 		if (i + 1 != j)
+		{
+			printf("__________________________________Unused pipes : p->fd[%d][%d]\n", j, 1);
 			close(p->fd[j][1]);
+		}
 		j++;
 	}
 }
@@ -56,7 +62,7 @@ static void	wait_childs(t_pipex *p)
 	}
 }
 
-void	pipex(t_final *cmds)
+void	pipex(t_final *cmds, char *env[])
 {
 	t_pipex	*p;
 
@@ -66,7 +72,7 @@ void	pipex(t_final *cmds)
 	p->len = lenlist(cmds);
 	if (!init_pipes(p))
 		return ;
-	if (!init_forks(cmds, p))
+	if (!init_forks(cmds, p, env))
 		return ;
 	/*Si besoin de quelque chose dans le process parent,
 	on ne ferme que les pipes que l'on utilise pas en laissant

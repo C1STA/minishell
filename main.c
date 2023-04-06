@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 20:57:56 by imrane            #+#    #+#             */
-/*   Updated: 2023/04/05 02:55:45 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/05 16:03:06 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int main(int argc, char *argv[], char *env[])
 				printf("c7\n");
 				printf_final_ast(final);
 				printf("c8\n");
-				executor(final);
+				executor(final, env);
 				
 			}
 			ft_free(NULL, &root, &src,&info);

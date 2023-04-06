@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 16:39:32 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/04 02:13:23 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/06 00:50:52 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,19 @@ bool	redir_file(t_redir *redir)
 
 int	redir_parsing(t_redir *redir)
 {
-	int	i;
+	int		i;
+	bool	in;
+	bool	out;
 
 	i = 0;
+	in = false;
+	out = false;
 	while (redir)
 	{
 		if (redir->in_file == 1)
 		{
+			in = true;
+			out = false;
 			i++;
 			redir = redir->next_sibling;
 			if (!redir_infile(redir))
@@ -88,11 +94,15 @@ int	redir_parsing(t_redir *redir)
 		}
 		else if (redir->heredoc == 1)
 		{
+			in = true;
+			out = false;
 			i++;
 			redir = redir->next_sibling;
 		}
 		else if (redir->out_file == 1)
 		{
+			in = false;
+			out = true;
 			i++;
 			redir = redir->next_sibling;
 			if (!redir_outfile(redir))
@@ -100,12 +110,14 @@ int	redir_parsing(t_redir *redir)
 		}
 		else if (redir->append == 1)
 		{
+			in = false;
+			out = true;
 			i++;
 			redir = redir->next_sibling;
 			if (!redir_append(redir))
 				return (i);
 		}
-		else if (redir->file == 1)
+		else if (redir->file == 1 && in == true)
 		{
 			if (!redir_file(redir))
 				return (i);

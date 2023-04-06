@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 15:56:53 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/04 19:32:49 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/05 16:05:44 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,12 @@ void	print_struct(t_final *cmds);
 int		lenlist(t_final *L);
 
 //pipex.c
-void	pipex(t_final *cmds);
+void	pipex(t_final *cmds, char *env[]);
 void	close_unused_pipes(t_pipex *p, int i);
 
 //pipex_init.c
 bool	init_pipes(t_pipex *p);
-bool	init_forks(t_final *cmds, t_pipex *p);
+bool	init_forks(t_final *cmds, t_pipex *p, char *env[]);
 
 //pipex_errors.c
 void	free_pipex(t_pipex *p);
@@ -62,7 +62,7 @@ bool	ft_heredoc(t_final *cmds);
 void	remove_heredoc(t_final *cmds);
 
 //childs.c
-void	child_processs(t_final *cmds, t_pipex *p, int i);
+void	child_processs(t_final *cmds, t_pipex *p, int i, char *env[]);
 
 //redir.c
 void	redir(t_redir *redir, t_indice *indice);
