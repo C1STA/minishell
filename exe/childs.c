@@ -6,11 +6,13 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 01:57:37 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/05 22:16:52 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/07 19:05:50 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell_exe.h"
+
+extern int	g_exit_status;
 
 t_final	*get_right_cmd(t_final *cmds, int i)
 {
@@ -27,13 +29,22 @@ t_final	*get_right_cmd(t_final *cmds, int i)
 	return (cmds);
 }
 
-void	child_processs(t_final *cmds, t_pipex *p, int i, char *env[])
+void	child_processs(t_final *cmds, t_pipex *p, int i, t_env *mini_env)
 {
 	//(void)env;
 	printf("LE PID DU PROCESSUS ENFANT EST : __________________%d\n", getpid());
 	close_unused_pipes(p, i);
 	cmds = get_right_cmd(cmds, i);
-	if (execve(cmds->cmds[0], cmds->cmds, env))
+	dup2(p->fd[i][0], STDIN_FILENO);
+	dup2(p->fd[i + 1][1], STDOUT_FILENO);
+	if (cmds->redir)
+		if (!init_redir(cmds->redir, i));
+		{
+			free_pipex(p);
+			free_exe(&cmds, &mini_env);
+			exit(EXIT_FAILURE);
+		}
+	if (execve(cmds->cmds[0], cmds->cmds, mini_env))
 	{
 		ft_putstr_fd("ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo", 2);
 		ft_putstr_fd(cmds->cmds[0], 2);

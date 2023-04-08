@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 19:16:50 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/04 20:06:45 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/07 11:32:37 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 extern int	g_exit_status;
 
-static bool	free_heredoc(t_heredoc *h, t_final *cmds, bool n)
+// Signaux ctrl+c / ctrl+d
+
+static bool	free_heredoc(t_heredoc *h, bool n)
 {
 	if (h->fd)
 		close(h->fd);
@@ -24,11 +26,10 @@ static bool	free_heredoc(t_heredoc *h, t_final *cmds, bool n)
 		free(h->input);
 	if (h)
 		free(h);
-	ft_free_final_ast(&cmds);
 	return (n);
 }
 
-static char	*heredoc_file_name(int i, int j)
+char	*heredoc_file_name(int i, int j)
 {
 	char	*k;
 	char	*l;
@@ -45,7 +46,7 @@ static char	*heredoc_file_name(int i, int j)
 	return (file_name);
 }
 
-static bool	init_heredoc(t_final *cmds, int i, int j)
+static bool	init_heredoc(t_redir *redir, int i, int j)
 {
 	t_heredoc	*h;
 
@@ -55,77 +56,54 @@ static bool	init_heredoc(t_final *cmds, int i, int j)
 	h->file_name = heredoc_file_name(i, j);
 	h->fd = open(h->file_name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (h->fd == -1)
-		return (free_heredoc(h, cmds, false));
-	cmds->redir = cmds->redir->next_sibling;
+		return (free_heredoc(h, false));
 	while (1)
 	{
+		redir = redir->next_sibling;
 		h->input = readline("> ");
-		if (!ft_strcmp(h->input, cmds->redir->txt))
+		if (!ft_strcmp(h->input, redir->txt))
 			break ;
 		h->reader = write(h->fd, h->input, ft_strlen(h->input));
 		if (h->reader == -1)
-			return (free_heredoc(h, cmds, false));
+			return (free_heredoc(h, false));
 		h->reader = write(h->fd, "\n", 1);
 		if (h->reader == -1)
-			return (free_heredoc(h, cmds, false));
+			return (free_heredoc(h, false));
 		free(h->input);
 	}
-	return (free_heredoc(h, cmds, true));
+	return (free_heredoc(h, true));
 }
 
-static void	define_heredoc(t_final *cmds)
+static void	define_heredoc(t_final *cmds, t_env *mini_env)
 {
 	int		i;
 	int		j;
-
-	printf("LE PID DU PROCESSUS HEREDOC EST : __________________%d\n", getpid());
-	i = 0;
-	while (cmds)
-	{
-		j = 0;
-		while (cmds->redir)
-		{
-			if (cmds->redir->heredoc == 1)
-				if (!init_heredoc(cmds, i, j))
-					exit(EXIT_FAILURE);
-			j++;
-			cmds->redir = cmds->redir->next_sibling;
-		}
-		i++;
-		cmds = cmds->next_sibling;
-	}
-	exit(EXIT_SUCCESS);
-}
-
-void	remove_heredoc(t_final *cmds)
-{
-	int		i;
-	int		j;
-	char	*file_name;
-	t_redir	*redir;
+	t_final	*tmp_cmds;
+	t_redir	*tmp_redir;
 
 	i = 0;
-	while (cmds)
+	tmp_cmds = cmds;
+	while (tmp_cmds)
 	{
 		j = 0;
-		redir = cmds->redir;
-		while (redir)
+		tmp_redir = tmp_cmds->redir;
+		while (tmp_redir)
 		{
-			if (redir->heredoc == 1)
+			if (tmp_redir->heredoc == 1)
 			{
-				file_name = heredoc_file_name(i, j);
-				unlink(file_name);
-				free(file_name);
+				if (!init_heredoc(tmp_redir, i, j))
+					return (free_exe(&cmds, &mini_env), exit(EXIT_FAILURE));
 			}
+			tmp_redir = tmp_redir->next_sibling;
 			j++;
-			redir = redir->next_sibling;
 		}
 		i++;
-		cmds = cmds->next_sibling;
+		tmp_cmds = tmp_cmds->next_sibling;
 	}
+	return (free_exe(&cmds, &mini_env), exit(EXIT_SUCCESS));
 }
 
-bool	ft_heredoc(t_final *cmds)
+bool	ft_heredoc(t_final *cmds, t_env *mini_env)
 {
 	pid_t	pid;
 
@@ -133,7 +111,7 @@ bool	ft_heredoc(t_final *cmds)
 	if (pid == -1)
 		return (perror("minishell: fork error"), false);
 	if (pid == 0)
-		define_heredoc(cmds);
+		define_heredoc(cmds, mini_env);
 	wait(&g_exit_status);
 	if (WIFEXITED(g_exit_status))
 	{
@@ -143,4 +121,3 @@ bool	ft_heredoc(t_final *cmds)
 	}
 	return (true);
 }
-

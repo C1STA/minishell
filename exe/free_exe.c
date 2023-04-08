@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin_free.c                                  :+:      :+:    :+:   */
+/*   free_exe.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/04 19:28:46 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/06 17:42:09 by wcista           ###   ########.fr       */
+/*   Created: 2023/04/07 11:28:49 by wcista            #+#    #+#             */
+/*   Updated: 2023/04/07 11:48:30 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,29 +21,30 @@ static void	ft_free_str(char **str)
 	}
 }
 
-char	*ft_strjoin_free(char *s1, char *s2)
+void	free_exe(t_final **cmds, t_env **mini_env)
 {
-	char	*dest;
-	size_t	len;
+	t_final	*tmp_cmds;
+	t_redir	*tmp_redir;
+	t_redir	*redir_free;
 	int		i;
-	int		j;
 
-	if ((!s1) && (!s2))
-		return (NULL);
-	i = ft_strlen(s1);
-	j = ft_strlen(s2);
-	len = (i + j + 1);
-	dest = malloc((len) * sizeof(char));
-	if (!dest)
-		return (NULL);
-	i = -1;
-	j = 0;
-	while (s1[++i])
-		dest[j++] = s1[i];
-	i = -1;
-	while (s2[++i])
-		dest[j++] = s2[i];
-	dest[j] = '\0';
-	ft_free_str(&s1);
-	return (dest);
+	while (*cmds)
+	{
+		i = 0;
+		tmp_cmds = (*cmds)->next_sibling;
+		tmp_redir = (*cmds)->redir;
+		while (tmp_redir)
+		{
+			redir_free = tmp_redir;
+			tmp_redir = tmp_redir->next_sibling;
+			ft_free_str(&redir_free->txt);
+			free(redir_free);
+		}
+		while ((*cmds)->cmds[i])
+			free((*cmds)->cmds[i++]);
+		free((*cmds)->cmds);
+		free(*cmds);
+		*cmds = tmp_cmds;
+	}
+	free_env(mini_env);
 }

@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 17:47:53 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/05 20:30:50 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/07 19:44:19 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	close_unused_pipes(t_pipex *p, int i)
 	int	j;
 
 	j = 0;
+	printf("_________________________________Commande : %d\n", i);
 	while (j < p->len + 1)
 	{
 		if (i != j)
@@ -62,7 +63,7 @@ static void	wait_childs(t_pipex *p)
 	}
 }
 
-void	pipex(t_final *cmds, char *env[])
+void	pipex(t_final *cmds, t_env *mini_env)
 {
 	t_pipex	*p;
 
@@ -72,7 +73,7 @@ void	pipex(t_final *cmds, char *env[])
 	p->len = lenlist(cmds);
 	if (!init_pipes(p))
 		return ;
-	if (!init_forks(cmds, p, env))
+	if (!init_forks(cmds, p, mini_env))
 		return ;
 	/*Si besoin de quelque chose dans le process parent,
 	on ne ferme que les pipes que l'on utilise pas en laissant
@@ -80,9 +81,12 @@ void	pipex(t_final *cmds, char *env[])
 	S'il n'y a besoin de rien faire dans le main, on peut fermer
 	tous les fds.*/
 	close_pipes_main(p);
+	dup2(p->fd[p->len + 1][0], STDIN_FILENO);
+	dup2(p->fd[0][1], STDOUT_FILENO);
 	printf("\nHELLO\nWORLD\n");
 	//close(p->fd[p->len][0]);
 	//close(p->fd[0][1]);
 	wait_childs(p);
 	free(p);
+	return (true);
 }

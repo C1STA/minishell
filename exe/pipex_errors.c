@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 18:09:51 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/04 03:41:03 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/07 18:26:50 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	free_pipex(t_pipex *p)
 		i++;
 	}
 	free(p->fd);
+	if (p->child)
+		free(p->child);
 	free(p);
 }
 
@@ -34,8 +36,8 @@ bool	pipe_error(t_pipex *p, int i)
 		close(p->fd[i][1]);
 		i--;
 	}
+	print_perror("pipe");
 	free_pipex(p);
-	perror("minishell: pipe error");
 	return (false);
 }
 
@@ -50,7 +52,7 @@ bool	fork_error(t_pipex *p)
 		close(p->fd[i][1]);
 		i++;
 	}
+	print_perror("fork");
 	free_pipex(p);
-	perror("minishell: fork error");
 	return (false);
 }

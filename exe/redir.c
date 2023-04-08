@@ -6,11 +6,21 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 16:39:32 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/06 00:50:52 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/07 17:58:04 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell_exe.h"
+
+extern int	g_exit_status;
+
+void	print_perror(char *s)
+{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(s, 2);
+		ft_putstr_fd(": ", 2);
+		perror("");
+}
 
 bool	redir_infile(t_redir *redir)
 {
@@ -18,13 +28,25 @@ bool	redir_infile(t_redir *redir)
 		return (false);
 	redir->fd_in = open(redir->txt, O_RDONLY);
 	if (redir->fd_in == -1)
-		return (false);
-	if (access(redir->txt, R_OK) == -1)
-	{
-		close(redir->fd_in);
-		return (false);
-	}
+		return (print_perror(redir->txt), false);
+	dup2(redir->fd_in, STDIN_FILENO);
 	close(redir->fd_in);
+	return (true);
+}
+
+bool	redir_heredoc(t_redir *redir, int i, int j)
+{
+	char	*file_name;
+
+	if(!redir)
+		return (false);
+	file_name = heredoc_file_name(i, j);
+	redir->fd_in = open(file_name, O_RDONLY);
+	if (redir->fd_in == -1)
+		return (print_perror(file_name), free(file_name), false);
+	dup2(redir->fd_in, STDIN_FILENO);
+	close(redir->fd_in);
+	free(file_name);
 	return (true);
 }
 
@@ -34,12 +56,8 @@ bool	redir_outfile(t_redir *redir)
 		return (false);
 	redir->fd_out = open(redir->txt, O_RDWR | O_TRUNC | O_CREAT, 0644);
 	if (redir->fd_out == -1)
-		return (false);
-	if (access(redir->txt, W_OK) == -1)
-	{
-		close (redir->fd_out);
-		return (false);
-	}
+		return (print_perror(redir->txt), false);
+	dup2(redir->fd_out, STDOUT_FILENO);
 	close(redir->fd_out);
 	return (true);
 }
@@ -48,17 +66,18 @@ bool	redir_append(t_redir *redir)
 {
 	redir->fd_out = open(redir->txt, O_RDWR | O_APPEND | O_CREAT, 0644);
 	if (redir->fd_out == -1)
-		return (false);
+		return (print_perror(redir->txt), false);
 	if (access(redir->txt, W_OK) == -1)
 	{
 		close(redir->fd_out);
-		return (false);
+		return (print_perror(redir->txt), false);
 	}
+	dup2(redir->fd_out, STDOUT_FILENO);
 	close(redir->fd_out);
 	return (true);
 }
 
-bool	redir_file(t_redir *redir)
+/* bool	redir_file(t_redir *redir)
 {
 	redir->fd_in = open(redir->txt, O_RDONLY);
 	if (redir->fd_in == -1)
@@ -70,69 +89,68 @@ bool	redir_file(t_redir *redir)
 	}
 	close(redir->fd_in);
 	return (true);
-}
+} */
 
-int	redir_parsing(t_redir *redir)
+bool	redir_in_here(t_redir *redir, int i, int j)
 {
-	int		i;
-	bool	in;
-	bool	out;
-
-	i = 0;
-	in = false;
-	out = false;
-	while (redir)
+	if (redir->in_file == 1)
 	{
-		if (redir->in_file == 1)
-		{
-			in = true;
-			out = false;
-			i++;
-			redir = redir->next_sibling;
-			if (!redir_infile(redir))
-				return (i);
-		}
-		else if (redir->heredoc == 1)
-		{
-			in = true;
-			out = false;
-			i++;
-			redir = redir->next_sibling;
-		}
-		else if (redir->out_file == 1)
-		{
-			in = false;
-			out = true;
-			i++;
-			redir = redir->next_sibling;
-			if (!redir_outfile(redir))
-				return (i);
-		}
-		else if (redir->append == 1)
-		{
-			in = false;
-			out = true;
-			i++;
-			redir = redir->next_sibling;
-			if (!redir_append(redir))
-				return (i);
-		}
-		else if (redir->file == 1 && in == true)
-		{
-			if (!redir_file(redir))
-				return (i);
-		}
-		i++;
 		redir = redir->next_sibling;
+		if (!redir_infile(redir))
+			return (false);
 	}
-	return (i);
+	if (redir->heredoc == 1)
+	{
+		redir = redir->next_sibling;
+		if (!redir_heredoc(redir, i, j))
+			return (false);
+	}
+	return (true);
 }
 
-/* ft_putstr_fd("minishell: ", 2);
-ft_putstr_fd(redir->txt, 2);
-perror(": "); */
+bool	redir_out_app(t_redir *redir)
+{
+	if (redir->out_file == 1)
+	{
+		redir = redir->next_sibling;
+		if (!redir_outfile(redir))
+			return (false);
+	}
+	if (redir->append == 1)
+	{
+		redir = redir->next_sibling;
+		if (!redir_append(redir))
+			return (false);
+	}
+	return (true);
+}
 
-int	redir_last_infile(t_redir *redir, int i)
+bool	init_redir(t_redir *redir, int i)
+{
+	int		j;
+	t_redir	*tmp_redir;
+
+	j = 0;
+	tmp_redir = redir;
+	while (tmp_redir)
+	{
+		if (tmp_redir->in_file == 1 || tmp_redir->heredoc == 1)
+		{
+			if (!redir_in_here(tmp_redir, i, j))
+				return (false);
+		}
+		else if (tmp_redir->out_file == 1 || tmp_redir->append == 1)
+		{
+			if (!redir_out_app(tmp_redir))
+				return (false);
+		}
+		j++;
+		tmp_redir = tmp_redir->next_sibling;
+	}
+	return (true);
+}
+
+/* int	redir_last_infile(t_redir *redir, int i)
 {
 	int	j;
 	int	k;
@@ -184,18 +202,4 @@ int		redir_last_outfile(t_redir *redir, int i)
 		redir = redir->next_sibling;
 	}
 	return (k);
-}
-
-void	redir(t_redir *redir, t_indice *indice)
-{
-	//int	i;
-	//int	i_infile;
-	//int	i_outfile;
-
-	indice->i = redir_parsing(redir);
-	indice->i_infile = redir_last_infile(redir, indice->i);
-	indice->i_outfile = redir_last_outfile(redir, indice->i);
-	printf("i______________________________________________________ = %d\n", indice->i);
-	printf("i_infile_______________________________________________ = %d\n", indice->i_infile);
-	printf("i_outfile______________________________________________ = %d\n", indice->i_outfile);
-}
+} */

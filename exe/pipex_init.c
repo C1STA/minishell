@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 18:00:36 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/05 22:16:06 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/07 17:54:34 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern int	g_exit_status;
 
-bool	init_forks(t_final *cmds, t_pipex *p, char *env[])
+bool	init_forks(t_final *cmds, t_pipex *p, t_env *mini_env)
 {
 	int	i;
 
@@ -28,7 +28,7 @@ bool	init_forks(t_final *cmds, t_pipex *p, char *env[])
 		if (p->child[i] == -1)
 			return (fork_error(p));
 		if (p->child[i] == 0)
-			child_processs(cmds, p, i, env);
+			child_processs(cmds, p, i, mini_env);
 		i++;
 	}
 	return (true);
@@ -59,7 +59,7 @@ bool	init_pipes(t_pipex *p)
 	i = 0;
 	p->fd = (int **)ft_calloc(sizeof(int *), p->len + 1);
 	if (!p->fd)
-		return (false);
+		return (free(p), false);
 	while (i < p->len + 1)
 	{
 		p->fd[i] = (int *)ft_calloc(sizeof(int), 2);
