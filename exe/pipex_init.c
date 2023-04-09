@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 18:00:36 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/07 17:54:34 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/09 12:02:41 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ bool	init_forks(t_final *cmds, t_pipex *p, t_env *mini_env)
 	int	i;
 
 	i = 0;
-	p->child = (pid_t *)malloc(sizeof(pid_t) * p->len + 1);
+	p->child = (pid_t *)malloc(sizeof(pid_t) * p->nb_cmds);
 	if (!p->child)
 		return (free_pipex(p), false);
-	while (i < p->len)
+	while (i < p->nb_cmds)
 	{
 		p->child[i] = fork();
 		if (p->child[i] == -1)
@@ -57,10 +57,16 @@ bool	init_pipes(t_pipex *p)
 	int	i;
 
 	i = 0;
-	p->fd = (int **)ft_calloc(sizeof(int *), p->len + 1);
+	p->fd = (int **)ft_calloc(sizeof(int *), p->nb_cmds - 1);
 	if (!p->fd)
 		return (free(p), false);
-	while (i < p->len + 1)
+	if (p->nb_cmds == 1)
+	{
+		p->fd[i] = (int *)ft_calloc(sizeof(int), 2);
+		if (!p->fd[i])
+			return (free_pipex(p), false);
+	}
+	while (i < p->nb_cmds - 1)
 	{
 		p->fd[i] = (int *)ft_calloc(sizeof(int), 2);
 		if (!p->fd[i])

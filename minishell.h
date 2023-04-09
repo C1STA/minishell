@@ -231,7 +231,7 @@ int double_tab_as_export(char **tab);
 
 /*EXEC*/
 void	remove_heredoc(t_final *cmds);
-void	executor(t_final *cmds, char *env[]);
+void	executor(t_final *cmds, t_env *mini_env);
 
 #endif
 

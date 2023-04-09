@@ -24,6 +24,7 @@ SRC = main.c \
 	error_pars.c \
 	exe/redir.c \
 	exe/heredoc.c \
+	exe/heredoc_remove.c \
 	exe/heredoc_signal.c \
 	exe/pipex.c \
 	exe/pipex_init.c \
@@ -33,6 +34,7 @@ SRC = main.c \
 	exe/childs.c \
 	exe/ft_strcmp.c \
 	exe/ft_strjoin_free.c \
+	exe/free_exe.c
 
 OBJ = $(SRC:%.c=%.o) 
 

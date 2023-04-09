@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 18:09:51 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/07 18:26:50 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/08 20:11:01 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ bool	fork_error(t_pipex *p)
 	int	i;
 
 	i = 0;
-	while (i < p->len + 1)
+	while (i < p->nb_cmds - 1)
 	{
 		close(p->fd[i][0]);
 		close(p->fd[i][1]);

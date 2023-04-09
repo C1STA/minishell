@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 17:47:53 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/07 19:44:19 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/09 12:03:50 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	close_unused_pipes(t_pipex *p, int i)
 
 	j = 0;
 	printf("_________________________________Commande : %d\n", i);
-	while (j < p->len + 1)
+	while (j < p->nb_cmds - 1)
 	{
 		if (i != j)
 		{
@@ -41,12 +41,10 @@ static void	close_pipes_main(t_pipex *p)
 	int	i;
 
 	i = 0;
-	while (i < p->len + 1)
+	while (i < p->nb_cmds - 1)
 	{
-		if (i != p->len + 1)
-			close(p->fd[i][0]);
-		if (i != 0)
-			close(p->fd[i][1]);
+		close(p->fd[i][0]);
+		close(p->fd[i][1]);
 		i++;
 	}
 }
@@ -56,7 +54,7 @@ static void	wait_childs(t_pipex *p)
 	int	i;
 
 	i = 0;
-	while (i < p->len)
+	while (i < p->nb_cmds)
 	{
 		waitpid(i, &g_exit_status, 0);
 		i++;
@@ -70,7 +68,7 @@ void	pipex(t_final *cmds, t_env *mini_env)
 	p = (t_pipex *)malloc(sizeof(t_pipex));
 	if (!p)
 		return ;
-	p->len = lenlist(cmds);
+	p->nb_cmds = lenlist(cmds);
 	if (!init_pipes(p))
 		return ;
 	if (!init_forks(cmds, p, mini_env))
@@ -81,12 +79,12 @@ void	pipex(t_final *cmds, t_env *mini_env)
 	S'il n'y a besoin de rien faire dans le main, on peut fermer
 	tous les fds.*/
 	close_pipes_main(p);
-	dup2(p->fd[p->len + 1][0], STDIN_FILENO);
+	dup2(p->fd[p->nb_cmds + 1][0], STDIN_FILENO);
 	dup2(p->fd[0][1], STDOUT_FILENO);
 	printf("\nHELLO\nWORLD\n");
-	//close(p->fd[p->len][0]);
+	//close(p->fd[p->nb_cmds][0]);
 	//close(p->fd[0][1]);
 	wait_childs(p);
 	free(p);
-	return (true);
+	//return (true);
 }
