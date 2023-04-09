@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:58:50 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/09 11:59:57 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/09 20:10:06 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,11 @@ int	main(int ac, char **av)
 	close(fd);
 	close (fd2);
 	free(s); */
-
+	char **arg;
+	arg = malloc(sizeof(char *) * 2);
+	arg[0] = "/bin/ls";
+	//arg[1] = ;
+	execve("/bin/ls", arg, NULL);
 	int	**fd;
 
 	fd = (int **)ft_calloc(sizeof(int *), 0);

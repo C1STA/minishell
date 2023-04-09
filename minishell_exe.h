@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 15:56:53 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/08 20:02:02 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/09 20:21:31 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,6 @@
 # define MINISHELL_EXE_H
 
 # include "minishell.h"
-
-typedef struct s_indice
-{
-	int	i;
-	int	i_infile;
-	int	i_outfile;
-}	t_indice;
 
 typedef struct s_pipex
 {
@@ -66,11 +59,17 @@ char	*heredoc_file_name(int i, int j);
 void	child_processs(t_final *cmds, t_pipex *p, int i, t_env *mini_env);
 
 //redir.c
-void	redir(t_redir *redir, t_indice *indice);
+bool	init_redir(t_redir *redir, int i);
+
+//redir_utils.c
+bool	redir_infile(t_redir *redir);
+bool	redir_heredoc(t_redir *redir, int i, int j);
+bool	redir_outfile(t_redir *redir);
+bool	redir_append(t_redir *redir);
 
 //strjoin_free
 char	*ft_strjoin_free(char *s1, char *s2);
-int	ft_strcmp(const char *s1, const char *s2);
+int		ft_strcmp(const char *s1, const char *s2);
 
 //free
 void	free_exe(t_final **cmds, t_env **mini_env);

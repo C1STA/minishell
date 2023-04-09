@@ -23,6 +23,7 @@ SRC = main.c \
 	ft_free/ft_free.c \
 	error_pars.c \
 	exe/redir.c \
+	exe/redir_utils.c \
 	exe/heredoc.c \
 	exe/heredoc_remove.c \
 	exe/heredoc_signal.c \
@@ -34,7 +35,8 @@ SRC = main.c \
 	exe/childs.c \
 	exe/ft_strcmp.c \
 	exe/ft_strjoin_free.c \
-	exe/free_exe.c
+	exe/free_exe.c \
+	exe/print_status.c
 
 OBJ = $(SRC:%.c=%.o) 
 

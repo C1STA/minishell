@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 18:09:51 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/08 20:11:01 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/09 15:05:52 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@ void	free_pipex(t_pipex *p)
 	int	i;
 
 	i = 0;
-	while (p->fd[i])
+	while (i < p->nb_cmds - 1)
 	{
-		free(p->fd[i]);
+		if (p->fd[i])
+			free(p->fd[i]);
 		i++;
 	}
 	free(p->fd);

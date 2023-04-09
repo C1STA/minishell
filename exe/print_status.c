@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec.c                                             :+:      :+:    :+:   */
+/*   print_status.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/04 02:19:53 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/09 20:18:35 by wcista           ###   ########.fr       */
+/*   Created: 2023/04/09 19:58:29 by wcista            #+#    #+#             */
+/*   Updated: 2023/04/09 20:17:54 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,10 @@
 
 extern int	g_exit_status;
 
-void	executor(t_final *cmds, t_env *mini_env)
+void	print_perror(char *s)
 {
-	if (!ft_heredoc(cmds, mini_env))
-		return ;
-	pipex(cmds, mini_env);
-	//printf("LE PID DU PROCESSUS PARENT EST : __________________%d\n", getpid());
-	remove_heredoc(cmds);
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(s, 2);
+	ft_putstr_fd(": ", 2);
+	perror("");
 }

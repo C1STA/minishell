@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 18:00:36 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/09 12:02:41 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/09 21:58:33 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,6 @@ bool	init_pipes(t_pipex *p)
 	p->fd = (int **)ft_calloc(sizeof(int *), p->nb_cmds - 1);
 	if (!p->fd)
 		return (free(p), false);
-	if (p->nb_cmds == 1)
-	{
-		p->fd[i] = (int *)ft_calloc(sizeof(int), 2);
-		if (!p->fd[i])
-			return (free_pipex(p), false);
-	}
 	while (i < p->nb_cmds - 1)
 	{
 		p->fd[i] = (int *)ft_calloc(sizeof(int), 2);

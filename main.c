@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 20:57:56 by imrane            #+#    #+#             */
-/*   Updated: 2023/04/08 19:59:16 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/09 16:28:40 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int main(int argc, char *argv[], char *env[])
 				printf_final_ast(final);
 				printf("c8\n");
 				printf("TOTAL DE COMMANDES = __________________%d\n", lenl(final));
-				//executor(final, mini_env);
+				executor(final, mini_env);
 				
 			}
 			ft_free(NULL, &root, &src,&info);

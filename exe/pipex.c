@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 17:47:53 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/09 12:03:50 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/09 22:19:51 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,18 @@ void	close_unused_pipes(t_pipex *p, int i)
 	int	j;
 
 	j = 0;
-	printf("_________________________________Commande : %d\n", i);
+	printf("\n_________________________________Commande : %d\n", i);
 	while (j < p->nb_cmds - 1)
 	{
 		if (i != j)
 		{
-			printf("__________________________________Unused pipes : p->fd[%d][%d]\n", j, 0);
-			close(p->fd[j][0]);
-		}
-		if (i + 1 != j)
-		{
-			printf("__________________________________Unused pipes : p->fd[%d][%d]\n", j, 1);
+			printf("________________(cmd: %d)__________________Unused pipes : p->fd[%d][%d]\n",i, j, 0);
 			close(p->fd[j][1]);
+		}
+		if (i - 1 != j)
+		{
+			printf("________________(cmd: %d)__________________Unused pipes : p->fd[%d][%d]\n",i,  j, 1);
+			close(p->fd[j][0]);
 		}
 		j++;
 	}
@@ -57,6 +57,7 @@ static void	wait_childs(t_pipex *p)
 	while (i < p->nb_cmds)
 	{
 		waitpid(i, &g_exit_status, 0);
+		printf("WAIT PROCESSUS = %d\n", i);
 		i++;
 	}
 }
@@ -73,18 +74,7 @@ void	pipex(t_final *cmds, t_env *mini_env)
 		return ;
 	if (!init_forks(cmds, p, mini_env))
 		return ;
-	/*Si besoin de quelque chose dans le process parent,
-	on ne ferme que les pipes que l'on utilise pas en laissant
-	ouvert que les pipes que l'on utilise.
-	S'il n'y a besoin de rien faire dans le main, on peut fermer
-	tous les fds.*/
 	close_pipes_main(p);
-	dup2(p->fd[p->nb_cmds + 1][0], STDIN_FILENO);
-	dup2(p->fd[0][1], STDOUT_FILENO);
-	printf("\nHELLO\nWORLD\n");
-	//close(p->fd[p->nb_cmds][0]);
-	//close(p->fd[0][1]);
 	wait_childs(p);
-	free(p);
-	//return (true);
+	free_pipex(p);
 }
