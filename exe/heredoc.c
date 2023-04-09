@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 19:16:50 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/09 22:43:22 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/09 22:48:52 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ static bool	init_heredoc(t_redir *redir, int i, int j)
 	h->fd = open(h->file_name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (h->fd == -1)
 		return (free_heredoc(h, false));
+	redir = redir->next_sibling;
 	while (1)
 	{
-		redir = redir->next_sibling;
 		h->input = readline("> ");
 		if (!ft_strcmp(h->input, redir->txt))
 			break ;
