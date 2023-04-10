@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 21:23:57 by imrane            #+#    #+#             */
-/*   Updated: 2023/03/31 18:42:15 by imoumini         ###   ########.fr       */
+/*   Updated: 2023/04/10 13:49:36 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void    print_ast(t_node *node)
 	ptr = node -> first_child;
 	while (ptr != NULL)
 	{
-		ft_printf("%s\n", ptr -> txt);
+		//ft_printf("%s\n", ptr -> txt);
 		ptr = ptr -> next_sibling;
 	}
 }

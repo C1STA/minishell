@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manip_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 18:47:11 by imrane            #+#    #+#             */
-/*   Updated: 2023/04/03 18:56:07 by imoumini         ###   ########.fr       */
+/*   Updated: 2023/04/10 13:46:25 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char    *ft_strcpy_env(char *str)
 	int length;
 	char *ptr;
 	
-	printf("str in cpyr env is=>%s\n", str);
+	//printf("str in cpyr env is=>%s\n", str);
 	if (!str)
 		return (NULL);
 	i = 0;
@@ -198,7 +198,7 @@ void    print_env(t_env *head)
 	ptr = head;
 	while (ptr != NULL)
 	{
-		ft_printf("%s\n", ptr -> txt);
+		//ft_printf("%s\n", ptr -> txt);
 		//printf("var name :%s\n", ptr -> var_name);
 		//printf("var value :%s\n", ptr -> var_value);
 		ptr = ptr -> next;
@@ -236,31 +236,31 @@ char	*extract_name(char *str)
 {
 	int i;
 	char *ptr;
-	printf("c0.4.3 bis.1\n");
+	//printf("c0.4.3 bis.1\n");
 	i = 0;
 	if (!str)
 		return (NULL);
-	printf("c0.4.3 bis.2\n");
+	//printf("c0.4.3 bis.2\n");
 	while (str[i] != '\0' && str[i] != '=')
 		i++;
-	printf("c0.4.3 bis.3\n");
+	//printf("c0.4.3 bis.3\n");
 	ptr = malloc((sizeof(char) *i) + 1);
-	printf("c0.4.3 bis.4\n");
+	//printf("c0.4.3 bis.4\n");
 	if (!ptr)
 		return (NULL);
-	printf("c0.4.3 bis.5\n");
+	//printf("c0.4.3 bis.5\n");
 	i = 0;
-	printf("c0.4.3 bis.6\n");
+	//printf("c0.4.3 bis.6\n");
 	while (str[i] != '\0' && str[i] != '=')
 	{
-		printf("c0.4.3 bis.7\n");
+		//printf("c0.4.3 bis.7\n");
 		ptr[i] = str[i];
-		printf("c0.4.3 bis.8\n");
+		//printf("c0.4.3 bis.8\n");
 		i++;
-		printf("c0.4.3 bis.9\n");
+		//printf("c0.4.3 bis.9\n");
 	}
 	ptr[i] = '\0';
-	printf("c0.4.3 bis.10\n");
+	//printf("c0.4.3 bis.10\n");
 	return (ptr);
 }
 char	*extract_value(char *str)
@@ -269,37 +269,37 @@ char	*extract_value(char *str)
 	int equal;
 	char *ptr;
 	
-	printf("c0.4.3 bis bis.1\n");
+	//printf("c0.4.3 bis bis.1\n");
 	i = 0;
 	equal = 0;
-	printf("c0.4.3 bis bis.2\n");
+	//printf("c0.4.3 bis bis.2\n");
 	if (!str)
 		return (NULL);
 	while (str[i] != '\0' && str[i] != '=')
 		i++;
-	printf("c0.4.3 bis bis.3\n");
+	//printf("c0.4.3 bis bis.3\n");
 	equal = i;
 	while(str[i] != '\0' && str[i] != ' ' && str[i] != '\t')
 		i++;
-	printf("c0.4.3 bis bis.4\n");
+	//printf("c0.4.3 bis bis.4\n");
 	ptr = malloc( (sizeof(char)) *(i - equal) + 1);
-	printf("c0.4.3 bis bis.5\n");
+	//printf("c0.4.3 bis bis.5\n");
 	if (!ptr)
 		return (NULL);
-	printf("c0.4.3 bis bis.6\n");
+	//printf("c0.4.3 bis bis.6\n");
 	equal++;
 	i = 0;
 	while (str[equal] != '\0' && str[equal] != ' ' && str[equal] != '\t')
 	{
-		printf("c0.4.3 bis bis.7\n");
+		//printf("c0.4.3 bis bis.7\n");
 		ptr[i] = str[equal];
-		printf("c0.4.3 bis bis.8\n");
+		//printf("c0.4.3 bis bis.8\n");
 		i++;
 		equal++;
-		printf("c0.4.3 bis bis.9\n");
+		//printf("c0.4.3 bis bis.9\n");
 	}
 	ptr[i] = '\0';
-	printf("c0.4.3 bis bis.10\n");
+	//printf("c0.4.3 bis bis.10\n");
 	return (ptr);
 }
 
@@ -320,24 +320,24 @@ int    insert_input_env(t_env **head, t_node *node, int pipe)
 	char *var_env_value;
 	char *env_input;
 	t_env	*last_node;
-	printf("c0.4.1\n");
+	//printf("c0.4.1\n");
 	if (!head)
 		return (1);
-	printf("c0.4.2\n");
+	//printf("c0.4.2\n");
 	if ((!node))
 		return (1);
 	if ((node -> next_sibling == NULL) || ft_stcmp(node -> next_sibling -> txt, "|") == 1)
 		return (1);
-	printf("c0.4.3\n");
+	//printf("c0.4.3\n");
 	// attention c pas forcement le premier element de la chaine
 	// c lelement juste apres de export
 	env_input = ft_strcpy_env(node ->  next_sibling -> txt);
-	printf("c0.4.3 bis\n");
+	//printf("c0.4.3 bis\n");
 	var_env_name = extract_name(node ->  next_sibling -> txt);
-	printf("c0.4.3 bis bis\n");
+	//printf("c0.4.3 bis bis\n");
 	var_env_value = extract_value(node ->  next_sibling -> txt);
-	printf("c0.4.3 bis bis bis\n");
-	printf("c0.4.4\n");
+	//printf("c0.4.3 bis bis bis\n");
+	//printf("c0.4.4\n");
 	// ici je regarde si g le droit ou non
 	if (pars_env_name(var_env_name, env_input) == 0 && (pipe == 0) && (pars_env_value(var_env_value, env_input) == 0) && count_nbr_equal(env_input, env_input) == 0)
 	{
@@ -350,12 +350,12 @@ int    insert_input_env(t_env **head, t_node *node, int pipe)
 		last_node -> var_name = var_env_name;
 		last_node -> var_value = var_env_value;
 		last_node -> txt = env_input;
-		printf("c0.4.5\n");
+		//printf("c0.4.5\n");
 		return (1);
 	}
 	else
 	{
-		printf("c0.4.6\n");
+		//printf("c0.4.6\n");
 		free (env_input);
 		free(var_env_name);
 		free(var_env_value);
@@ -523,29 +523,29 @@ void expand_job_multiple_dollar(t_node *ptr, int nbr)
 	char *new_str;
 	
 	i = 0;
-	printf("c1.3.1\n");
+	//printf("c1.3.1\n");
 	while (ptr -> txt[i] != '\0')
 	{
-		printf("c1.3.2\n");
+		//printf("c1.3.2\n");
 		if (ptr ->txt[i] == '$')
 		{
-			printf("c1.3.3\n");
+			//printf("c1.3.3\n");
 			save_before_dollar = before_dollar(ptr -> txt);
-			printf("save_before_dollar is =>%s\n", save_before_dollar);
-			printf("c1.3.4\n");
+			//printf("save_before_dollar is =>%s\n", save_before_dollar);
+			//printf("c1.3.4\n");
 			str_nbr = add_nbr(nbr);
-			printf("add_nbr is =>%s\n", str_nbr);
-			printf("c1.3.5\n");
+			//printf("add_nbr is =>%s\n", str_nbr);
+			//printf("c1.3.5\n");
 			save_after_dollar = after_multiple_dollar(ptr -> txt, nbr);
-			printf("c1.3.6\n");
-			printf("save_after_dollar is =>%s\n", save_after_dollar);
+			//printf("c1.3.6\n");
+			//printf("save_after_dollar is =>%s\n", save_after_dollar);
 			new_str = ft_strjoin(save_before_dollar, str_nbr);
 			free (str_nbr);
 			free(save_after_dollar);
-			printf("c1.3.7\n");
-			printf("new_str is =>%s\n", new_str);
+			//printf("c1.3.7\n");
+			//printf("new_str is =>%s\n", new_str);
 			new_str = ft_strjoin(new_str, save_after_dollar);
-			printf("new_str is =>%s\n", new_str);
+			//printf("new_str is =>%s\n", new_str);
 			free(ptr -> txt);
 			ptr -> txt = new_str;
 			return ;
@@ -590,25 +590,25 @@ int more_than_one_dollars_suite(t_node *ptr)
 {
 	int i;
 	i = 0;
-	printf("c1.2.1\n");
+	//printf("c1.2.1\n");
 	while(ptr -> txt[i])
 	{
-		printf("c1.2.2\n");
+		//printf("c1.2.2\n");
 		if(ptr->txt[i] == '$')
 		{
-			printf("c1.2.3\n");
+			//printf("c1.2.3\n");
 			if (ptr->txt[i + 1])
 			{
-				printf("c1.2.4\n");
+				//printf("c1.2.4\n");
 				if (ptr->txt[i+1] == '$')
 					return (1);
 			}
-			printf("c1.2.5\n");
+			//printf("c1.2.5\n");
 		}
-		printf("c1.2.6\n");
+		//printf("c1.2.6\n");
 		i++;
 	}
-	printf("c1.2.7\n");
+	//printf("c1.2.7\n");
 	return (0);
 }
 
@@ -738,23 +738,23 @@ void    expand_env(t_env *head, t_node *root)
 	//	return ;
 	while (ptr)
 	{
-		printf("c1.1\n");
+		//printf("c1.1\n");
 		expand = do_i_have_to_expand(ptr);
-		printf("c1.2\n");
+		//printf("c1.2\n");
 		//if (/*txt is juste un dollar sans rien apres on expand pas*/)
 		while (more_than_one_dollars_suite(ptr) == 1)
 		{
-			printf("c1.3\n");
+			//printf("c1.3\n");
 			expand_job_multiple_dollar(ptr, nbr_of_dollar_suite(ptr));
-			printf("c1.4\n");
+			//printf("c1.4\n");
 		}
 		// la normalement il en reste 1 ou 0
 		expand = do_i_have_to_expand(ptr);
-		printf("c1.5\n");
+		//printf("c1.5\n");
 		if (expand)
 			expand_job(head, ptr);
-		printf("c1.6\n");
+		//printf("c1.6\n");
 		ptr = ptr -> next_sibling;
-		printf("c1.7\n");
+		//printf("c1.7\n");
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:58:50 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/09 20:10:06 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/10 22:19:31 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,15 @@ void	print_perror(char *s)
 		perror("");
 }
 
+int	ft_isdigit(int c)
+{
+	if ((c >= 48 && c <= 57))
+	{
+		return (1);
+	}
+	return (0);
+}
+
 int	main(int ac, char **av)
 {
 /* 	(void)ac;
@@ -76,7 +85,7 @@ int	main(int ac, char **av)
 	close(fd);
 	close (fd2);
 	free(s); */
-	char **arg;
+/* 	char **arg;
 	arg = malloc(sizeof(char *) * 2);
 	arg[0] = "/bin/ls";
 	//arg[1] = ;
@@ -88,6 +97,14 @@ int	main(int ac, char **av)
 		return (printf("MALLOC FAIL\n"), 1);
 	else
 		printf("MALLOC SUCCESS\n");
-	free(fd);
+	free(fd); */
+/* 	char *s = "B0NJ";
+	int	i = 0;
+	while (s[i])
+	{
+		if (!ft_isdigit(s[i]))
+			printf("not a digit\n");
+		i++;
+	} */
 	return (0);
 }

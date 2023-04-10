@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   final_ast.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 21:53:16 by imoumini          #+#    #+#             */
-/*   Updated: 2023/04/02 19:03:16 by imoumini         ###   ########.fr       */
+/*   Updated: 2023/04/10 13:48:46 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,18 @@ t_final *create_final_ast(t_com **ast)
 	t_final *final;
 	int i;
 
-	printf("c4.1\n");
+	//printf("c4.1\n");
 	final = NULL;
 	i = 0;
-	printf("c4.2\n");
+	//printf("c4.2\n");
 	while (ast[i])
 	{
-		printf("c4.3\n");
+		//printf("c4.3\n");
 		final = create_list_final_ast(final, ast[i]);
-		printf("c4.4\n");
+		//printf("c4.4\n");
 		i++;
 	}
-	printf("c4.5\n");
+	//printf("c4.5\n");
 	return (final);
 }
 
@@ -121,21 +121,21 @@ void printf_final_ast(t_final *final)
 	follow = final;
 	while (follow)
 	{
-		ft_printf("---------------------------\n");
-		ft_printf("for command %i :\n", j);
-		ft_printf("command is : \n");
+		//ft_printf("---------------------------\n");
+		//ft_printf("for command %i :\n", j);
+		//ft_printf("command is : \n");
 		while (follow -> cmds[i])
 		{
-			ft_printf("%s\n", follow -> cmds[i]);
+			//ft_printf("%s\n", follow -> cmds[i]);
 			i++;
 		}
-		ft_printf("redir is : \n");
+		//ft_printf("redir is : \n");
 		follow_redir = follow -> redir;
-		if (!follow_redir)
-			ft_printf("this command as no redir\n");
+		//if (!follow_redir) //commentaire wcista
+			//ft_printf("this command as no redir\n"); //commentaire wcista
 		while (follow_redir)
 		{
-			ft_printf("%s, heredoc : %i, in_file : %i, out_file : %i, append : %i, file : %i\n", follow_redir -> txt, follow_redir -> heredoc, follow_redir -> in_file, follow_redir -> out_file, follow_redir -> append, follow_redir -> file);
+			//ft_printf("%s, heredoc : %i, in_file : %i, out_file : %i, append : %i, file : %i\n", follow_redir -> txt, follow_redir -> heredoc, follow_redir -> in_file, follow_redir -> out_file, follow_redir -> append, follow_redir -> file);
 			follow_redir = follow_redir -> next_sibling;
 		}
 		i = 0;

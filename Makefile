@@ -36,7 +36,8 @@ SRC = main.c \
 	exe/ft_strcmp.c \
 	exe/ft_strjoin_free.c \
 	exe/free_exe.c \
-	exe/print_status.c
+	exe/print_status.c \
+	exe/builtin_exe.c
 
 OBJ = $(SRC:%.c=%.o) 
 

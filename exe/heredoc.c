@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 19:16:50 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/09 22:48:52 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/10 14:21:27 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ bool	ft_heredoc(t_final *cmds, t_env *mini_env)
 		return (perror("minishell: fork error"), false);
 	if (pid == 0)
 		define_heredoc(cmds, mini_env);
-	wait(&g_exit_status);
+	waitpid(pid, &g_exit_status, 0);
 	if (WIFEXITED(g_exit_status))
 	{
 		g_exit_status = (WEXITSTATUS(g_exit_status));
