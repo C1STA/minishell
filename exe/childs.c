@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 01:57:37 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/10 22:53:01 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/10 23:40:06 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	child_processs(t_final *cmds, t_pipex *p, int i, t_env *mini_env)
 	if (!builtin_exe(tmp_cmds))
 	{
 		if (execvp(tmp_cmds->cmds[0], tmp_cmds->cmds) == -1)
-			print_perror(tmp_cmds->cmds[0]);
+			print_exec(tmp_cmds->cmds[0]);
 	}
 	//ft_putstr_fd("\n\n\n", 2);
 	//ft_putstr_fd(tmp_cmds->cmds[0], 2);

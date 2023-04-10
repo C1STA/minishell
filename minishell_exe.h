@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 15:56:53 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/10 22:51:01 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/10 23:41:56 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	free_exe(t_final **cmds, t_env **mini_env);
 //print
 void	print_perror(char *s);
 void	print_exit(char *s, bool n);
+void	print_exec(char *s);
 
 //builtin
 bool	builtin_exe(t_final *cmds);
