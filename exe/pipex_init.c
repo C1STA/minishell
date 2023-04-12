@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 18:00:36 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/12 04:07:28 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/12 06:40:31 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ bool	init_pipes(t_pipex *p)
 		if (!p->fd[i])
 			return (free_pipex(p), false);
 		if (pipe(p->fd[i]) == -1)
-			return (pipe_error(p, i));
+			return (pipe_error(p));
 		i++;
 	}
 	//print_pipes(p);

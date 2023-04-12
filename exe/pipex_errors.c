@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 18:09:51 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/09 15:05:52 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/12 06:40:58 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ void	free_pipex(t_pipex *p)
 	free(p);
 }
 
-bool	pipe_error(t_pipex *p, int i)
+bool	pipe_error(t_pipex *p)
 {
-	while (i >= 0)
+	while (p->i >= 0)
 	{
-		close(p->fd[i][0]);
-		close(p->fd[i][1]);
-		i--;
+		close(p->fd[p->i][0]);
+		close(p->fd[p->i][1]);
+		p->i--;
 	}
 	print_perror("pipe");
 	free_pipex(p);
