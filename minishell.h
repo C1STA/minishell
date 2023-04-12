@@ -76,10 +76,10 @@ typedef struct com_node
 /*node de la structure final qui sera donne a l'executeur*/
 typedef struct final
 {
-    char **cmds;
-    t_redir *redir;
-    
-    struct final *next_sibling;
+	char			**cmds;
+	t_redir			*redir;
+	int				exit_tmp;
+	struct final	*next_sibling;
 } t_final;
 
 

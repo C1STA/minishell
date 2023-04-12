@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 17:47:53 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/10 21:55:15 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/12 03:32:52 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern int	g_exit_status;
 
-void	close_unused_pipes(t_pipex *p, int i)
+void	close_unused_pipes(t_pipex *p)
 {
 	int	j;
 
@@ -22,12 +22,12 @@ void	close_unused_pipes(t_pipex *p, int i)
 	//printf("\n_________________________________Commande : %d\n", i);
 	while (j < p->nb_cmds - 1)
 	{
-		if (i != j)
+		if (p->i != j)
 		{
 			//printf("________________(cmd: %d)__________________Unused pipes : p->fd[%d][%d]\n",i, j, 1);
 			close(p->fd[j][1]);
 		}
-		if (i - 1 != j)
+		if (p->i - 1 != j)
 		{
 			//printf("________________(cmd: %d)__________________Unused pipes : p->fd[%d][%d]\n",i,  j, 0);
 			close(p->fd[j][0]);

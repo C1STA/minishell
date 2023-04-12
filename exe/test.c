@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:58:50 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/10 22:19:31 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/12 00:10:11 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	ft_isdigit(int c)
 	return (0);
 }
 
-int	main(int ac, char **av)
+int	main(void)
 {
 /* 	(void)ac;
 	int	fd;
@@ -106,5 +106,13 @@ int	main(int ac, char **av)
 			printf("not a digit\n");
 		i++;
 	} */
+	int	fd[2];
+	pipe(fd);
+	dup2(fd[0], 0);
+	dup2(fd[1], 1);
+	close(fd[0]);
+	close(fd[1]);
+	close(1);
+	close(0);
 	return (0);
 }
