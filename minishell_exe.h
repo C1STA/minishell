@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 15:56:53 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/12 06:40:17 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/12 12:07:06 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ bool	init_forks(t_final *cmds, t_pipex *p, t_env *mini_env);
 
 //pipex_errors.c
 void	free_pipex(t_pipex *p);
-bool	pipe_error(t_pipex *p);
+bool	pipe_error(t_pipex *p, int i);
 bool	fork_error(t_pipex *p);
 
 //heredoc.c
