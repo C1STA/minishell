@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 18:47:11 by imrane            #+#    #+#             */
-/*   Updated: 2023/04/10 13:46:25 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/13 07:19:19 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,14 +208,11 @@ void    print_env(t_env *head)
 // et que pour le exit ca dit oui aussi alors que ya
 int		ft_stcmp(char *str1, char *str2)
 {
-	int i;
+	size_t	i;
+
+	if (ft_strlen(str1) != ft_strlen(str2))
+		return (0);
 	i = 0;
-	if (!str1)
-		return (0);
-	if (!str2)
-		return (0);
-	if (str1[0] == '\0')
-		return (0);
 	while (str1[i] != '\0')
 	{
 		if (str1[i] != str2[i])

@@ -14,6 +14,7 @@
 # include <stdbool.h>
 # include <sys/wait.h>
 # include <sys/types.h>
+# include <limits.h>
 
 
 // structure de l'input de l'user

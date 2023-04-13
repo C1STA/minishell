@@ -30,14 +30,13 @@ SRC = main.c \
 	exe/pipex.c \
 	exe/pipex_init.c \
 	exe/pipex_errors.c \
-	exe/struct.c \
 	exe/exec.c \
 	exe/childs.c \
-	exe/ft_strcmp.c \
-	exe/ft_strjoin_free.c \
 	exe/free_exe.c \
 	exe/print_status.c \
-	exe/builtin_exe.c
+	exe/builtin_exe.c \
+	exe/utils.c \
+	exe/utils_2.c
 
 OBJ = $(SRC:%.c=%.o) 
 

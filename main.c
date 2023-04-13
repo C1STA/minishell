@@ -6,26 +6,13 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 20:57:56 by imrane            #+#    #+#             */
-/*   Updated: 2023/04/10 23:08:50 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/13 07:13:19 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	g_exit_status;
-
-int	lenl(t_final *L)
-{
-	int	len;
-
-	len = 0;
-	while (L)
-	{
-		len++;
-		L = L->next_sibling;
-	}
-	return (len);
-}
 
 int main(int argc, char *argv[], char *env[])
 {
@@ -106,7 +93,6 @@ int main(int argc, char *argv[], char *env[])
 				//printf("c7\n");
 				printf_final_ast(final);
 				//printf("c8\n");
-				//printf("TOTAL DE COMMANDES = __________________%d\n", lenl(final));
 				executor(final, mini_env);
 				printf("exit status = %d\n", g_exit_status);
 				

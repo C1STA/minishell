@@ -6,22 +6,13 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 11:28:49 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/12 03:55:41 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/13 07:16:13 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell_exe.h"
 
 extern int	g_exit_status;
-
-static void	ft_free_str(char **str)
-{
-	if (str != NULL && **str != '\0')
-	{
-		free(*str);
-		*str = NULL;
-	}
-}
 
 void	free_exe(t_final **cmds, t_env **mini_env)
 {
