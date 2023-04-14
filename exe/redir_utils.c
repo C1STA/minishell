@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 23:44:10 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/12 03:53:19 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/13 19:11:38 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ bool	redir_heredoc(t_redir *redir, t_pipex *p, int j)
 	dup2(redir->fd_in, STDIN_FILENO);
 	close(redir->fd_in);
 	free(file_name);
+	p->exit_status = 0;
 	return (true);
 }
 

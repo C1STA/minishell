@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 18:50:34 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/13 09:53:12 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/13 21:24:33 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,12 @@ bool	builtin_exit_status(t_pipex *p)
 	return (true);
 }
 
+bool	builtin_exe_unset(t_pipex *p)
+{
+	p->exit_status = 0;
+	return (true);
+}
+
 bool	builtin_exe(t_final *cmds, t_pipex *p)
 {
 	if (!ft_strcmp(cmds->cmds[0], "exit"))
@@ -104,12 +110,12 @@ bool	builtin_exe(t_final *cmds, t_pipex *p)
 		return (builtin_exe_echo(cmds, p));
 	if (!ft_strcmp(cmds->cmds[0], "$?"))
 		return (builtin_exit_status(p));
+	if (!ft_strcmp(cmds->cmds[0], "unset"))
+		 return (builtin_exe_unset(p));
 	//if ((!ft_strcmp(cmds->cmds[0], "export")) && cmds->cmds[1])
 		// PRINT ENV A -> Z --> check redirections (export sans options)
 	//if((!ft_strcmp(cmds->cmds[0], "export")) && !cmds->cmds[1])
 		// EXIT AVEC LES BONS PIPES (pass) (export avec options)
-	//if (!ft_strcmp(cmds->cmds[0], "unset"))
-		// EXIT AVEC LES BONS PIPES (pass)
 	//if (!ft_strcmp(cmds->cmds[0], "env"))
 		//print env --> check redirections
 	return (false);

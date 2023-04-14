@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 01:57:37 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/12 16:04:29 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/13 18:56:52 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,10 @@ void	child_processs(t_final *cmds, t_pipex *p, t_env *mini_env)
 	if (!init_redir(tmp_redir, p))
 		exit_child(cmds, p, mini_env);
 	if (!builtin_exe(tmp_cmds, p))
-		if (execvp(tmp_cmds->cmds[0], tmp_cmds->cmds) == -1)
-			print_exec(tmp_cmds->cmds[0], p);
+	{
+		if (tmp_cmds->cmds[0])
+			if (execvp(tmp_cmds->cmds[0], tmp_cmds->cmds) == -1)
+				print_exec(tmp_cmds->cmds[0], p);
+	}
 	exit_child(cmds, p, mini_env);
 }

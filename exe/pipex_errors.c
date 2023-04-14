@@ -6,11 +6,13 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 18:09:51 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/12 15:49:54 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/13 20:33:11 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell_exe.h"
+
+extern int	g_exit_status;
 
 void	free_pipex(t_pipex *p)
 {
@@ -58,8 +60,9 @@ bool	pipe_error(t_pipex *p, int i)
 	}
 	free(p->fd);
 	p->fd = NULL;
-	print_perror("pipe");
+	print_perror("start_pipeline: pgrp pipe");
 	free_pipex(p);
+	g_exit_status = 24;
 	return (false);
 }
 
@@ -74,7 +77,8 @@ bool	fork_error(t_pipex *p)
 		close(p->fd[i][1]);
 		i++;
 	}
-	print_perror("fork");
+	print_perror("fork: retry");
 	free_pipex(p);
+	g_exit_status = 11;
 	return (false);
 }

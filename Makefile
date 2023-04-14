@@ -1,5 +1,7 @@
 NAME = minishell
+
 CC = gcc -Wall -Werror -Wextra -g
+
 SRC = main.c \
 	parsing/lexer/manipulate_input.c \
 	parsing/lexer/init_src_token.c \
@@ -39,7 +41,6 @@ SRC = main.c \
 	exe/utils_2.c
 
 OBJ = $(SRC:%.c=%.o) 
-
 
 all: $(NAME)
 
