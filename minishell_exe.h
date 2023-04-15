@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 15:56:53 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/13 09:08:54 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/15 15:30:55 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,15 @@ typedef struct s_heredoc
 	int		reader;
 	int		fd;
 }	t_heredoc;
+
+typedef struct s_cd
+{
+	char	*pwd;
+	char	*path;
+}	t_cd;
+
+//builtin_cd.c
+bool	print_perror_cd(char *s, bool n, t_pipex *p, t_cd *cd);
 
 //pipex.c
 void	pipex(t_final *cmds, t_env *mini_env);
@@ -73,6 +82,7 @@ void	print_exec(char *s, t_pipex *p);
 
 //builtin
 bool	builtin_exe(t_final *cmds, t_pipex *p);
+bool	isbuiltin(t_final *cmds, t_pipex *p);
 
 //utils
 int		lenlist(t_final *L);
@@ -81,5 +91,6 @@ long long	ft_atol_plus(char *str);
 long long	ft_atol_minus(char *str);
 char	*ft_strjoin_free(char *s1, char *s2);
 int		ft_strcmp(const char *s1, const char *s2);
+size_t	ft_tablen(char **t);
 
 #endif

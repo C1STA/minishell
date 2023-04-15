@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 04:47:53 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/13 09:23:54 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/15 12:07:15 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,14 @@ int	lenlist(t_final *L)
 		L = L->next_sibling;
 	}
 	return (len);
+}
+
+size_t	ft_tablen(char **t)
+{
+	size_t	i;
+
+	i = 0;
+	while (t[i])
+		i++;
+	return (i);
 }

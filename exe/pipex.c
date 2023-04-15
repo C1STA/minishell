@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 17:47:53 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/12 16:05:57 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/15 15:30:22 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,20 @@ void	pipex(t_final *cmds, t_env *mini_env)
 	p->child = NULL;
 	if (!init_pipes(p))
 		return ;
+	if (p->nb_cmds == 1 && isbuiltin(cmds, p))
+	{
+		if (!init_redir(cmds->redir, p))
+		{
+			g_exit_status = p->exit_status;
+			close_pipes_main(p);
+			free_pipex(p);
+			return ;
+		}
+		builtin_exe(cmds, p);
+		close_pipes_main(p);
+		free_pipex(p);
+		return ;
+	}
 	if (!init_forks(cmds, p, mini_env))
 		return ;
 	close_pipes_main(p);

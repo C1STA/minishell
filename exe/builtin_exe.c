@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 18:50:34 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/13 21:24:33 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/15 15:28:18 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,29 @@ bool	builtin_exe_unset(t_pipex *p)
 	return (true);
 }
 
+/* bool	builtin_exe_cd(t_final *cmds, t_pipex *p)
+{
+	
+} */
+
+bool	builtin_exe_pwd(t_pipex *p)
+{
+	char	*pwd;
+
+	pwd = NULL;
+	pwd = getcwd(NULL, 0);
+	if (!pwd)
+	{
+		p->exit_status = 1;
+		print_perror("");
+		return (true);
+	}
+	printf("%s\n", pwd);
+	free(pwd);
+	p->exit_status = 0;
+	return (true);
+}
+
 bool	builtin_exe(t_final *cmds, t_pipex *p)
 {
 	if (!ft_strcmp(cmds->cmds[0], "exit"))
@@ -112,6 +135,32 @@ bool	builtin_exe(t_final *cmds, t_pipex *p)
 		return (builtin_exit_status(p));
 	if (!ft_strcmp(cmds->cmds[0], "unset"))
 		 return (builtin_exe_unset(p));
+	if (!ft_strcmp(cmds->cmds[0], "cd"))
+		return (builtin_exe_cd(cmds, p));
+	if (!ft_strcmp(cmds->cmds[0], "pwd"))
+		return (builtin_exe_pwd(p));
+	//if ((!ft_strcmp(cmds->cmds[0], "export")) && cmds->cmds[1])
+		// PRINT ENV A -> Z --> check redirections (export sans options)
+	//if((!ft_strcmp(cmds->cmds[0], "export")) && !cmds->cmds[1])
+		// EXIT AVEC LES BONS PIPES (pass) (export avec options)
+	//if (!ft_strcmp(cmds->cmds[0], "env"))
+		//print env --> check redirections
+	return (false);
+}
+bool	isbuiltin(t_final *cmds, t_pipex *p)
+{
+	if (!ft_strcmp(cmds->cmds[0], "exit"))
+		return (true);
+	if (!ft_strcmp(cmds->cmds[0], "echo"))
+		return (true);
+	if (!ft_strcmp(cmds->cmds[0], "$?"))
+		return (true);
+	if (!ft_strcmp(cmds->cmds[0], "unset"))
+		 return (true);
+	if (!ft_strcmp(cmds->cmds[0], "cd"))
+		return (true);
+	if (!ft_strcmp(cmds->cmds[0], "pwd"))
+		return (true);
 	//if ((!ft_strcmp(cmds->cmds[0], "export")) && cmds->cmds[1])
 		// PRINT ENV A -> Z --> check redirections (export sans options)
 	//if((!ft_strcmp(cmds->cmds[0], "export")) && !cmds->cmds[1])
