@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 19:16:50 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/15 23:08:20 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/16 18:29:06 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*heredoc_file_name(int i, int j)
 	return (file_name);
 }
 
-static bool	init_heredoc(t_redir *redir, int i, int j)
+static bool	init_heredoc(char *env[], t_redir *redir, int i, int j)
 {
 	t_heredoc	*h;
 
@@ -63,6 +63,7 @@ static bool	init_heredoc(t_redir *redir, int i, int j)
 		h->input = readline("> ");
 		if (!ft_strcmp(h->input, redir->txt))
 			break ;
+		expand_heredoc(h, env);
 		h->reader = write(h->fd, h->input, ft_strlen(h->input));
 		if (h->reader == -1)
 			return (free_heredoc(h, false));
@@ -91,7 +92,7 @@ static void	define_heredoc(t_final *cmds, char *env[])
 		{
 			if (tmp_redir->heredoc == 1)
 			{
-				if (!init_heredoc(tmp_redir, i, j))
+				if (!init_heredoc(env, tmp_redir, i, j))
 					return (free_exe(&cmds, &env), exit(EXIT_FAILURE));
 			}
 			tmp_redir = tmp_redir->next;

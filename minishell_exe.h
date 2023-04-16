@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 15:56:53 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/16 12:51:00 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/16 18:43:23 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,12 @@ bool	fork_error(t_pipex *p);
 bool	ft_heredoc(t_final *cmds, char *env[]);
 void	remove_heredoc(t_final *cmds);
 char	*heredoc_file_name(int i, int j);
-
+void	expand_heredoc(t_heredoc *h, char **env);
+char 	*find_value(char *str, char **env);
+char 	*return_value_heredoc(char* str);
+char 	*transform_value(char *str, char *value);
+char 	*return_before_heredoc(char *str);
+char 	*return_after_heredoc(char *str);
 //childs.c
 void	child_processs(t_final *cmds, char *env[], t_pipex *p);
 
