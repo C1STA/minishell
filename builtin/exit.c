@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 18:33:31 by imrane            #+#    #+#             */
-/*   Updated: 2023/04/16 08:58:50 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/16 17:47:58 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,10 @@ int	ft_stcmp_exit(char *str1, char *str2)
 		i++;
 	}
 	return (1);
+}
+void	ft_exit_d(t_env **env)
+{
+	free_env(env);
+	ft_putstr_fd("exit\n", 1);
+	exit (g_exit_status);
 }

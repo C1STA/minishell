@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 20:57:56 by imrane            #+#    #+#             */
-/*   Updated: 2023/04/16 17:34:45 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/16 17:49:33 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int main(int argc, char *argv[], char *env[])
     {
         input = readline("minishell> ");
 		if (!input)
-			return (printf("exit\n"), 0);
+			ft_exit_d(&mini_env);
 		add_history(input);
 		if (does_quotes_closed(input) == 1 && single_enter(input) == 0 && check_space_append_heredoc(input) == 1)
 		{
@@ -95,12 +95,6 @@ int main(int argc, char *argv[], char *env[])
 }
 
 
-
-
-
-
-//$?
-// faire builtin
 // faire ctrl c fait rien
 // faire ctr D -> quitte le shell
 // faire ctrl \ -> ne fait rien

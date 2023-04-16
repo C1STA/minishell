@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 21:52:52 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/15 22:37:58 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/16 17:48:56 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,6 +229,7 @@ void		ft_sigint(int sigint, siginfo_t *pid, void *idontknow);
 /*builtin exit*/
 void		ft_exit(t_env **mini_env, t_node **root, \
 		t_source **src, t_info_tok **info);
+void		ft_exit_d(t_env **env);
 
 /*free*/
 void		free_info_buf(t_info_tok *info);
