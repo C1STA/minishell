@@ -61,8 +61,9 @@ SRC = main.c \
 	exe/print_status.c \
 	exe/builtin_exe.c \
 	exe/builtin_exe_cd.c \
+	exe/builtin_exe_export.c \
 	exe/utils.c \
-	exe/utils_2.c
+	exe/utils_2.c 
 
 OBJ = $(SRC:%.c=%.o) 
 

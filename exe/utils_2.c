@@ -6,11 +6,20 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 09:23:24 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/16 09:19:45 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/16 12:50:24 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell_exe.h"
+
+void	ft_swap(char **a, char **b)
+{
+	char	*tmp;
+
+	tmp = *a;
+	*a = *b;
+	*b = tmp;
+}
 
 size_t	ft_tablen(char **t)
 {
@@ -20,6 +29,16 @@ size_t	ft_tablen(char **t)
 	while (t[i])
 		i++;
 	return (i);
+}
+
+int	ft_strcmp_e(char *s1, char *s2)
+{
+	while (*s1 && (*s1 == *s2))
+	{
+		s1++;
+		s2++;
+	}
+	return (*s1 - *s2);
 }
 
 long long	ft_atol_plus(char *str)

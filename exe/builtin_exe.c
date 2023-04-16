@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 18:50:34 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/16 09:18:11 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/16 13:11:34 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ bool	builtin_exit_status(t_pipex *p)
 	return (true);
 }
 
-bool	builtin_exe_unset(t_pipex *p)
+bool	builtin_exe_export_unset(t_pipex *p)
 {
 	p->exit_status = 0;
 	return (true);
@@ -125,6 +125,22 @@ pwd: cannot access parent directories");
 	return (true);
 }
 
+bool	builtin_exe_env(char *env[], t_pipex *p)
+{
+	int	i;
+
+	i = 0;
+	if (!env)
+		return (true);
+	while (env[i])
+	{
+		printf("%s\n", env[i]);
+		i++;
+	}
+	p->exit_status = 0;
+	return (true);
+}
+
 bool	builtin_exe(t_final *cmds, char *env[], t_pipex *p)
 {
 	if (!ft_strcmp(cmds->cmds[0], "exit"))
@@ -134,17 +150,17 @@ bool	builtin_exe(t_final *cmds, char *env[], t_pipex *p)
 	if (!ft_strcmp(cmds->cmds[0], "$?"))
 		return (builtin_exit_status(p));
 	if (!ft_strcmp(cmds->cmds[0], "unset"))
-		return (builtin_exe_unset(p));
+		return (builtin_exe_export_unset(p));
 	if (!ft_strcmp(cmds->cmds[0], "cd"))
 		return (builtin_exe_cd(cmds, env, p));
 	if (!ft_strcmp(cmds->cmds[0], "pwd"))
 		return (builtin_exe_pwd(p));
-	//if ((!ft_strcmp(cmds->cmds[0], "export")) && cmds->cmds[1])
-		// PRINT ENV A -> Z --> check redirections (export sans options)
-	//if((!ft_strcmp(cmds->cmds[0], "export")) && !cmds->cmds[1])
-		// EXIT AVEC LES BONS PIPES (pass) (export avec options)
-	//if (!ft_strcmp(cmds->cmds[0], "env"))
-		//print env --> check redirections
+	if ((!ft_strcmp(cmds->cmds[0], "export")) && !cmds->cmds[1])
+		return (builtin_exe_export(env, p));
+	if ((!ft_strcmp(cmds->cmds[0], "export")) && cmds->cmds[1])
+		return (builtin_exe_export_unset(p));
+	if ((!ft_strcmp(cmds->cmds[0], "env")) && !cmds->cmds[1])
+		return (builtin_exe_env(env, p));
 	return (false);
 }
 
@@ -162,11 +178,9 @@ bool	isbuiltin(t_final *cmds)
 		return (true);
 	if (!ft_strcmp(cmds->cmds[0], "pwd"))
 		return (true);
-	//if ((!ft_strcmp(cmds->cmds[0], "export")) && cmds->cmds[1])
-		// PRINT ENV A -> Z --> check redirections (export sans options)
-	//if((!ft_strcmp(cmds->cmds[0], "export")) && !cmds->cmds[1])
-		// EXIT AVEC LES BONS PIPES (pass) (export avec options)
-	//if (!ft_strcmp(cmds->cmds[0], "env"))
-		//print env --> check redirections
+	if ((!ft_strcmp(cmds->cmds[0], "export")) && !cmds->cmds[1])
+		return (true);
+	if ((!ft_strcmp(cmds->cmds[0], "env")) && !cmds->cmds[1])
+		return (true);
 	return (false);
 }

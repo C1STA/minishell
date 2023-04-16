@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 15:56:53 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/16 09:06:41 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/16 12:51:00 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,14 @@ typedef struct s_cd
 	char	*path;
 	char	*tmp;
 }	t_cd;
+
+typedef struct s_export
+{
+	int		i;
+	int		j;
+	int		min_idx;
+	int		len;
+}	t_export;
 
 //builtin_cd.c
 bool	print_perror_cd(char *s, bool n, t_pipex *p, t_cd *cd);
@@ -85,13 +93,16 @@ void	print_exec(char *s, t_pipex *p);
 bool	isbuiltin(t_final *cmds);
 bool	builtin_exe(t_final *cmds, char *env[], t_pipex *p);
 bool	builtin_exe_cd(t_final *cmds, char *env[], t_pipex *p);
+bool	builtin_exe_export(char *env[], t_pipex *p);
 
 //utils
 int		lenlist(t_final *L);
+void	ft_swap(char **a, char **b);
 void	ft_free_str(char **str);
 char	*ft_strjoin_env(char *s1, char *s2);
 char	*ft_strjoin_free(char *s1, char *s2);
 int		ft_strcmp(const char *s1, const char *s2);
 size_t	ft_tablen(char **t);
+int	ft_strcmp_e(char *s1, char *s2);
 
 #endif
