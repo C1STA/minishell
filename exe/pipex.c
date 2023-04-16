@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 17:47:53 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/15 15:30:22 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/16 09:20:46 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,23 @@ static void	wait_childs(t_pipex *p)
 	}
 }
 
-void	pipex(t_final *cmds, t_env *mini_env)
+void	lonely_builtin(t_final *cmds, char *env[], t_pipex *p)
+{
+	if (!init_redir(cmds->redir, p))
+	{
+		g_exit_status = p->exit_status;
+		close_pipes_main(p);
+		free_pipex(p);
+		return ;
+	}
+	builtin_exe(cmds, env, p);
+	g_exit_status = p->exit_status;
+	close_pipes_main(p);
+	free_pipex(p);
+	return ;
+}
+
+void	pipex(t_final *cmds, char *env[])
 {
 	t_pipex	*p;
 
@@ -65,23 +81,12 @@ void	pipex(t_final *cmds, t_env *mini_env)
 		return (print_perror("malloc"));
 	p->nb_cmds = lenlist(cmds);
 	p->child = NULL;
+	p->i = 0;
 	if (!init_pipes(p))
 		return ;
-	if (p->nb_cmds == 1 && isbuiltin(cmds, p))
-	{
-		if (!init_redir(cmds->redir, p))
-		{
-			g_exit_status = p->exit_status;
-			close_pipes_main(p);
-			free_pipex(p);
-			return ;
-		}
-		builtin_exe(cmds, p);
-		close_pipes_main(p);
-		free_pipex(p);
-		return ;
-	}
-	if (!init_forks(cmds, p, mini_env))
+	if (p->nb_cmds == 1 && isbuiltin(cmds))
+		return (lonely_builtin(cmds, env, p));
+	if (!init_forks(cmds, env, p))
 		return ;
 	close_pipes_main(p);
 	wait_childs(p);

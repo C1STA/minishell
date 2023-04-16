@@ -3,40 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   final_ast.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
+/*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 21:53:16 by imoumini          #+#    #+#             */
-/*   Updated: 2023/04/10 13:48:46 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/15 15:37:59 by imoumini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-t_final *create_final_ast(t_com **ast)
+t_final	*create_final_ast(t_com **ast)
 {
-	t_final *final;
-	int i;
+	t_final	*final;
+	int		i;
 
-	//printf("c4.1\n");
 	final = NULL;
 	i = 0;
-	//printf("c4.2\n");
 	while (ast[i])
 	{
-		//printf("c4.3\n");
 		final = create_list_final_ast(final, ast[i]);
-		//printf("c4.4\n");
 		i++;
 	}
-	//printf("c4.5\n");
 	return (final);
 }
 
-t_final *create_list_final_ast(t_final *final, t_com *ast)
+t_final	*create_list_final_ast(t_final *final, t_com *ast)
 {
-	t_final *ptr;
-	t_final *follow;
-	
+	t_final	*ptr;
+	t_final	*follow;
+
 	ptr = malloc(sizeof(t_final));
 	if (!ast)
 		return (NULL);
@@ -44,27 +39,27 @@ t_final *create_list_final_ast(t_final *final, t_com *ast)
 	{
 		ptr -> cmds = break_linked_list_in_double_tab(ast);
 		ptr -> redir = ast -> redir;
-		ptr -> next_sibling = NULL;
+		ptr -> next = NULL;
 		final = ptr;
 	}
 	else
 	{
 		follow = final;
-		while (follow -> next_sibling != NULL)
-			follow = follow -> next_sibling;
-		follow -> next_sibling = ptr;
+		while (follow -> next != NULL)
+			follow = follow -> next;
+		follow -> next = ptr;
 		ptr -> cmds = break_linked_list_in_double_tab(ast);
 		ptr -> redir = ast -> redir;
-		ptr -> next_sibling = NULL;
+		ptr -> next = NULL;
 	}
 	return (final);
 }
 
-char **break_linked_list_in_double_tab(t_com *com)
+char	**break_linked_list_in_double_tab(t_com *com)
 {
-	char **tab;
-	t_com *follow;
-	int i;
+	char	**tab;
+	t_com	*follow;
+	int		i;
 
 	i = 0;
 	if (!com)
@@ -77,35 +72,32 @@ char **break_linked_list_in_double_tab(t_com *com)
 		{
 			tab[i] = malloc(sizeof(char) * (ft_strlen(follow -> txt) + 1));
 			ft_strlcpy(tab[i], follow -> txt, (ft_strlen(follow -> txt) + 1));
-			follow = follow -> next_sibling;
-			i++;
-			tab[i] = NULL;
+			follow = follow -> next;
+			tab[++i] = NULL;
 		}
 		else
 		{
 			tab[i] = NULL;
-			follow = follow -> next_sibling;
+			follow = follow -> next;
 		}
 	}
 	return (tab);
 }
 
-int ft_com_len(t_com *com)
+int	ft_com_len(t_com *com)
 {
-	t_com *follow;
-	int i;
+	t_com	*follow;
+	int		i;
 
 	i = 0;
 	follow = com;
 	while (follow)
 	{
 		i++;
-		follow = follow -> next_sibling;
+		follow = follow -> next;
 	}
 	return (i);
 }
-
-// creer fonction qui qffiche ma final structure pour voir si ca a fonctionner
 
 void printf_final_ast(t_final *final)
 {
@@ -121,28 +113,25 @@ void printf_final_ast(t_final *final)
 	follow = final;
 	while (follow)
 	{
-		//ft_printf("---------------------------\n");
-		//ft_printf("for command %i :\n", j);
-		//ft_printf("command is : \n");
+		ft_printf("---------------------------\n");
+		ft_printf("for command %i :\n", j);
+		ft_printf("command is : \n");
 		while (follow -> cmds[i])
 		{
-			//ft_printf("%s\n", follow -> cmds[i]);
+			ft_printf("%s\n", follow -> cmds[i]);
 			i++;
 		}
-		//ft_printf("redir is : \n");
+		ft_printf("redir is : \n");
 		follow_redir = follow -> redir;
-		//if (!follow_redir) //commentaire wcista
-			//ft_printf("this command as no redir\n"); //commentaire wcista
+		if (!follow_redir)
+			ft_printf("this command as no redir\n");
 		while (follow_redir)
 		{
-			//ft_printf("%s, heredoc : %i, in_file : %i, out_file : %i, append : %i, file : %i\n", follow_redir -> txt, follow_redir -> heredoc, follow_redir -> in_file, follow_redir -> out_file, follow_redir -> append, follow_redir -> file);
-			follow_redir = follow_redir -> next_sibling;
+			ft_printf("%s, heredoc : %i, in_file : %i, out_file : %i, append : %i, file : %i\n", follow_redir -> txt, follow_redir -> heredoc, follow_redir -> in_file, follow_redir -> out_file, follow_redir -> append, follow_redir -> file);
+			follow_redir = follow_redir -> next;
 		}
 		i = 0;
 		j++;
-		follow = follow -> next_sibling;
+		follow = follow -> next;
 	}
 }
-
-// faire valgrind
-// faire logique quand ya les guillemets

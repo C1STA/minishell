@@ -3,122 +3,83 @@
 /*                                                        :::      ::::::::   */
 /*   in_out.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imrane <imrane@student.42.fr>              +#+  +:+       +#+        */
+/*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 19:17:23 by imrane            #+#    #+#             */
-/*   Updated: 2023/03/10 20:14:12 by imrane           ###   ########.fr       */
+/*   Updated: 2023/04/15 15:37:59 by imoumini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int in_file_second_check(t_node *ptr)
+int	in_file_second_check(t_node *ptr)
 {
 	if (!ptr)
 		return (1);
-	if ((ptr -> next_sibling) == NULL) // si ya un seul < et ya rien après le <
-	{
-		ft_printf("syntax error near unexpected token `newline'\n");
+	if (in_file_second_check_alone(ptr) == 0)
 		return (0);
-	}
-	if (ptr) // si ya un seul < ou un seul >
+	if (ptr)
 	{
-		if (ft_stcmp(ptr -> txt, "<") == 1)
-		{
-			if (ptr -> next_sibling) // si ya un truc après le <
-			{
-				if (ft_stcmp(ptr -> next_sibling -> txt, ">") == 1)
-					{
-						ft_printf("syntax error near unexpected token '%s'\n", ptr -> next_sibling -> txt);
-						return (0);
-					}
-			}
-		}
-		if (ft_stcmp(ptr -> txt, ">") == 1)
-		{
-			if (ptr -> next_sibling) // si ya un truc après le <
-			{
-				if (ft_stcmp(ptr -> next_sibling -> txt, "<") == 1)
-					{
-						ft_printf("syntax error near unexpected token '%s'\n", ptr -> next_sibling -> txt);
-						return (0);
-					}
-			}
-		}
+		if (in_file_second_check_something_after(ptr) == 0)
+			return (0);
 	}
 	return (1);
 }
-int ft_in_file_first_check(t_node *ptr)
+
+int	ft_in_file_first_check(t_node *ptr)
 {
 	if (!ptr)
 		return (1);
-	if (ptr -> next_sibling)
+	if (ptr -> next)
 	{
-		if (ft_stcmp(ptr -> txt, "<") == 1 && ft_stcmp(ptr -> next_sibling -> txt, ">") == 1)
-		{
-			ft_printf("syntax error near unexpected token '>'\n");
+		if (ft_in_file_first_check_wrong_arrow(ptr) == 0)
 			return (0);
-		}
-		if (ft_stcmp(ptr -> txt, ">") == 1 && ft_stcmp(ptr -> next_sibling -> txt, "<") == 1)
+		if (ft_stcmp(ptr-> next-> txt, "<") == 1 \
+			|| ft_stcmp(ptr->next->txt, ">") == 1)
 		{
-			ft_printf("syntax error near unexpected token '<'\n");
-			return (0);
-		}
-		// si ya  << ou >>
-		// si ya >>
-		// si ya <<
-		if (ft_stcmp(ptr -> next_sibling -> txt, "<") == 1 || ft_stcmp(ptr -> next_sibling -> txt, ">") == 1)
-		{
-			if (ptr -> next_sibling -> next_sibling == NULL)
+			if (ptr -> next -> next == NULL)
 			{
 				ft_printf("syntax error near unexpected token `newline'\n");
 				return (0);
 			}
-			if (ptr -> next_sibling -> next_sibling)
-			{
-				if (ft_stcmp(ptr -> next_sibling -> next_sibling -> txt, "<") == 1 || ft_stcmp(ptr -> next_sibling -> next_sibling -> txt, ">") == 1)
-				{
-					ft_printf("syntax error near unexpected token '%s'\n", ptr -> next_sibling -> next_sibling -> txt);
-					return (0);
-				}
-			}
+			if (in_file_next(ptr) == 0)
+				return (0);
 		}
 	}
 	return (1);
 }
-int ft_in_file(t_node *head)
+
+int	ft_in_file(t_node *head)
 {
-    t_node *ptr;
-    
+	t_node	*ptr;
+
 	ptr = head;
-    if (!ptr)
-		return(2);
+	if (!ptr)
+		return (2);
 	if (ptr -> first_child)
 		ptr = ptr -> first_child;
 	while (ptr != NULL)
 	{
-		if (ft_stcmp(ptr -> txt, "<") == 1 || ft_stcmp(ptr -> txt, ">") == 1 )
+		if (ft_stcmp(ptr -> txt, "<") == 1 || ft_stcmp(ptr -> txt, ">") == 1)
 		{
 			if (ft_in_file_first_check(ptr) == 0)
 				return (0);
 			if (in_file_second_check(ptr) == 0)
 				return (0);
-			// avancer juste qua être un truc différent de < ou >
-			while (ptr && (ft_stcmp(ptr -> txt, "<") == 1 || ft_stcmp(ptr -> txt, ">") == 1))
-				ptr = ptr -> next_sibling;
+			while (ptr && (ft_stcmp(ptr->txt, "<") == 1 \
+				|| ft_stcmp(ptr->txt, ">") == 1))
+				ptr = ptr -> next;
 		}
-		if (ptr && ft_stcmp(ptr -> txt, "<") != 1 && ft_stcmp(ptr -> txt, ">") != 1)
-			ptr = ptr -> next_sibling;	
+		if (ptr && ft_stcmp(ptr->txt, "<") != 1 && ft_stcmp(ptr->txt, ">") != 1)
+			ptr = ptr -> next;
 	}
-	
 	return (1);
-    
 }
 
-int is_here_doc(t_node *root)
+int	is_here_doc(t_node *root)
 {
-	t_node *ptr;
-	
+	t_node	*ptr;
+
 	if (!root)
 		return (2);
 	ptr = root -> first_child;
@@ -126,13 +87,13 @@ int is_here_doc(t_node *root)
 	{	
 		if (ft_stcmp(ptr -> txt, "<"))
 		{
-			if (ptr -> next_sibling)
+			if (ptr -> next)
 			{
-				if (ft_stcmp(ptr -> next_sibling -> txt, "<"))
+				if (ft_stcmp(ptr -> next -> txt, "<"))
 					return (1);
 			}
 		}
-		ptr = ptr ->next_sibling;
+		ptr = ptr ->next;
 	}
 	return (0);
 }

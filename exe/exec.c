@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 02:19:53 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/12 15:56:27 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/16 07:58:07 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 extern int	g_exit_status;
 
-void	executor(t_final *cmds, t_env *mini_env)
+void	executor(t_final *cmds, char *env[])
 {
 	cmds->exit_tmp = g_exit_status;
-	if (!ft_heredoc(cmds, mini_env))
+	if (!ft_heredoc(cmds, env))
 		return ;
-	pipex(cmds, mini_env);
+	pipex(cmds, env);
 	remove_heredoc(cmds);
 }

@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 19:16:50 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/10 14:21:27 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/15 23:08:20 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static bool	init_heredoc(t_redir *redir, int i, int j)
 	h->fd = open(h->file_name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (h->fd == -1)
 		return (free_heredoc(h, false));
-	redir = redir->next_sibling;
+	redir = redir->next;
 	while (1)
 	{
 		h->input = readline("> ");
@@ -74,7 +74,7 @@ static bool	init_heredoc(t_redir *redir, int i, int j)
 	return (free_heredoc(h, true));
 }
 
-static void	define_heredoc(t_final *cmds, t_env *mini_env)
+static void	define_heredoc(t_final *cmds, char *env[])
 {
 	int		i;
 	int		j;
@@ -92,26 +92,26 @@ static void	define_heredoc(t_final *cmds, t_env *mini_env)
 			if (tmp_redir->heredoc == 1)
 			{
 				if (!init_heredoc(tmp_redir, i, j))
-					return (free_exe(&cmds, &mini_env), exit(EXIT_FAILURE));
+					return (free_exe(&cmds, &env), exit(EXIT_FAILURE));
 			}
-			tmp_redir = tmp_redir->next_sibling;
+			tmp_redir = tmp_redir->next;
 			j++;
 		}
 		i++;
-		tmp_cmds = tmp_cmds->next_sibling;
+		tmp_cmds = tmp_cmds->next;
 	}
-	return (free_exe(&cmds, &mini_env), exit(EXIT_SUCCESS));
+	return (free_exe(&cmds, &env), exit(EXIT_SUCCESS));
 }
 
-bool	ft_heredoc(t_final *cmds, t_env *mini_env)
+bool	ft_heredoc(t_final *cmds, char *env[])
 {
 	pid_t	pid;
 
 	pid = fork();
 	if (pid == -1)
-		return (perror("minishell: fork error"), false);
+		return (print_perror("fork"), false);
 	if (pid == 0)
-		define_heredoc(cmds, mini_env);
+		define_heredoc(cmds, env);
 	waitpid(pid, &g_exit_status, 0);
 	if (WIFEXITED(g_exit_status))
 	{

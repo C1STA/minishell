@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 20:57:56 by imrane            #+#    #+#             */
-/*   Updated: 2023/04/13 07:13:19 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/16 07:54:32 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int main(int argc, char *argv[], char *env[])
     t_node *root;
 	t_com **ast;
 	t_final *final;
+	char **final_env;
 	(void)argc;
     (void)argv;
 	
@@ -36,21 +37,28 @@ int main(int argc, char *argv[], char *env[])
 	action_exit.sa_mask = sigmask;
 	action_exit.sa_sigaction = ft_sigint;
 	sigaction(SIGINT, &action_exit, NULL);
+	
+	// signal control D
+	signal(SIGQUIT, SIG_IGN);
 	// programme hors signaux
 	mini_env = copy_env(env);
+	final = NULL;
     src = NULL;
 	info = NULL;
 	root = NULL;
 	ast = NULL;
+	final_env = NULL;
 		
 	while (1)
     {
         input = readline("minishell> ");
 		if (!input)
 			return (printf("exit\n"), 0); // free (c ici que je gere control D )
+		add_history(input);
 		// fonction ici qui tema si espace entre les >
-		if (single_enter(input) == 0 && check_space_append_heredoc(input) == 1)
+		if (does_quotes_closed(input) == 1 && single_enter(input) == 0 && check_space_append_heredoc(input) == 1)
 		{
+			//exit(1);
 			root = parse_simple_command(input, &src, &info);
 			//print_ast(root);
 			ft_exit(&mini_env, &root, &src, &info);
@@ -62,62 +70,108 @@ int main(int argc, char *argv[], char *env[])
 			{
 				//printf("c1\n");
 				//afficher env apres que j'ai ajouté var env
-        		//printf("----------------------\n");
-				print_env(mini_env);
+				//printf("----------------------\n");
+				//print_env(mini_env);
 				//printf("----------------------\n");
 				// afficher ast avant expand
-				print_ast(root);
+				//print_ast(root);
 				//printf("----------------------\n");
 				//printf("-----------------------\n");
 				//printf("ast after expand is : \n");
-				print_ast(root);
+				//print_ast(root);
 				//printf("----------------------\n");
 				//printf("c2\n");
+				supp_quotes(root);
+				//printf("ast after supp auotes is is : \n");
+				//print_ast(root);
+				//printf("----------------------\n");
 				ast = create_ast_command_redir(root);
-				//printf("c2 bis\n");
-				//printf("ast after decoupe is :\n");
-				print_final_ast(ast);
 				//printf("c3\n");
-				//printf("final ast is :\n");
+				//printf("ast after decoupe is :\n");
+				//print_final_ast(ast);
 				//printf("c4\n");
-				final = create_final_ast(ast);
-				// ok jai pas mis le NULL dans le double tableau ici
-				//printf("c4 bis\n");
-				//printf("final ast before final expand is :\n");
-				// ok je crois que je mets jamais NULL dans le cas de USER sans env
-				printf_final_ast(final);
+				//printf("final ast is :\n");
 				//printf("c5\n");
-				ft_free_before_final_ast(&ast);
-				//printf("c6\n");
-				final_expand(final);
+				final = create_final_ast(ast);
+				//printf("c6 bis\n");
+				//printf("final ast before final expand is :\n");
+				//printf_final_ast(final);
 				//printf("c7\n");
-				printf_final_ast(final);
+				ft_free_before_final_ast(&ast);
 				//printf("c8\n");
-				executor(final, mini_env);
-				printf("exit status = %d\n", g_exit_status);
+				final_expand(final);
+				//printf("c9\n");
+				//printf_final_ast(final);
+				//printf("c10\n");
+				// create new env double tableau
+				final_env = transform_env_in_double_tab(mini_env);
+				//printf("--------------------------------\n");
+				//printf("final env is \n");
+				//print_double_tab_env(final_env);
+				//printf("---------------------------------\n");
+				//printf("c11\n");
+				executor(final, final_env);
+				free_env(&mini_env);
+				mini_env = copy_env(final_env);
+				printf("exit_status = %d\n", g_exit_status);
+				//print_double_tab_env(final_env);
 				
 			}
 			ft_free(NULL, &root, &src,&info);
-			//printf("c9\n");
+			//printf("c12\n");
 			ft_free_final_ast(&final);
-			//printf("c10\n");
+			//printf("c13\n");
+			free_final_env(&final_env);
+			//printf("c14\n");
 		}
 			else (free(input));
-    }
+	}
 }
 
-// regler les invalid write, conditionnal jump et invalid free
 
-   // faire ctrl c fait rien
+
+
+
+// merge
+//$?
+// faire builtin
+// faire ctrl c fait rien
 // faire ctr D -> quitte le shell
 // faire ctrl \ -> ne fait rien
+// regler les invalid write, conditionnal jump
+//faire norminette
 
-// valgrind
-// norminette
-// guillemet
-// heredoc pas expand
-// faire historique
+//signaux 
+	// qund jsuis dans la boucle while
+	// qund jsuis dans un fork (genre dans mon cat)
+	// qund jsuis dans le heredoc
+// etre a laffut de tous les exit status
 
+/*
+imoumini@e1r10p21:~/42_cursus/minishell$ echo "$USER"
+imoumini
+imoumini@e1r10p21:~/42_cursus/minishell$ echo '$USER'
+$USER
+imoumini@e1r10p21:~/42_cursus/minishell$ echo '"$USER"'
+"$USER"
+imoumini@e1r10p21:~/42_cursus/minishell$ echo "'"$USER"'"
+'imoumini'
+imoumini@e1r10p21:~/42_cursus/minishell$ echo "''$USER''"
+''imoumini''
+imoumini@e1r10p21:~/42_cursus/minishell$ echo "ok"$USER"dac"
+okimouminidac
+imoumini@e1r10p21:~/42_cursus/minishell$ echo "ok"'$USER'"dac"
+ok$USERdac
+imoumini@e1r10p21:~/42_cursus/minishell$ echo "ok"''$USER"''dac"
+okimoumini''dac
+imoumini@e1r10p21:~/42_cursus/minishell$ ""'$USER'""
+$USER: command not found
+imoumini@e1r10p21:~/42_cursus/minishell$ echo ""'$USER'""
+$USER
+imoumini@e1r10p21:~/42_cursus/minishell$ echo ""'$USER'""
 
+la regle de supression c'est : je supprime la guillemet qui ouvre et qui ferme
+si je vois des guillemets opposer a linterieur je les laisses
+*/
 
-
+// 

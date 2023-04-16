@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 04:47:53 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/15 12:07:15 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/16 09:19:33 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*ft_strjoin_free(char *s1, char *s2)
 	i = ft_strlen(s1);
 	j = ft_strlen(s2);
 	len = (i + j + 1);
-	dest = malloc((len) * sizeof(char));
+	dest = (char *)malloc((len) * sizeof(char));
 	if (!dest)
 		return (NULL);
 	i = -1;
@@ -64,6 +64,32 @@ char	*ft_strjoin_free(char *s1, char *s2)
 	return (dest);
 }
 
+char	*ft_strjoin_env(char *s1, char *s2)
+{
+	char	*dest;
+	size_t	len;
+	int		i;
+	int		j;
+
+	if ((!s1) && (!s2))
+		return (NULL);
+	i = ft_strlen(s1);
+	j = ft_strlen(s2);
+	len = (i + j + 1);
+	dest = (char *)malloc((len) * sizeof(char));
+	if (!dest)
+		return (NULL);
+	i = -1;
+	j = 0;
+	while (s1[++i])
+		dest[j++] = s1[i];
+	i = -1;
+	while (s2[++i])
+		dest[j++] = s2[i];
+	dest[j] = '\0';
+	return (dest);
+}
+
 int	lenlist(t_final *L)
 {
 	int	len;
@@ -72,17 +98,7 @@ int	lenlist(t_final *L)
 	while (L)
 	{
 		len++;
-		L = L->next_sibling;
+		L = L->next;
 	}
 	return (len);
-}
-
-size_t	ft_tablen(char **t)
-{
-	size_t	i;
-
-	i = 0;
-	while (t[i])
-		i++;
-	return (i);
 }

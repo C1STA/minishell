@@ -6,13 +6,13 @@
 /*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 15:57:53 by imoumini          #+#    #+#             */
-/*   Updated: 2023/03/23 16:29:05 by imoumini         ###   ########.fr       */
+/*   Updated: 2023/04/14 19:00:14 by imoumini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int single_enter(char *input)
+int	single_enter(char *input)
 {
 	if (!input)
 		return (1);

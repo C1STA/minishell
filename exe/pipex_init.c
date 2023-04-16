@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 18:00:36 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/12 15:50:41 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/15 23:22:59 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern int	g_exit_status;
 
-bool	init_forks(t_final *cmds, t_pipex *p, t_env *mini_env)
+bool	init_forks(t_final *cmds, char *env[], t_pipex *p)
 {
 	p->i = 0;
 	p->child = (pid_t *)malloc(sizeof(pid_t) * p->nb_cmds);
@@ -26,7 +26,7 @@ bool	init_forks(t_final *cmds, t_pipex *p, t_env *mini_env)
 		if (p->child[p->i] == -1)
 			return (fork_error(p));
 		if (p->child[p->i] == 0)
-			child_processs(cmds, p, mini_env);
+			child_processs(cmds, env, p);
 		p->i++;
 	}
 	return (true);

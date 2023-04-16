@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 19:58:29 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/15 16:21:56 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/16 09:18:55 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,16 @@ bool	print_perror_cd(char *s, bool n, t_pipex *p, t_cd *cd)
 	if (n)
 	{
 		ft_putstr_fd(": ", 2);
-		perror("");	
+		perror("");
 	}
 	else
 		ft_putstr_fd("\n", 2);
 	if (cd->path)
 		free(cd->path);
+	if (cd->cwd)
+		free(cd->cwd);
+	if (cd->tmp)
+		free(cd->tmp);
 	free(cd);
 	return (false);
 }
@@ -78,8 +82,9 @@ void	print_exec(char *s, t_pipex *p)
 	}
 }
 
-void	print_exit(char *s, bool n, t_pipex *p)
+void	print_exit(t_final *cmds, t_pipex *p, char *s, bool n)
 {
+	ft_putstr_fd("exit\n", 1);
 	if (n)
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
@@ -87,6 +92,8 @@ void	print_exit(char *s, bool n, t_pipex *p)
 	}
 	else
 	{
+		if (p->nb_cmds == 1)
+			remove_heredoc(cmds);
 		ft_putstr_fd("minishell: exit: ", 2);
 		ft_putstr_fd(s, 2);
 		ft_putstr_fd(": numeric argument required\n", 2);

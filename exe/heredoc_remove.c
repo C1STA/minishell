@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heredoc_free.c                                     :+:      :+:    :+:   */
+/*   heredoc_remove.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 13:28:33 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/07 11:30:39 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/16 08:55:14 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ void	remove_heredoc(t_final *cmds)
 				free(file_name);
 			}
 			j++;
-			redir = redir->next_sibling;
+			redir = redir->next;
 		}
 		i++;
-		cmds = cmds->next_sibling;
+		cmds = cmds->next;
 	}
 }

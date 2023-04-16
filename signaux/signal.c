@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imrane <imrane@student.42.fr>              +#+  +:+       +#+        */
+/*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 18:26:21 by imrane            #+#    #+#             */
-/*   Updated: 2023/03/11 17:48:50 by imrane           ###   ########.fr       */
+/*   Updated: 2023/04/15 19:27:29 by imoumini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,4 @@ void	ft_sigint(int sigint, siginfo_t *pid, void *idontknow)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
-	
 }
