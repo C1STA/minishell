@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 18:50:34 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/16 13:11:34 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/16 20:02:15 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,15 +168,9 @@ bool	isbuiltin(t_final *cmds)
 {
 	if (!ft_strcmp(cmds->cmds[0], "exit"))
 		return (true);
-	if (!ft_strcmp(cmds->cmds[0], "echo"))
-		return (true);
 	if (!ft_strcmp(cmds->cmds[0], "$?"))
 		return (true);
-	if (!ft_strcmp(cmds->cmds[0], "unset"))
-		return (true);
 	if (!ft_strcmp(cmds->cmds[0], "cd"))
-		return (true);
-	if (!ft_strcmp(cmds->cmds[0], "pwd"))
 		return (true);
 	if ((!ft_strcmp(cmds->cmds[0], "export")) && !cmds->cmds[1])
 		return (true);
