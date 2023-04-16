@@ -6,11 +6,12 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 20:57:56 by imrane            #+#    #+#             */
-/*   Updated: 2023/04/16 07:54:32 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/16 17:34:45 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "minishell_exe.h"
 
 int	g_exit_status;
 
@@ -24,6 +25,8 @@ int main(int argc, char *argv[], char *env[])
 	t_com **ast;
 	t_final *final;
 	char **final_env;
+	t_env *last_node;
+	char *exit_status;
 	(void)argc;
     (void)argv;
 	
@@ -48,68 +51,34 @@ int main(int argc, char *argv[], char *env[])
 	root = NULL;
 	ast = NULL;
 	final_env = NULL;
-		
 	while (1)
     {
         input = readline("minishell> ");
 		if (!input)
-			return (printf("exit\n"), 0); // free (c ici que je gere control D )
+			return (printf("exit\n"), 0);
 		add_history(input);
-		// fonction ici qui tema si espace entre les >
 		if (does_quotes_closed(input) == 1 && single_enter(input) == 0 && check_space_append_heredoc(input) == 1)
 		{
-			//exit(1);
 			root = parse_simple_command(input, &src, &info);
-			//print_ast(root);
 			ft_exit(&mini_env, &root, &src, &info);
-			//printf("c0\n");
+			
+			if (check_if_exist(mini_env, "?") == 1)
+				supp_env(&mini_env, "?");
+			add_node_env(mini_env);
+			last_node = last_env_node(mini_env);
+			exit_status = ft_itoa(g_exit_status);
+			fill_last_node(last_node, ft_strcpy("?"), exit_status, ft_strjoin(ft_strcpy("?="), exit_status));
 			expand_env(mini_env,root);
 			is_unset(&mini_env, root);
 			//printf("c0 bis\n");
 			if(error_pars(root) == 1 && is_env_var(mini_env, root) == 1)
 			{
-				//printf("c1\n");
-				//afficher env apres que j'ai ajouté var env
-				//printf("----------------------\n");
-				//print_env(mini_env);
-				//printf("----------------------\n");
-				// afficher ast avant expand
-				//print_ast(root);
-				//printf("----------------------\n");
-				//printf("-----------------------\n");
-				//printf("ast after expand is : \n");
-				//print_ast(root);
-				//printf("----------------------\n");
-				//printf("c2\n");
 				supp_quotes(root);
-				//printf("ast after supp auotes is is : \n");
-				//print_ast(root);
-				//printf("----------------------\n");
 				ast = create_ast_command_redir(root);
-				//printf("c3\n");
-				//printf("ast after decoupe is :\n");
-				//print_final_ast(ast);
-				//printf("c4\n");
-				//printf("final ast is :\n");
-				//printf("c5\n");
 				final = create_final_ast(ast);
-				//printf("c6 bis\n");
-				//printf("final ast before final expand is :\n");
-				//printf_final_ast(final);
-				//printf("c7\n");
 				ft_free_before_final_ast(&ast);
-				//printf("c8\n");
 				final_expand(final);
-				//printf("c9\n");
-				//printf_final_ast(final);
-				//printf("c10\n");
-				// create new env double tableau
 				final_env = transform_env_in_double_tab(mini_env);
-				//printf("--------------------------------\n");
-				//printf("final env is \n");
-				//print_double_tab_env(final_env);
-				//printf("---------------------------------\n");
-				//printf("c11\n");
 				executor(final, final_env);
 				free_env(&mini_env);
 				mini_env = copy_env(final_env);
@@ -118,11 +87,8 @@ int main(int argc, char *argv[], char *env[])
 				
 			}
 			ft_free(NULL, &root, &src,&info);
-			//printf("c12\n");
 			ft_free_final_ast(&final);
-			//printf("c13\n");
 			free_final_env(&final_env);
-			//printf("c14\n");
 		}
 			else (free(input));
 	}
@@ -132,7 +98,7 @@ int main(int argc, char *argv[], char *env[])
 
 
 
-// merge
+
 //$?
 // faire builtin
 // faire ctrl c fait rien
