@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   guillemets2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 15:05:39 by imoumini          #+#    #+#             */
-/*   Updated: 2023/04/15 15:37:59 by imoumini         ###   ########.fr       */
+/*   Updated: 2023/04/18 02:37:08 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+extern int	g_exit_status;
 
 int	single_quote_closed(t_node *head)
 {
@@ -28,10 +30,7 @@ int	single_quote_closed(t_node *head)
 		ptr = ptr -> next;
 	}
 	if (count % 2 != 0)
-	{
-		ft_printf("error : single quote are not closed\n");
-		return (0);
-	}
+		return (print_error_quotes("single quotes"), 0);
 	return (1);
 }
 
@@ -51,10 +50,7 @@ int	double_quote_closed(t_node *head)
 		ptr = ptr -> next;
 	}
 	if (count % 2 != 0)
-	{
-		ft_printf("error : double quote are not closed\n");
-		return (0);
-	}
+		return (print_error_quotes("double quotes"), 0);
 	return (1);
 }
 

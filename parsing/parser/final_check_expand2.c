@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 17:44:38 by imoumini          #+#    #+#             */
-/*   Updated: 2023/04/16 02:44:09 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/18 03:17:27 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,7 @@ void	print_double_tab(char **str)
 
 	i = 0;
 	if (!str)
-	{
-		ft_printf("double tab is empty\n");
 		return ;
-	}
-	ft_printf("double tab is \n");
 	while (str[i])
 	{
 		ft_printf("%s\n", str[i]);

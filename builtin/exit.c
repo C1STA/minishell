@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 18:33:31 by imrane            #+#    #+#             */
-/*   Updated: 2023/04/16 17:47:58 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/17 17:57:28 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ t_source **src, t_info_tok **info)
 	{
 		ft_free(env, root, src, info);
 		ft_putstr_fd("exit\n", 1);
+		close(STDIN_FILENO);
+		close(STDOUT_FILENO);
 		exit (g_exit_status);
 	}
 }

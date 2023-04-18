@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 11:28:49 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/15 23:28:44 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/18 00:47:43 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	free_exe(t_final **cmds, char ***env)
 	free_final_env(env);
 }
 
-void	exit_child(t_final *cmds, char *env[], t_pipex *p)
+void	exit_exe(t_final *cmds, char *env[], t_pipex *p)
 {
 	if (p->i != p->nb_cmds - 1)
 	{
@@ -57,5 +57,7 @@ void	exit_child(t_final *cmds, char *env[], t_pipex *p)
 	g_exit_status = p->exit_status;
 	free_pipex(p);
 	free_exe(&cmds, &env);
+	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
 	exit(g_exit_status);
 }

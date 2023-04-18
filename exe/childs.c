@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 01:57:37 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/15 23:28:40 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/18 00:40:25 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	child_processs(t_final *cmds, char *env[], t_pipex *p)
 	t_redir	*tmp_redir;
 
 	close_unused_pipes(p);
-	p->exit_status = cmds->exit_tmp;
 	tmp_cmds = get_right_cmd(cmds, p->i);
 	tmp_redir = tmp_cmds->redir;
 	if (p->i != 0)
@@ -43,12 +42,12 @@ void	child_processs(t_final *cmds, char *env[], t_pipex *p)
 	if (p->i != p->nb_cmds - 1)
 		dup2(p->fd[p->i][1], STDOUT_FILENO);
 	if (!init_redir(tmp_redir, p))
-		exit_child(cmds, env, p);
+		exit_exe(cmds, env, p);
 	if (!builtin_exe(tmp_cmds, env, p))
 	{
 		if (tmp_cmds->cmds[0])
 			if (execve(tmp_cmds->cmds[0], tmp_cmds->cmds, env) == -1)
 				print_exec(tmp_cmds->cmds[0], p);
 	}
-	exit_child(cmds, env, p);
+	exit_exe(cmds, env, p);
 }

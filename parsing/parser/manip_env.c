@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manip_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 18:47:11 by imrane            #+#    #+#             */
-/*   Updated: 2023/04/15 15:55:53 by imoumini         ###   ########.fr       */
+/*   Updated: 2023/04/18 01:04:47 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ char	*ft_strcpy_env(char *str)
 	int		length;
 	char	*ptr;
 
-	printf("str in cpyr env is=>%s\n", str);
 	if (!str)
 		return (NULL);
 	i = 0;

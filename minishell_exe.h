@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 15:56:53 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/16 18:43:23 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/18 00:16:30 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,11 @@ bool	ft_heredoc(t_final *cmds, char *env[]);
 void	remove_heredoc(t_final *cmds);
 char	*heredoc_file_name(int i, int j);
 void	expand_heredoc(t_heredoc *h, char **env);
-char 	*find_value(char *str, char **env);
-char 	*return_value_heredoc(char* str);
-char 	*transform_value(char *str, char *value);
-char 	*return_before_heredoc(char *str);
-char 	*return_after_heredoc(char *str);
+char	*find_value(char *str, char **env);
+char	*return_value_heredoc(char *str);
+char	*transform_value(char *str, char *value);
+char	*return_before_heredoc(char *str);
+char	*return_after_heredoc(char *str);
 //childs.c
 void	child_processs(t_final *cmds, char *env[], t_pipex *p);
 
@@ -87,7 +87,7 @@ bool	redir_append(t_redir *redir, t_pipex *p);
 
 //free
 void	free_exe(t_final **cmds, char ***env);
-void	exit_child(t_final *cmds, char *env[], t_pipex *p);
+void	exit_exe(t_final *cmds, char *env[], t_pipex *p);
 
 //print
 void	print_perror(char *s);
@@ -108,6 +108,6 @@ char	*ft_strjoin_env(char *s1, char *s2);
 char	*ft_strjoin_free(char *s1, char *s2);
 int		ft_strcmp(const char *s1, const char *s2);
 size_t	ft_tablen(char **t);
-int	ft_strcmp_e(char *s1, char *s2);
+int		ft_strcmp_e(char *s1, char *s2);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 18:50:34 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/16 20:02:15 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/18 01:03:20 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ bool	builtin_exe_exit(t_final *cmds, char *env[], t_pipex *p)
 	int				j;
 
 	if (!cmds->cmds[1])
-		return (exit_child(cmds, env, p), true);
+		return (ft_putstr_fd("exit\n", 1), exit_exe(cmds, env, p), true);
 	i = 1;
 	while (cmds->cmds[i])
 	{
@@ -56,13 +56,13 @@ bool	builtin_exe_exit(t_final *cmds, char *env[], t_pipex *p)
 		{
 			if (!ft_isdigit(cmds->cmds[i][j]))
 				return (print_exit(cmds, p, cmds->cmds[i], false), \
-				exit_child(cmds, env, p), true);
+				exit_exe(cmds, env, p), true);
 			j++;
 		}
 		i++;
 	}
 	builtin_exe_exit_bis(cmds, p);
-	return (exit_child(cmds, env, p), true);
+	return (exit_exe(cmds, env, p), true);
 }
 
 bool	builtin_exe_echo(t_final *cmds, t_pipex *p)
@@ -168,13 +168,13 @@ bool	isbuiltin(t_final *cmds)
 {
 	if (!ft_strcmp(cmds->cmds[0], "exit"))
 		return (true);
-	if (!ft_strcmp(cmds->cmds[0], "$?"))
-		return (true);
 	if (!ft_strcmp(cmds->cmds[0], "cd"))
 		return (true);
 	if ((!ft_strcmp(cmds->cmds[0], "export")) && !cmds->cmds[1])
 		return (true);
 	if ((!ft_strcmp(cmds->cmds[0], "env")) && !cmds->cmds[1])
+		return (true);
+	if (!ft_strcmp(cmds->cmds[0], "pwd"))
 		return (true);
 	return (false);
 }

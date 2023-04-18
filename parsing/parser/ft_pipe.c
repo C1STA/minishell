@@ -3,37 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipe.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 19:16:29 by imrane            #+#    #+#             */
-/*   Updated: 2023/04/15 15:37:59 by imoumini         ###   ########.fr       */
+/*   Updated: 2023/04/18 02:13:58 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+extern int	g_exit_status;
 
 int	ft_pipe_first_check(t_node *ptr)
 {
 	if (!ptr)
 		return (1);
 	if (ptr -> prev_sibling == NULL)
-	{
-		ft_printf("syntax error near unexpected token `|'\n");
-		return (0);
-	}
+		return (print_error_syntax("|"), 0);
 	if (ptr -> next == NULL)
-	{
-		ft_printf("syntax error near unexpected token `newline'\n");
-		return (0);
-	}
+		return (print_error_syntax("newline"), 0);
 	if (ptr -> next)
-	{
 		if (ft_stcmp(ptr -> next -> txt, "|") == 1)
-		{
-			ft_printf("syntax error near unexpected token `|'\n");
-			return (0);
-		}
-	}
+			return (print_error_syntax("|"), 0);
 	return (1);
 }
 

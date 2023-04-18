@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   manipulate_token2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 19:16:47 by imrane            #+#    #+#             */
-/*   Updated: 2023/04/14 17:07:01 by imoumini         ###   ########.fr       */
+/*   Updated: 2023/04/18 01:22:48 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+extern int	g_exit_status;
 
 int	tokenize_space(char c, t_source *src, t_info_tok *info)
 {
@@ -81,7 +83,6 @@ int	tokenize_single_quote(char c, t_source *src, t_info_tok *info)
 		&& (is_double_quotes_str_closed(info -> tok_buf) == 1) \
 		&& (next_src_is_legit(src) == 0))
 	{
-		printf("d3\n");
 		info -> tok_bufindex++;
 		add_to_buf(c, info);
 		info -> tok_bufindex++;
@@ -91,7 +92,6 @@ int	tokenize_single_quote(char c, t_source *src, t_info_tok *info)
 	}
 	else
 	{
-		printf("d4\n");
 		info -> tok_bufindex++;
 		add_to_buf(c, info);
 		src -> curpos++;

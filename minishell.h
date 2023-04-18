@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 21:52:52 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/16 17:48:56 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/18 02:32:34 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,16 @@
 # include <sys/wait.h>
 # include <sys/types.h>
 # include <limits.h>
+
+typedef struct s_prompt
+{
+	char		*name;
+	char		*user;
+	char		*pwd;
+	int			len;
+	size_t		i;
+	size_t		j;
+}	t_prompt;
 
 // structure de l'input de l'user
 typedef struct source_s
@@ -327,10 +337,15 @@ int			double_tab_as_export(char **tab);
 int			is_double_quotes_str_closed(char *str);
 int			is_single_quotes_str_closed(char *str);
 
+/* print status */
+void		print_error_export(char *s);
+void		print_error_syntax(char *s);
+void		print_error_quotes(char *s);
+
 /*EXEC*/
 void		remove_heredoc(t_final *cmds);
 void		executor(t_final *cmds, char *env[]);
 long long	ft_atol_plus(char *str);
 long long	ft_atol_minus(char *str);
-
+char		*get_prompt_name(t_env *env);
 #endif

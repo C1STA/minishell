@@ -6,11 +6,13 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 17:16:25 by imoumini          #+#    #+#             */
-/*   Updated: 2023/04/15 23:35:45 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/18 02:52:53 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+extern int	g_exit_status;
 
 int	is_env_var(t_env *mini_env, t_node *root)
 {
@@ -20,7 +22,6 @@ int	is_env_var(t_env *mini_env, t_node *root)
 	if (!root)
 		return (1);
 	nbr = how_much_pipe(root);
-	//printf("nbr of pipe is %i\n", nbr);
 	ptr = root -> first_child;
 	if (ptr)
 	{
@@ -48,10 +49,7 @@ int	count_nbr_equal(char *str, char *env_input)
 		i++;
 	}
 	if (count == 0)
-	{
-		ft_printf("export : '%s' is not a valid identifier\n", env_input);
-		return (1);
-	}
+		return (print_error_export(env_input), 1);
 	return (0);
 }
 
@@ -93,10 +91,7 @@ int	pars_env_value(char *str, char *env_input)
 	while (str[i])
 	{
 		if (str[i] == '\\')
-		{
-			ft_printf("export : '%s' is not a valid identifier\n", env_input);
-			return (1);
-		}
+			return (print_error_export(env_input), 1);
 		i++;
 	}
 	return (0);

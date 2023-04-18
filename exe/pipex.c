@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 17:47:53 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/16 09:20:46 by wcista           ###   ########.fr       */
+ /*   Updated: 2023/04/17 17:48:18 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,20 +56,34 @@ static void	wait_childs(t_pipex *p)
 	}
 }
 
+void	lonely_exit(t_pipex *p, int saved_stdin, int saved_stdout)
+{
+	dup2(saved_stdin, STDIN_FILENO);
+	dup2(saved_stdout, STDOUT_FILENO);
+	close(saved_stdin);
+	close(saved_stdout);
+	g_exit_status = p->exit_status;
+	free_pipex(p);
+}
+
 void	lonely_builtin(t_final *cmds, char *env[], t_pipex *p)
 {
+	int	saved_stdin;
+	int	saved_stdout;
+
+	saved_stdin = dup(STDIN_FILENO);
+	saved_stdout = dup(STDOUT_FILENO);
 	if (!init_redir(cmds->redir, p))
+		lonely_exit(p, saved_stdin, saved_stdout);
+	if (!ft_strcmp(cmds->cmds[0], "exit"))
 	{
-		g_exit_status = p->exit_status;
-		close_pipes_main(p);
-		free_pipex(p);
-		return ;
+		dup2(saved_stdin, STDIN_FILENO);
+		dup2(saved_stdout, STDOUT_FILENO);
+		close(saved_stdin);
+		close(saved_stdout);
 	}
 	builtin_exe(cmds, env, p);
-	g_exit_status = p->exit_status;
-	close_pipes_main(p);
-	free_pipex(p);
-	return ;
+	lonely_exit(p, saved_stdin, saved_stdout);
 }
 
 void	pipex(t_final *cmds, char *env[])
@@ -81,11 +95,13 @@ void	pipex(t_final *cmds, char *env[])
 		return (print_perror("malloc"));
 	p->nb_cmds = lenlist(cmds);
 	p->child = NULL;
+	p->fd = NULL;
 	p->i = 0;
-	if (!init_pipes(p))
-		return ;
+	p->exit_status = cmds->exit_tmp;
 	if (p->nb_cmds == 1 && isbuiltin(cmds))
 		return (lonely_builtin(cmds, env, p));
+	if (!init_pipes(p))
+		return ;
 	if (!init_forks(cmds, env, p))
 		return ;
 	close_pipes_main(p);

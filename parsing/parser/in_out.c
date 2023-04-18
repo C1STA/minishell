@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   in_out.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 19:17:23 by imrane            #+#    #+#             */
-/*   Updated: 2023/04/15 15:37:59 by imoumini         ###   ########.fr       */
+/*   Updated: 2023/04/18 02:14:45 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+extern int	g_exit_status;
 
 int	in_file_second_check(t_node *ptr)
 {
@@ -38,10 +40,7 @@ int	ft_in_file_first_check(t_node *ptr)
 			|| ft_stcmp(ptr->next->txt, ">") == 1)
 		{
 			if (ptr -> next -> next == NULL)
-			{
-				ft_printf("syntax error near unexpected token `newline'\n");
-				return (0);
-			}
+				return (print_error_syntax("newline"), 0);
 			if (in_file_next(ptr) == 0)
 				return (0);
 		}
