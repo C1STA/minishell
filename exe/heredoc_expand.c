@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 10:43:18 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/20 15:11:46 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/20 16:05:42 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,10 @@ static void	expand_process(t_heredoc *h, char *env[], bool n)
 {
 	h->i++;
 	h->i_save = h->i;
-	if (ft_isalpha(h->input[h->i]))
+	if (ft_isalpha(h->input[h->i]) || h->input[h->i] == '_')
 	{
 		while (h->input[h->i] && h->input[h->i] != '$' \
-		&& ft_isalnum(h->input[h->i]))
+		&& (ft_isalnum(h->input[h->i]) || h->input[h->i] == '_'))
 		{
 			h->i++;
 			h->j++;
@@ -104,7 +104,8 @@ char	*heredoc_expand(t_heredoc *h, char *env[], bool n)
 	{
 		h->j = 0;
 		if (h->input[h->i] == '$' && h->input[h->i + 1] && h->input[h->i + 1] \
-		!= '$' && (ft_isalnum(h->input[h->i + 1]) || h->input[h->i + 1] == '?'))
+		!= '$' && (ft_isalnum(h->input[h->i + 1]) || h->input[h->i + 1] == '?' \
+		|| h->input[h->i + 1] == '_'))
 			expand_process(h, env, n);
 		else if (h->dollar == true)
 			h->dollar = false;
