@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 19:16:50 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/18 00:25:40 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/19 19:53:05 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ static bool	init_heredoc(char *env[], t_redir *redir, int i, int j)
 {
 	t_heredoc	*h;
 
-	(void)env;
 	h = (t_heredoc *)malloc(sizeof(t_heredoc));
 	if (!h)
 		return (false);
@@ -64,7 +63,7 @@ static bool	init_heredoc(char *env[], t_redir *redir, int i, int j)
 		h->input = readline("> ");
 		if (!ft_strcmp(h->input, redir->txt))
 			break ;
-		//expand_heredoc(h, env);
+		h->input = heredoc_expand(h, env);
 		h->reader = write(h->fd, h->input, ft_strlen(h->input));
 		if (h->reader == -1)
 			return (free_heredoc(h, false));

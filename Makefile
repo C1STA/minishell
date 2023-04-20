@@ -50,8 +50,9 @@ SRC = main.c \
 	exe/redir.c \
 	exe/redir_utils.c \
 	exe/heredoc.c \
-	exe/heredoc_remove.c \
 	exe/heredoc_expand.c \
+	exe/heredoc_expand_2.c \
+	exe/heredoc_remove.c \
 	exe/heredoc_signal.c \
 	exe/pipex.c \
 	exe/pipex_init.c \

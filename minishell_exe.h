@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 15:56:53 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/18 00:16:30 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/20 01:53:42 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,14 @@ typedef struct s_pipex
 
 typedef struct s_heredoc
 {
+	int		len;
+	int		i;
+	int		i_save;
+	int		j;
+	int		k;
+	int		dollar;
+	char	*tmp;
+	char	*dest;
 	char	*file_name;
 	char	*input;
 	int		reader;
@@ -67,12 +75,17 @@ bool	fork_error(t_pipex *p);
 bool	ft_heredoc(t_final *cmds, char *env[]);
 void	remove_heredoc(t_final *cmds);
 char	*heredoc_file_name(int i, int j);
+char	*heredoc_expand(t_heredoc *h, char *env[]);
+char	*heredoc_expanded(t_heredoc *h, char *env[]);
+int		env_var_len(char *env);
+/*
 void	expand_heredoc(t_heredoc *h, char **env);
 char	*find_value(char *str, char **env);
 char	*return_value_heredoc(char *str);
 char	*transform_value(char *str, char *value);
 char	*return_before_heredoc(char *str);
 char	*return_after_heredoc(char *str);
+*/
 //childs.c
 void	child_processs(t_final *cmds, char *env[], t_pipex *p);
 
