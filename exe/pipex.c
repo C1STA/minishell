@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/17 17:47:53 by wcista            #+#    #+#             */
- /*   Updated: 2023/04/17 17:48:18 by wcista           ###   ########.fr       */
+/*   Created: 2023/04/20 12:59:17 by wcista            #+#    #+#             */
+/*   Updated: 2023/04/20 13:02:07 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,36 +54,6 @@ static void	wait_childs(t_pipex *p)
 			g_exit_status = (WEXITSTATUS(g_exit_status));
 		i++;
 	}
-}
-
-void	lonely_exit(t_pipex *p, int saved_stdin, int saved_stdout)
-{
-	dup2(saved_stdin, STDIN_FILENO);
-	dup2(saved_stdout, STDOUT_FILENO);
-	close(saved_stdin);
-	close(saved_stdout);
-	g_exit_status = p->exit_status;
-	free_pipex(p);
-}
-
-void	lonely_builtin(t_final *cmds, char *env[], t_pipex *p)
-{
-	int	saved_stdin;
-	int	saved_stdout;
-
-	saved_stdin = dup(STDIN_FILENO);
-	saved_stdout = dup(STDOUT_FILENO);
-	if (!init_redir(cmds->redir, p))
-		lonely_exit(p, saved_stdin, saved_stdout);
-	if (!ft_strcmp(cmds->cmds[0], "exit"))
-	{
-		dup2(saved_stdin, STDIN_FILENO);
-		dup2(saved_stdout, STDOUT_FILENO);
-		close(saved_stdin);
-		close(saved_stdout);
-	}
-	builtin_exe(cmds, env, p);
-	lonely_exit(p, saved_stdin, saved_stdout);
 }
 
 void	pipex(t_final *cmds, char *env[])

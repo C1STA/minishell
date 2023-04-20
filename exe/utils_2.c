@@ -6,11 +6,13 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 09:23:24 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/16 12:50:24 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/20 13:32:53 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell_exe.h"
+
+extern int	g_exit_status;
 
 void	ft_swap(char **a, char **b)
 {

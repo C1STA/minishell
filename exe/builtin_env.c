@@ -1,41 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heredoc_remove.c                                   :+:      :+:    :+:   */
+/*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/06 13:28:33 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/16 08:55:14 by wcista           ###   ########.fr       */
+/*   Created: 2023/04/20 14:05:45 by wcista            #+#    #+#             */
+/*   Updated: 2023/04/20 14:06:02 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell_exe.h"
 
-void	remove_heredoc(t_final *cmds)
+extern int	g_exit_status;
+
+bool	builtin_env(char *env[], t_pipex *p)
 {
-	int		i;
-	int		j;
-	char	*file_name;
-	t_redir	*redir;
+	int	i;
 
 	i = 0;
-	while (cmds)
+	if (!env)
+		return (true);
+	while (env[i])
 	{
-		j = 0;
-		redir = cmds->redir;
-		while (redir)
-		{
-			if (redir->heredoc == 1)
-			{
-				file_name = heredoc_file_name(i, j);
-				unlink(file_name);
-				free(file_name);
-			}
-			j++;
-			redir = redir->next;
-		}
+		printf("%s\n", env[i]);
 		i++;
-		cmds = cmds->next;
 	}
+	p->exit_status = 0;
+	return (true);
 }

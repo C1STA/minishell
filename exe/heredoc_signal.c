@@ -6,11 +6,13 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 20:49:17 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/04 02:13:04 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/20 13:32:28 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell_exe.h"
+
+extern int	g_exit_status;
 
 /* static void	heredoc_signal(int sigint, siginfo_t *pid, void *idontknow)
 {

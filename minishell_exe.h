@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 15:56:53 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/20 01:53:42 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/20 14:11:12 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ typedef struct s_heredoc
 	int		i;
 	int		i_save;
 	int		j;
+	int		i_env;
+	int		j_env;
 	int		k;
 	int		dollar;
 	char	*tmp;
@@ -55,9 +57,6 @@ typedef struct s_export
 	int		len;
 }	t_export;
 
-//builtin_cd.c
-bool	print_perror_cd(char *s, bool n, t_pipex *p, t_cd *cd);
-
 //pipex.c
 void	pipex(t_final *cmds, char *env[]);
 void	close_unused_pipes(t_pipex *p);
@@ -66,26 +65,23 @@ void	close_unused_pipes(t_pipex *p);
 bool	init_pipes(t_pipex *p);
 bool	init_forks(t_final *cmds, char *env[], t_pipex *p);
 
+//pipex_lonely.c
+void	lonely_builtin(t_final *cmds, char *env[], t_pipex *p);
+
 //pipex_errors.c
 void	free_pipex(t_pipex *p);
 bool	pipe_error(t_pipex *p, int i);
 bool	fork_error(t_pipex *p);
 
-//heredoc.c
+//heredoc.c - heredoc_expand.c - heredoc_utils.c
 bool	ft_heredoc(t_final *cmds, char *env[]);
 void	remove_heredoc(t_final *cmds);
 char	*heredoc_file_name(int i, int j);
-char	*heredoc_expand(t_heredoc *h, char *env[]);
-char	*heredoc_expanded(t_heredoc *h, char *env[]);
+char	*heredoc_expand(t_heredoc *h, char *env[], bool n);
+void	heredoc_exit(t_final *cmds, char *env[], bool n);
+bool	init_values(t_heredoc *h, bool n);
 int		env_var_len(char *env);
-/*
-void	expand_heredoc(t_heredoc *h, char **env);
-char	*find_value(char *str, char **env);
-char	*return_value_heredoc(char *str);
-char	*transform_value(char *str, char *value);
-char	*return_before_heredoc(char *str);
-char	*return_after_heredoc(char *str);
-*/
+
 //childs.c
 void	child_processs(t_final *cmds, char *env[], t_pipex *p);
 
@@ -98,20 +94,41 @@ bool	redir_heredoc(t_redir *redir, t_pipex *p, int j);
 bool	redir_outfile(t_redir *redir, t_pipex *p);
 bool	redir_append(t_redir *redir, t_pipex *p);
 
-//free
+//free_exe.c
 void	free_exe(t_final **cmds, char ***env);
 void	exit_exe(t_final *cmds, char *env[], t_pipex *p);
 
-//print
+//print_status.c
 void	print_perror(char *s);
-void	print_exit(t_final *cmds, t_pipex *p, char *s, bool n);
 void	print_exec(char *s, t_pipex *p);
+void	print_exit(t_final *cmds, t_pipex *p, char *s, bool n);
+bool	print_perror_cd(char *s, bool n, t_pipex *p, t_cd *cd);
 
-//builtin
+//builtin.c
 bool	isbuiltin(t_final *cmds);
-bool	builtin_exe(t_final *cmds, char *env[], t_pipex *p);
-bool	builtin_exe_cd(t_final *cmds, char *env[], t_pipex *p);
-bool	builtin_exe_export(char *env[], t_pipex *p);
+bool	builtin(t_final *cmds, char *env[], t_pipex *p);
+
+//builtin_cd.c - builtin_cd_utils.c
+void	free_cd(t_cd *cd);
+size_t	env_finder(char *name, char **env);
+void	export_env(char *variable, char *val, char *env[]);
+char	*get_env_input(char *variable, int j, char *env[]);
+bool	builtin_cd(t_final *cmds, char *env[], t_pipex *p);
+
+//builtin_echo.c
+bool	builtin_echo(t_final *cmds, t_pipex *p);
+
+//builtin_env.c
+bool	builtin_env(char *env[], t_pipex *p);
+
+//builtin_exit.c
+bool	builtin_exit(t_final *cmds, char *env[], t_pipex *p);
+
+//builtin_export.c
+bool	builtin_export(char *env[], t_pipex *p);
+
+//builtin_pwd.c
+bool	builtin_pwd(t_pipex *p);
 
 //utils
 int		lenlist(t_final *L);

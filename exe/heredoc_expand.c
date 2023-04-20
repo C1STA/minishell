@@ -5,59 +5,62 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/18 09:47:24 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/20 02:33:11 by wcista           ###   ########.fr       */
+/*   Created: 2023/04/18 10:43:18 by wcista            #+#    #+#             */
+/*   Updated: 2023/04/20 15:11:46 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell_exe.h"
 
-int	env_var_len(char *env)
-{
-	int	i;
+extern int	g_exit_status;
 
-	i = 0;
-	while (env[i] && env[i] != '=')
-		i++;
-	return (i);
+static void	init_final(t_heredoc *h, char *env[], bool n)
+{
+	h->j_env = ft_strlen(h->tmp) + 1;
+	while (env[h->i_env][h->j_env])
+	{
+		if (n)
+			h->dest[h->k++] = env[h->i_env][h->j_env++];
+		else
+		{
+			h->j_env++;
+			h->len++;
+		}
+	}
 }
 
-static void	compare_to_env(t_heredoc *h, char *env[])
+static void	get_from_env(t_heredoc *h, char *env[], bool n)
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (env[i])
+	h->i_env = 0;
+	h->j_env = 0;
+	while (env[h->i_env])
 	{
-		if ((int)ft_strlen(h->tmp) == env_var_len(env[i]))
+		if ((int)ft_strlen(h->tmp) == env_var_len(env[h->i_env]))
 		{
-			if (!strncmp(env[i], h->tmp, ft_strlen(h->tmp)))
+			if (!ft_strncmp(env[h->i_env], h->tmp, env_var_len(env[h->i_env])))
 			{
-				j = ft_strlen(h->tmp) + 1;
-				while (env[i][j])
-				{
-					j++;
-					h->len++;
-				}
+				init_final(h, env, n);
 				break ;
 			}
 		}
-		i++;
+		h->i_env++;
 	}
 	if (h->input[h->i] == '$')
 		h->dollar = true;
 	free(h->tmp);
 }
 
-static void	get_len(t_heredoc *h, char *env[])
+static void	init_tmp(t_heredoc *h, char *env[], bool n)
 {
 	int	k;
 
 	h->tmp = (char *)malloc(sizeof(char) * h->j + 1);
 	if (!h->tmp)
+	{
+		if (n)
+			free(h->dest);
 		return (print_perror("malloc"));
+	}
 	k = 0;
 	while (k < h->j)
 	{
@@ -66,44 +69,56 @@ static void	get_len(t_heredoc *h, char *env[])
 		k++;
 	}
 	h->tmp[k] = '\0';
-	compare_to_env(h, env);
+	get_from_env(h, env, n);
 }
 
-char	*heredoc_expand(t_heredoc *h, char *env[])
+static void	expand_process(t_heredoc *h, char *env[], bool n)
 {
-	h->i = 0;
-	h->len = 0;
-	h->tmp = NULL;
-	h->dollar = false;
+	h->i++;
+	h->i_save = h->i;
+	if (ft_isalpha(h->input[h->i]))
+	{
+		while (h->input[h->i] && h->input[h->i] != '$' \
+		&& ft_isalnum(h->input[h->i]))
+		{
+			h->i++;
+			h->j++;
+		}
+		init_tmp(h, env, n);
+	}
+	else if (h->input[h->i] == '?')
+	{
+		h->i++;
+		h->j++;
+		init_tmp(h, env, n);
+	}
+	else
+		h->i++;
+}
+
+char	*heredoc_expand(t_heredoc *h, char *env[], bool n)
+{
+	if (!init_values(h, n))
+		return (NULL);
 	while (h->input[h->i])
 	{
 		h->j = 0;
 		if (h->input[h->i] == '$' && h->input[h->i + 1] && h->input[h->i + 1] \
-		!= '$' && ft_isalnum(h->input[h->i + 1]))
-		{
-			h->i++;
-			h->i_save = h->i;
-			if (ft_isalpha(h->input[h->i]))
-			{
-				while (h->input[h->i] && h->input[h->i] != '$' \
-				&& ft_isalnum(h->input[h->i]))
-				{
-					h->i++;
-					h->j++;
-				}
-				get_len(h, env);
-			}
-			else
-				h->i++;
-		}
+		!= '$' && (ft_isalnum(h->input[h->i + 1]) || h->input[h->i + 1] == '?'))
+			expand_process(h, env, n);
 		else if (h->dollar == true)
 			h->dollar = false;
+		else if (n)
+			h->dest[h->k++] = h->input[h->i++];
 		else
 		{
 			h->len++;
 			h->i++;
 		}
 	}
-	printf("FINAL LEN IS : %i\n", h->len);
-	return (heredoc_expanded(h, env));
+	if (!n)
+		return (heredoc_expand(h, env, true));
+	h->dest[h->k] = '\0';
+	free(h->input);
+	return (h->dest);
 }

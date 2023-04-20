@@ -1,47 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_exe_cd.c                                   :+:      :+:    :+:   */
+/*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 09:51:34 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/16 09:23:09 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/20 13:43:03 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell_exe.h"
 
-size_t	env_finder(char *name, char **env)
-{
-	size_t	i;
+extern int	g_exit_status;
 
-	i = 0;
-	while (env[i] && ft_strncmp(name, env[i], ft_strlen(name)))
-		i++;
-	return (i);
-}
-
-char	*get_env_input(char *variable, int j, char *env[])
-{
-	size_t	i;
-
-	i = env_finder(variable, env);
-	if (i == ft_tablen(env))
-		return (NULL);
-	return (&env[i][j]);
-}
-
-void	export_env(char *variable, char *val, char *env[])
-{
-	size_t	i;
-
-	i = env_finder(variable, env);
-	free(env[i]);
-	env[i] = ft_strjoin_env(variable, val);
-}
-
-bool	first_check(t_final *cmds, t_pipex *p, char *env[], t_cd *cd)
+static bool	first_check(t_final *cmds, t_pipex *p, char *env[], t_cd *cd)
 {
 	if (!cmds->cmds[1] || (cmds->cmds[1][0] == '~' \
 	&& !cmds->cmds[1][1] && !cmds->cmds[2]))
@@ -61,15 +34,21 @@ bool	first_check(t_final *cmds, t_pipex *p, char *env[], t_cd *cd)
 	return (true);
 }
 
-void	free_cd(t_cd *cd)
+static bool	cd_builtin(t_final *cmds, t_pipex *p, t_cd *cd)
 {
-	free(cd->tmp);
-	free(cd->path);
-	free(cd->cwd);
-	free(cd);
+	if (cmds->cmds[1][0] != '/')
+	{
+		cd->cwd = ft_strjoin_free(cd->cwd, "/");
+		cd->cwd = ft_strjoin_free(cd->cwd, cmds->cmds[1]);
+		if (chdir(cd->cwd))
+			return (print_perror_cd(cmds->cmds[1], true, p, cd));
+	}
+	else if (chdir(cmds->cmds[1]))
+		return (print_perror_cd(cmds->cmds[1], true, p, cd));
+	return (true);
 }
 
-bool	builtin_exe_cd(t_final *cmds, char *env[], t_pipex *p)
+bool	builtin_cd(t_final *cmds, char *env[], t_pipex *p)
 {
 	t_cd	*cd;
 
@@ -86,15 +65,8 @@ bool	builtin_exe_cd(t_final *cmds, char *env[], t_pipex *p)
 		return (print_perror_cd("error retrieving current directory: \
 getcwd: cannot access parent directories", true, p, cd));
 	cd->tmp = ft_strcpy(cd->cwd);
-	if (cmds->cmds[1][0] != '/')
-	{
-		cd->cwd = ft_strjoin_free(cd->cwd, "/");
-		cd->cwd = ft_strjoin_free(cd->cwd, cmds->cmds[1]);
-		if (chdir(cd->cwd))
-			return (print_perror_cd(cmds->cmds[1], true, p, cd));
-	}
-	else if (chdir(cmds->cmds[1]))
-		return (print_perror_cd(cmds->cmds[1], true, p, cd));
+	if (!cd_builtin(cmds, p, cd))
+		return (false);
 	export_env("OLDPWD=", cd->tmp, env);
 	free(cd->path);
 	cd->path = NULL;

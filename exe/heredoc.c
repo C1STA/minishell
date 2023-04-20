@@ -6,15 +6,13 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 19:16:50 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/19 19:53:05 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/20 13:32:37 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell_exe.h"
 
 extern int	g_exit_status;
-
-// Signaux ctrl+c / ctrl+d
 
 static bool	free_heredoc(t_heredoc *h, bool n)
 {
@@ -63,7 +61,7 @@ static bool	init_heredoc(char *env[], t_redir *redir, int i, int j)
 		h->input = readline("> ");
 		if (!ft_strcmp(h->input, redir->txt))
 			break ;
-		h->input = heredoc_expand(h, env);
+		h->input = heredoc_expand(h, env, false);
 		h->reader = write(h->fd, h->input, ft_strlen(h->input));
 		if (h->reader == -1)
 			return (free_heredoc(h, false));
@@ -93,7 +91,7 @@ static void	define_heredoc(t_final *cmds, char *env[])
 			if (tmp_redir->heredoc == 1)
 			{
 				if (!init_heredoc(env, tmp_redir, i, j))
-					return (free_exe(&cmds, &env), exit(EXIT_FAILURE));
+					return (heredoc_exit(cmds, env, false));
 			}
 			tmp_redir = tmp_redir->next;
 			j++;
@@ -101,7 +99,7 @@ static void	define_heredoc(t_final *cmds, char *env[])
 		i++;
 		tmp_cmds = tmp_cmds->next;
 	}
-	return (free_exe(&cmds, &env), exit(EXIT_SUCCESS));
+	return (heredoc_exit(cmds, env, true));
 }
 
 bool	ft_heredoc(t_final *cmds, char *env[])

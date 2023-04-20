@@ -6,11 +6,13 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 04:47:53 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/16 09:19:33 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/20 13:32:56 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell_exe.h"
+
+extern int	g_exit_status;
 
 int	ft_strcmp(const char *s1, const char *s2)
 {

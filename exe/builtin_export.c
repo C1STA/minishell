@@ -1,18 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_exe_export.c                               :+:      :+:    :+:   */
+/*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 10:18:14 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/16 13:13:29 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/20 14:11:51 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell_exe.h"
 
-char	**dup_env(char *env[])
+extern int	g_exit_status;
+
+static char	**dup_env(char *env[])
 {
 	int		i;
 	int		len;
@@ -34,7 +36,7 @@ char	**dup_env(char *env[])
 	return (env_copy);
 }
 
-void	sort_env(char *env[])
+static void	sort_env(char *env[])
 {
 	t_export	*e;
 
@@ -60,7 +62,7 @@ void	sort_env(char *env[])
 	free(e);
 }
 
-void	print_env_cpy(char **str)
+static void	print_env_cpy(char **str)
 {
 	int	i;
 
@@ -74,7 +76,7 @@ void	print_env_cpy(char **str)
 	}
 }
 
-bool	builtin_exe_export(char *env[], t_pipex *p)
+bool	builtin_export(char *env[], t_pipex *p)
 {
 	char	**env_tmp;
 
