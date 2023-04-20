@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 13:31:22 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/20 14:15:19 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/20 15:24:42 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,22 @@ static void	builtin_exit_bis(t_final *cmds, t_pipex *p)
 		remove_heredoc(cmds);
 }
 
+bool	exit_return(t_final *cmds, char *env[], t_pipex *p)
+{
+	if (p->nb_cmds == 1)
+		remove_heredoc(cmds);
+	ft_putstr_fd("exit\n", 1);
+	exit_exe(cmds, env, p);
+	return (true);
+}
+
 bool	builtin_exit(t_final *cmds, char *env[], t_pipex *p)
 {
 	int				i;
 	int				j;
 
 	if (!cmds->cmds[1])
-		return (ft_putstr_fd("exit\n", 1), exit_exe(cmds, env, p), true);
+		return (exit_return(cmds, env, p));
 	i = 1;
 	while (cmds->cmds[i])
 	{

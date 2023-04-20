@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 20:57:56 by imrane            #+#    #+#             */
-/*   Updated: 2023/04/17 22:15:25 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/20 15:19:27 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,6 @@ int main(int argc, char *argv[], char *env[])
 		if (does_quotes_closed(input) == 1 && single_enter(input) == 0 && check_space_append_heredoc(input) == 1)
 		{
 			root = parse_simple_command(input, &src, &info);
-			//ft_exit(&mini_env, &root, &src, &info);
-			
 			if (check_if_exist(mini_env, "?") == 1)
 				supp_env(&mini_env, "?");
 			add_node_env(mini_env);
