@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 10:18:14 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/20 14:11:51 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/21 05:24:21 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,9 @@ static void	print_env_cpy(char **str)
 		return ;
 	while (str[i])
 	{
-		printf("declare -x %s\n", str[i]);
+		ft_putstr_fd("declare -x ", 1);
+		ft_putstr_fd(str[i], 1);
+		ft_putstr_fd("\n", 1);
 		i++;
 	}
 }

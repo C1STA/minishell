@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 09:51:34 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/20 13:43:03 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/21 05:03:57 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ bool	builtin_cd(t_final *cmds, char *env[], t_pipex *p)
 getcwd: cannot access parent directories", true, p, cd));
 	cd->tmp = ft_strcpy(cd->cwd);
 	if (!cd_builtin(cmds, p, cd))
-		return (false);
+		return (true);
 	export_env("OLDPWD=", cd->tmp, env);
 	free(cd->path);
 	cd->path = NULL;

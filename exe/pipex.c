@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 12:59:17 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/20 13:02:07 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/21 04:25:41 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,10 @@ void	pipex(t_final *cmds, char *env[])
 	p = (t_pipex *)malloc(sizeof(t_pipex));
 	if (!p)
 		return (print_perror("malloc"));
-	p->nb_cmds = lenlist(cmds);
-	p->child = NULL;
-	p->fd = NULL;
 	p->i = 0;
+	p->fd = NULL;
+	p->child = NULL;
+	p->nb_cmds = lenlist(cmds);
 	p->exit_status = cmds->exit_tmp;
 	if (p->nb_cmds == 1 && isbuiltin(cmds))
 		return (lonely_builtin(cmds, env, p));

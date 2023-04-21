@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 19:16:50 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/20 13:32:37 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/21 02:20:30 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ bool	ft_heredoc(t_final *cmds, char *env[])
 {
 	pid_t	pid;
 
+	if (!is_heredoc(cmds))
+		return (true);
 	pid = fork();
 	if (pid == -1)
 		return (print_perror("fork"), false);

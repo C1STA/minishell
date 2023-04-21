@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:25:16 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/20 13:32:32 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/21 02:04:39 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,24 @@ void	remove_heredoc(t_final *cmds)
 		i++;
 		cmds = cmds->next;
 	}
+}
+
+bool	is_heredoc(t_final *cmds)
+{
+	t_final	*tmp_cmds;
+	t_redir	*tmp_redir;
+
+	tmp_cmds = cmds;
+	while (tmp_cmds)
+	{
+		tmp_redir = tmp_cmds->redir;
+		while (tmp_redir)
+		{
+			if (tmp_redir->heredoc == 1)
+				return (true);
+			tmp_redir = tmp_redir->next;
+		}
+		tmp_cmds = tmp_cmds->next;
+	}
+	return (false);
 }

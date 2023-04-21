@@ -60,6 +60,7 @@ SRC = main.c \
 	exe/pipex_errors.c \
 	exe/exec.c \
 	exe/childs.c \
+	exe/cmd_access.c \
 	exe/free_exe.c \
 	exe/print_status.c \
 	exe/builtin.c \

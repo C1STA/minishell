@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 15:56:53 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/20 14:11:12 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/21 03:02:59 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ bool	pipe_error(t_pipex *p, int i);
 bool	fork_error(t_pipex *p);
 
 //heredoc.c - heredoc_expand.c - heredoc_utils.c
+bool	is_heredoc(t_final *cmds);
 bool	ft_heredoc(t_final *cmds, char *env[]);
 void	remove_heredoc(t_final *cmds);
 char	*heredoc_file_name(int i, int j);
@@ -84,6 +85,9 @@ int		env_var_len(char *env);
 
 //childs.c
 void	child_processs(t_final *cmds, char *env[], t_pipex *p);
+
+//cmd_access.c
+void	is_access(t_final *cmds, char *env[]);
 
 //redir.c
 bool	init_redir(t_redir *redir, t_pipex *p);

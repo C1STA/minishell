@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 20:57:56 by imrane            #+#    #+#             */
-/*   Updated: 2023/04/20 15:19:27 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/21 05:15:42 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int main(int argc, char *argv[], char *env[])
 				executor(final, final_env);
 				free_env(&mini_env);
 				mini_env = copy_env(final_env);
-				printf("exit_status = %d\n", g_exit_status);
+				//printf("exit_status = %d\n", g_exit_status);
 				//print_double_tab_env(final_env);
 				
 			}

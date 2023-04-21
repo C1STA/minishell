@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 13:54:37 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/20 13:55:01 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/21 05:28:08 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ bool	builtin_pwd(t_pipex *p)
 pwd: cannot access parent directories");
 		return (true);
 	}
-	printf("%s\n", pwd);
+	ft_putstr_fd(pwd, 1);
+	ft_putstr_fd("\n", 1);
 	free(pwd);
 	p->exit_status = 0;
 	return (true);
