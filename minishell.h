@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
+/*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 21:52:52 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/18 02:32:34 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/22 20:54:30 by imoumini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ typedef struct redir_node
 	char				*txt;
 	int					heredoc;
 	int					in_file;
+	int					quotes;
 	int					out_file;
 	int					append;
 	int					file;
@@ -161,6 +162,7 @@ t_node		*add_node_to_ast(t_node *root, t_node *node);
 void		print_ast(t_node *node);
 int			single_enter(char *input);
 int			check_space_append_heredoc(char *str);
+int			only_space(char *str);
 
 /*env*/
 t_env		*copy_env(char *original[]);
@@ -181,6 +183,8 @@ int			insert_input_env(t_env **head, t_node *root, int pipe);
 void		expand_env(t_env *head, t_node *root);
 char		*ft_strcpy(char *str);
 char		*ft_strcpy_env(char *str);
+void		if_double_env(char *new_str, int *i, int *j, char *str);
+void		if_simple_env(char *new_str, int *i, int *j, char *str);
 void		create_var_name(t_env *node);
 void		create_var_value(t_env *node);
 int			ft_stcmp(char *str1, char *str2);

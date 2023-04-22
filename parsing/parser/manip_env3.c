@@ -6,7 +6,7 @@
 /*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:34:36 by imoumini          #+#    #+#             */
-/*   Updated: 2023/04/15 16:06:36 by imoumini         ###   ########.fr       */
+/*   Updated: 2023/04/22 21:36:43 by imoumini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,33 @@
 char	*extract_name(char *str)
 {
 	int		i;
+	int		j;
 	char	*ptr;
 
 	i = 0;
+	j = 0;
 	if (!str)
 		return (NULL);
 	while (str[i] != '\0' && str[i] != '=')
 		i++;
 	ptr = malloc((sizeof(char) * i) + 1);
-	if (!ptr)
-		return (NULL);
 	i = 0;
 	while (str[i] != '\0' && str[i] != '=')
 	{
-		ptr[i] = str[i];
+		if_double_env(ptr, &i, &j, str);
+		if ((!str[i]) || str[i] == '=')
+			break ;
+		if_simple_env(ptr, &i, &j, str);
+		if ((!str[i]) || str[i] == '=')
+			break ;
+		if (str[i] != '\'' && str[i] != '"')
+		{
+			ptr[j] = str[i];
+			j++;
+		}
 		i++;
 	}
-	ptr[i] = '\0';
-	return (ptr);
+	return (ptr[i] = '\0', ptr);
 }
 
 char	*extract_value(char *str)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manip_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
+/*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 18:47:11 by imrane            #+#    #+#             */
-/*   Updated: 2023/04/18 01:04:47 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/22 20:56:29 by imoumini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*ft_strcpy(char *str)
 	ptr[i] = '\0';
 	return (ptr);
 }
-
+/*
 char	*ft_strcpy_env(char *str)
 {
 	int		i;
@@ -49,11 +49,44 @@ char	*ft_strcpy_env(char *str)
 		return (NULL);
 	while (str[i] != '\0' && str[i] != ' ' && str[i] != '\t')
 	{
+		// en gros c que qudn ya des guillemets que jqccepte les espace
+		// jenleve les guillemets
+		//en fait la logique denregistrement cest celle du jeneleve les guillemets
 		ptr[i] = str[i];
 		i++;
 	}
 	ptr[i] = '\0';
 	return (ptr);
+
+}*/
+
+char	*ft_strcpy_env(char *str)
+{
+	int		i;
+	int		j;
+	char	*ptr;
+
+	if (!str)
+		return (NULL);
+	i = 0;
+	j = 0;
+	ptr = malloc(sizeof(char) *(ft_strlen(str) + 1));
+	while (str[i] != '\0')
+	{
+		if_double_env(ptr, &i, &j, str);
+		if (!str[i])
+			break ;
+		if_simple_env(ptr, &i, &j, str);
+		if (!str[i])
+			break ;
+		if (str[i] != '\'' && str[i] != '"')
+		{
+			ptr[j] = str[i];
+			j++;
+		}
+		i++;
+	}
+	return (ptr[j] = '\0', ptr);
 }
 
 t_env	*new_node_env(void)

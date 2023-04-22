@@ -6,7 +6,7 @@
 /*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:38:31 by imoumini          #+#    #+#             */
-/*   Updated: 2023/04/15 17:09:48 by imoumini         ###   ########.fr       */
+/*   Updated: 2023/04/22 18:53:02 by imoumini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	more_than_one_dollars_suite(t_node *ptr)
 		{
 			if (ptr->txt[i + 1])
 			{
-				if (ptr->txt[i + 1] == '$')
+				if (ptr->txt[i + 1] == '$' && ptr->txt[i + 2])
 					return (1);
 			}
 		}

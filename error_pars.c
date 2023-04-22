@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_pars.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
+/*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 20:50:27 by imrane            #+#    #+#             */
-/*   Updated: 2023/04/18 03:02:14 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/22 16:59:31 by imoumini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,24 +68,27 @@ int	check_space_append_heredoc(char *str)
 int	does_quotes_closed(char *str)
 {
 	int	i;
-	int	single;
-	int	double_q;
 
-	single = 0;
-	double_q = 0;
 	i = 0;
 	while (str[i])
 	{
 		if (str[i] == '"')
-			double_q++;
+		{
+			i++;
+			while (str[i] && str[i] != '"')
+				i++;
+			if (!(str[i]))
+				return (print_error_quotes("quotes"), 0);
+		}
 		if (str[i] == '\'')
-			single++;
-		if (end_comm(str, i, single, double_q) == 0)
-			return (0);
+		{
+			i++;
+			while (str[i] && str[i] != '\'')
+				i++;
+			if (!(str[i]))
+				return (print_error_quotes("quotes"), 0);
+		}
 		i++;
 	}
-	if (single % 2 != 0 || double_q % 2 != 0)
-		return (print_error_quotes("quotes"), 0);
-	else
-		return (1);
+	return (1);
 }

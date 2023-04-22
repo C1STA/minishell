@@ -6,7 +6,7 @@
 /*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 22:06:18 by imrane            #+#    #+#             */
-/*   Updated: 2023/04/15 17:24:13 by imoumini         ###   ########.fr       */
+/*   Updated: 2023/04/22 18:43:38 by imoumini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void free_final_env(char ***tab_env)
 	int i;
 	char **tab;
 	i = 0;
-	
+
 	if (!tab_env)
 		return ;
 	tab = *tab_env;
