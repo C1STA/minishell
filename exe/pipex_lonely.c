@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 13:01:07 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/20 13:43:03 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/23 01:41:20 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	lonely_builtin(t_final *cmds, char *env[], t_pipex *p)
 	saved_stdin = dup(STDIN_FILENO);
 	saved_stdout = dup(STDOUT_FILENO);
 	if (!init_redir(cmds->redir, p))
-		lonely_exit(p, saved_stdin, saved_stdout);
+		return (lonely_exit(p, saved_stdin, saved_stdout));
 	if (!ft_strcmp(cmds->cmds[0], "exit"))
 	{
 		dup2(saved_stdin, STDIN_FILENO);

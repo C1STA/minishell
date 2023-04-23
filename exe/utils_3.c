@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec.c                                             :+:      :+:    :+:   */
+/*   utils_3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/04 02:19:53 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/23 01:34:10 by wcista           ###   ########.fr       */
+/*   Created: 2023/04/23 02:40:28 by wcista            #+#    #+#             */
+/*   Updated: 2023/04/23 02:41:03 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,29 @@
 
 extern int	g_exit_status;
 
-void	executor(t_final *cmds, char *env[])
+char	*ft_strjoin_s2(char *s1, char *s2)
 {
-	cmds->exit_tmp = g_exit_status;
-	if (!ft_heredoc(cmds, env))
-		return (remove_heredoc(cmds));
-	pipex(cmds, env);
-	remove_heredoc(cmds);
+	char	*dest;
+	size_t	len;
+	int		i;
+	int		j;
+
+	if ((!s1) && (!s2))
+		return (NULL);
+	i = ft_strlen(s1);
+	j = ft_strlen(s2);
+	len = (i + j + 1);
+	dest = (char *)malloc((len) * sizeof(char));
+	if (!dest)
+		return (NULL);
+	i = -1;
+	j = 0;
+	while (s1[++i])
+		dest[j++] = s1[i];
+	i = -1;
+	while (s2[++i])
+		dest[j++] = s2[i];
+	dest[j] = '\0';
+	ft_free_str(&s2);
+	return (dest);
 }

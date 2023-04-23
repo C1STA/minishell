@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 15:56:53 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/21 03:02:59 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/23 02:41:18 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ void	ft_swap(char **a, char **b);
 void	ft_free_str(char **str);
 char	*ft_strjoin_env(char *s1, char *s2);
 char	*ft_strjoin_free(char *s1, char *s2);
+char	*ft_strjoin_s2(char *s1, char *s2);
 int		ft_strcmp(const char *s1, const char *s2);
 size_t	ft_tablen(char **t);
 int		ft_strcmp_e(char *s1, char *s2);

@@ -6,7 +6,7 @@
 /*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 21:52:52 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/22 20:54:30 by imoumini         ###   ########.fr       */
+/*   Updated: 2023/04/22 22:12:03 by imoumini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct node_s
 	char			*txt;
 	int				children;
 	int				after_here_doc;
+	int				quotes;
 	int				heredoc;
 	struct node_s	*first_child;
 	struct node_s	*next;
@@ -80,8 +81,8 @@ typedef struct redir_node
 {
 	char				*txt;
 	int					heredoc;
-	int					in_file;
 	int					quotes;
+	int					in_file;
 	int					out_file;
 	int					append;
 	int					file;

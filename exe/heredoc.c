@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 19:16:50 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/21 02:20:30 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/23 02:41:29 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@ extern int	g_exit_status;
 
 static bool	free_heredoc(t_heredoc *h, bool n)
 {
+	if (access(h->file_name, W_OK) == -1)
+	{
+		n = false;
+		perror(h->file_name);
+	}
 	if (h->fd)
 		close(h->fd);
 	if (h->file_name)
@@ -39,6 +44,7 @@ char	*heredoc_file_name(int i, int j)
 	file_name = ft_strjoin_free(file_name, k);
 	file_name = ft_strjoin_free(file_name, "_");
 	file_name = ft_strjoin_free(file_name, l);
+	file_name = ft_strjoin_s2("/tmp/", file_name);
 	free(k);
 	free(l);
 	return (file_name);
@@ -61,13 +67,12 @@ static bool	init_heredoc(char *env[], t_redir *redir, int i, int j)
 		h->input = readline("> ");
 		if (!ft_strcmp(h->input, redir->txt))
 			break ;
-		h->input = heredoc_expand(h, env, false);
+		if (!redir->quotes)
+			h->input = heredoc_expand(h, env, false);
 		h->reader = write(h->fd, h->input, ft_strlen(h->input));
 		if (h->reader == -1)
 			return (free_heredoc(h, false));
 		h->reader = write(h->fd, "\n", 1);
-		if (h->reader == -1)
-			return (free_heredoc(h, false));
 		free(h->input);
 	}
 	return (free_heredoc(h, true));

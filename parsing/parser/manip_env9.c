@@ -6,7 +6,7 @@
 /*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:45:52 by imoumini          #+#    #+#             */
-/*   Updated: 2023/04/15 18:30:54 by imoumini         ###   ########.fr       */
+/*   Updated: 2023/04/22 22:14:54 by imoumini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,10 @@ void	attribute_atfer_here_doc(t_node *node)
 	ptr = node -> next;
 	while (ptr)
 	{
+		if (does_str_has_quotes(ptr->txt) == 1)
+			ptr -> quotes = 1;
+		else
+			ptr -> quotes = 0;
 		ptr -> after_here_doc = 1;
 		ptr = ptr -> next;
 	}

@@ -12,8 +12,8 @@ SRC = main.c \
 	parsing/lexer/manipulate_token5.c \
 	parsing/parser/parser.c \
 	parsing/parser/ft_pipe.c \
-	parsing/parser/guillemets.c \
-	parsing/parser/guillemets2.c \
+	parsing/parser/quotes.c \
+	parsing/parser/quotes_2.c \
 	parsing/parser/in_out.c \
 	parsing/parser/in_out2.c \
 	parsing/parser/in_out3.c \
@@ -73,6 +73,7 @@ SRC = main.c \
 	exe/builtin_pwd.c \
 	exe/utils.c \
 	exe/utils_2.c \
+	exe/utils_3.c \
 	prompt_name.c \
 	print_errors.c
 

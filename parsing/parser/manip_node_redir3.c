@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manip_node_redir3.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 17:14:40 by imoumini          #+#    #+#             */
-/*   Updated: 2023/04/15 18:49:37 by imoumini         ###   ########.fr       */
+/*   Updated: 2023/04/23 00:42:45 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,10 @@ void	add_new_redir_to_list(t_redir *redir, t_redir *ptr, t_node *node)
 
 t_redir	*create_redir_node_if(t_redir *redir, t_node *node, t_redir *ptr)
 {
+	if (node -> quotes == 1)
+		ptr -> quotes = 1;
+	else
+		ptr->quotes = 0;
 	if (ft_stcmp(node -> txt, "<") == 1 && node -> next \
 		&& ft_stcmp(node -> next -> txt, "<") == 1)
 		return (ft_heredoc_redir(ptr), redir);
@@ -50,6 +54,10 @@ t_redir	*create_redir_node_if(t_redir *redir, t_node *node, t_redir *ptr)
 
 t_redir	*create_redir_node_else(t_redir *redir, t_node *node, t_redir *ptr)
 {
+	if (node -> quotes == 1)
+		ptr -> quotes = 1;
+	else
+		ptr->quotes = 0;
 	if (ft_stcmp(node -> txt, "<") == 1 && node -> next \
 		&& ft_stcmp(node -> next -> txt, "<") == 1)
 		return (ft_heredoc_redir(ptr), redir);
