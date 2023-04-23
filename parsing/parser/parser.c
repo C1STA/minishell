@@ -6,7 +6,7 @@
 /*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 21:23:57 by imrane            #+#    #+#             */
-/*   Updated: 2023/04/15 18:54:13 by imoumini         ###   ########.fr       */
+/*   Updated: 2023/04/23 17:15:22 by imoumini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_node	*parse_simple_command(char *input, t_source **src, t_info_tok **info)
 	if (src_ft -> end_input != 1)
 		tok = tokenize(src_ft, info_ft);
 	while (src_ft -> exit != 1 || tok != NULL)
-	{	
+	{
 		if (!(if_tok_exist(tok, root, info)))
 			return (NULL);
 		info = init_global_info_token(info);
@@ -100,8 +100,9 @@ t_node	*if_tok_exist(t_token *tok, t_node *root, t_info_tok **info)
 		if (!node)
 			return (NULL);
 		add_node_to_ast(root, node);
-		free_info(info);
 		free_tok(&tok);
 	}
+	free_info(info);
+	info = NULL;
 	return (root);
 }

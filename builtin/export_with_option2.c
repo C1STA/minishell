@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_with_option2.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
+/*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 19:42:54 by imoumini          #+#    #+#             */
-/*   Updated: 2023/04/18 02:55:07 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/23 15:58:38 by imoumini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	pars_env_name_quote(char *str, char *env)
 
 int	pars_env_name_f_if(char *str, char *env_input, int i)
 {
+	if (!str[i])
+		return (0);
 	if (str[i] == ' ' || str[i] == '\t' || str[i] == '@' \
 			|| str[i] == '+' || str[i] == '\\' \
 			|| str[i] == '(' || str[i] == ')')
@@ -45,6 +47,8 @@ int	pars_env_name_f_if(char *str, char *env_input, int i)
 
 int	pars_env_name_s_if(char *str, char *env_input, int i)
 {
+	if (!str[i])
+		return (0);
 	if (str[i] == '*' || str[i] == '{' || str[i] == '}' || str[i] == '-' )
 		return (print_error_export(env_input), 1);
 	return (0);
@@ -52,6 +56,8 @@ int	pars_env_name_s_if(char *str, char *env_input, int i)
 
 int	pars_env_name_t_if(char *str, char *env_input, int i)
 {
+	if (!str[i])
+		return (0);
 	if (!(str[i] >= 'a' && str[i] <= 'z') && !(str[i] >= 'A' && str[i] <= 'Z') \
 			&& !(str[i] >= '0' && str[i] <= '9') \
 			&& !(str[i] == '\"') && !(str[i] == '\''))

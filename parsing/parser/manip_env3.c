@@ -6,7 +6,7 @@
 /*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:34:36 by imoumini          #+#    #+#             */
-/*   Updated: 2023/04/22 21:36:43 by imoumini         ###   ########.fr       */
+/*   Updated: 2023/04/23 15:53:27 by imoumini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*extract_name(char *str)
 		}
 		i++;
 	}
-	return (ptr[i] = '\0', ptr);
+	return (ptr[j] = '\0', ptr);
 }
 
 char	*extract_value(char *str)

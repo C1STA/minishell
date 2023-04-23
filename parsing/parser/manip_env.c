@@ -6,7 +6,7 @@
 /*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 18:47:11 by imrane            #+#    #+#             */
-/*   Updated: 2023/04/22 20:56:29 by imoumini         ###   ########.fr       */
+/*   Updated: 2023/04/23 15:57:29 by imoumini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,32 +33,6 @@ char	*ft_strcpy(char *str)
 	ptr[i] = '\0';
 	return (ptr);
 }
-/*
-char	*ft_strcpy_env(char *str)
-{
-	int		i;
-	int		length;
-	char	*ptr;
-
-	if (!str)
-		return (NULL);
-	i = 0;
-	length = ft_strlen(str);
-	ptr = malloc(sizeof(char) *(length + 1));
-	if (!ptr)
-		return (NULL);
-	while (str[i] != '\0' && str[i] != ' ' && str[i] != '\t')
-	{
-		// en gros c que qudn ya des guillemets que jqccepte les espace
-		// jenleve les guillemets
-		//en fait la logique denregistrement cest celle du jeneleve les guillemets
-		ptr[i] = str[i];
-		i++;
-	}
-	ptr[i] = '\0';
-	return (ptr);
-
-}*/
 
 char	*ft_strcpy_env(char *str)
 {

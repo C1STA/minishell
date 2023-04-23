@@ -6,7 +6,7 @@
 /*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 22:06:18 by imrane            #+#    #+#             */
-/*   Updated: 2023/04/22 18:43:38 by imoumini         ###   ########.fr       */
+/*   Updated: 2023/04/23 17:17:33 by imoumini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,7 +196,10 @@ void free_info(t_info_tok **info)
 				ptr -> tok_buf = NULL;
 			}
 			free(ptr);
+			ptr = NULL;
 		}
+		else
+			free(ptr);
 		info = NULL;
 	}
 }
