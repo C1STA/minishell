@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:25:16 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/24 18:30:24 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/24 21:43:47 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	heredoc_exit(t_final *cmds, char *env[], bool n)
 	free_exe(&cmds, &env);
 	close(STDIN_FILENO);
 	close(STDOUT_FILENO);
+	ft_signal(5);
 	if (n)
 	{
 		g_exit_status = 0;

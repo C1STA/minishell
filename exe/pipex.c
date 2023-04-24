@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 12:59:17 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/21 04:25:41 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/24 22:53:43 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ static void	wait_childs(t_pipex *p)
 			g_exit_status = (WEXITSTATUS(g_exit_status));
 		i++;
 	}
+	ft_signal(1);
 }
 
 void	pipex(t_final *cmds, char *env[])

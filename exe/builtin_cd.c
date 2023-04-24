@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 09:51:34 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/21 05:03:57 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/24 19:56:28 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static bool	first_check(t_final *cmds, t_pipex *p, char *env[], t_cd *cd)
 	&& !cmds->cmds[1][1] && !cmds->cmds[2]))
 	{
 		cd->path = get_env_input("HOME=", 5, env);
+		if (!cd->path)
+			return (print_perror_cd("HOME not set", false, p, cd));
 		if (chdir(cd->path))
 			return (print_perror_cd("HOME not set", false, p, cd));
 		cd->cwd = get_env_input("PWD=", 4, env);

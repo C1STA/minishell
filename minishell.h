@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 21:52:52 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/24 18:53:48 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/24 20:45:15 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -357,4 +357,7 @@ void		executor(t_final *cmds, char *env[]);
 long long	ft_atol_plus(char *str);
 long long	ft_atol_minus(char *str);
 char		*get_prompt_name(t_env *env);
+void		free_prompt(t_prompt *p);
+void		init_to_null(t_prompt *p);
+
 #endif

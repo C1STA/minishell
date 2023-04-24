@@ -6,22 +6,19 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 21:29:02 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/24 19:23:57 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/24 20:43:35 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_exe.h"
 
-static void	free_prompt(t_prompt *p)
+static char	*default_name(void)
 {
-	if (p->user)
-		free(p->user);
-	if (p->name)
-		free(p->name);
-	if (p->pwd)
-		free(p->pwd);
-	free(p);
+	char	*name;
+
+	name = ft_strcpy("minishell> ");
+	return (name);
 }
 
 static void	get_cluster_position(t_env *env, t_prompt *p, bool n)
@@ -52,18 +49,8 @@ static void	get_cluster_position(t_env *env, t_prompt *p, bool n)
 		get_cluster_position(env, p, true));
 }
 
-static bool	get_len_and_names(t_env *env, t_prompt *p)
+static void	len_and_names_loop(t_env *env_tmp, t_prompt *p)
 {
-	t_env		*env_tmp;
-
-	env_tmp = env;
-	p->len = 0;
-	p->i = 0;
-	p->j = 0;
-	p->status = 0;
-	p->name = NULL;
-	p->user = NULL;
-	p->pwd = NULL;
 	while (env_tmp)
 	{
 		if (!ft_strcmp(env_tmp->var_name, "USER"))
@@ -85,17 +72,18 @@ static bool	get_len_and_names(t_env *env, t_prompt *p)
 		}
 		env_tmp = env_tmp->next;
 	}
+}
+
+static bool	get_len_and_names(t_env *env, t_prompt *p)
+{
+	t_env		*env_tmp;
+
+	env_tmp = env;
+	init_to_null(p);
+	len_and_names_loop(env_tmp, p);
 	if (p->status != 3)
 		return (free_prompt(p), false);
 	return (true);
-}
-
-static char	*default_name(void)
-{
-	char	*name;
-
-	name = ft_strcpy("minishell> ");
-	return (name);
 }
 
 char	*get_prompt_name(t_env *env)
@@ -110,7 +98,7 @@ char	*get_prompt_name(t_env *env)
 		return (default_name());
 	dest = (char *)malloc(sizeof(char) * (p->len + 5));
 	if (!dest)
-		return (NULL);
+		return (free_prompt(p), default_name());
 	while (p->i < ft_strlen(p->user))
 		dest[p->i++] = p->user[p->j++];
 	dest[p->i++] = '@';
@@ -124,6 +112,5 @@ char	*get_prompt_name(t_env *env)
 	dest[p->i++] = '$';
 	dest[p->i++] = ' ';
 	dest[p->i++] = '\0';
-	free_prompt(p);
-	return (dest);
+	return (free_prompt(p), dest);
 }
