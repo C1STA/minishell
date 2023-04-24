@@ -6,7 +6,7 @@
 /*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 20:57:56 by imrane            #+#    #+#             */
-/*   Updated: 2023/04/23 17:24:12 by imoumini         ###   ########.fr       */
+/*   Updated: 2023/04/23 21:14:48 by imoumini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,7 @@ int main(int argc, char *argv[], char *env[])
 	(void)argc;
     (void)argv;
 	
-	// signal exit
-	struct sigaction action_exit;
-	sigset_t	sigmask;
-
-	g_exit_status = 0;
-	sigemptyset(&sigmask);
-	action_exit.sa_flags = SA_SIGINFO;
-	action_exit.sa_mask = sigmask;
-	action_exit.sa_sigaction = ft_sigint;
-	sigaction(SIGINT, &action_exit, NULL);
-	
-	// signal control slash
-	signal(SIGQUIT, SIG_IGN);
-	// programme hors signaux
+	ft_signal(1);
 	mini_env = copy_env(env);
 	final = NULL;
     src = NULL;
@@ -71,7 +58,6 @@ int main(int argc, char *argv[], char *env[])
 			fill_last_node(last_node, ft_strcpy("?"), exit_status, ft_strjoin(ft_strcpy("?="), exit_status));
 			expand_env(mini_env,root);
 			is_unset(&mini_env, root);
-			// ft_free(NULL, NULL, NULL, &info);
 			if(error_pars(root) == 1 && is_env_var(mini_env, root) == 1)
 			{
 				supp_quotes(root);
@@ -83,6 +69,7 @@ int main(int argc, char *argv[], char *env[])
 				free_env(&mini_env);
 				ft_free(NULL, &root, &src, &info);
 				executor(final, final_env);
+				printf("g_exit_status = %d\n", g_exit_status);
 				mini_env = copy_env(final_env);
 				free_final_env(&final_env);
 				ft_free_final_ast(&final);
@@ -108,27 +95,7 @@ int main(int argc, char *argv[], char *env[])
 // etre a laffut de tous les exit status
 
 /*
-imoumini@e1r10p21:~/42_cursus/minishell$ echo "$USER"
-imoumini
-imoumini@e1r10p21:~/42_cursus/minishell$ echo '$USER'
-$USER
-imoumini@e1r10p21:~/42_cursus/minishell$ echo '"$USER"'
-"$USER"
-imoumini@e1r10p21:~/42_cursus/minishell$ echo "'"$USER"'"
-'imoumini'
-imoumini@e1r10p21:~/42_cursus/minishell$ echo "''$USER''"
-''imoumini''
-imoumini@e1r10p21:~/42_cursus/minishell$ echo "ok"$USER"dac"
-okimouminidac
-imoumini@e1r10p21:~/42_cursus/minishell$ echo "ok"'$USER'"dac"
-ok$USERdac
-imoumini@e1r10p21:~/42_cursus/minishell$ echo "ok"''$USER"''dac"
-okimoumini''dac
-imoumini@e1r10p21:~/42_cursus/minishell$ ""'$USER'""
-$USER: command not found
-imoumini@e1r10p21:~/42_cursus/minishell$ echo ""'$USER'""
-$USER
-imoumini@e1r10p21:~/42_cursus/minishell$ echo ""'$USER'""
+
 
 
 

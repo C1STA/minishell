@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
+/*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:25:16 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/21 02:04:39 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/23 21:28:13 by imoumini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,9 @@ void	heredoc_exit(t_final *cmds, char *env[], bool n)
 	close(STDOUT_FILENO);
 	if (n)
 		exit(EXIT_SUCCESS);
-	else
-		exit(EXIT_FAILURE);
+	else if (g_exit_status != 130)
+		g_exit_status = 1;
+	exit(g_exit_status);
 }
 
 void	remove_heredoc(t_final *cmds)

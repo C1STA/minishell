@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 21:52:52 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/22 22:12:03 by imoumini         ###   ########.fr       */
+/*   Updated: 2023/04/24 16:18:18 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,11 @@ typedef struct s_prompt
 	char		*user;
 	char		*pwd;
 	int			len;
+	int			save_len;
 	size_t		i;
 	size_t		j;
+	int			i_gcp;
+	int			j_gcp;
 }	t_prompt;
 
 // structure de l'input de l'user
@@ -238,12 +241,12 @@ void		print_double_tab_env(char **str);
 char		**transform_env_in_double_tab(t_env *node);
 void		free_final_env(char ***tab_env);
 int			count_nbr_env(t_env *node);
-/*signaux*/
-void		ft_sigint(int sigint, siginfo_t *pid, void *idontknow);
+
+/*signals*/
+void		ft_sigint(int sigint);
+void		ft_signal(int i);
 
 /*builtin exit*/
-void		ft_exit(t_env **mini_env, t_node **root, \
-		t_source **src, t_info_tok **info);
 void		ft_exit_d(t_env **env);
 
 /*free*/

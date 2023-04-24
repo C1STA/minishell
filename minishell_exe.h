@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_exe.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
+/*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 15:56:53 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/23 02:41:18 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/23 21:53:48 by imoumini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,9 @@ char	*heredoc_expand(t_heredoc *h, char *env[], bool n);
 void	heredoc_exit(t_final *cmds, char *env[], bool n);
 bool	init_values(t_heredoc *h, bool n);
 int		env_var_len(char *env);
+void	print_eof(char *s);
+bool	infinite_loop(char *env[], t_redir *redir, t_heredoc *h);
+bool	free_heredoc(t_heredoc *h, bool n);
 
 //childs.c
 void	child_processs(t_final *cmds, char *env[], t_pipex *p);

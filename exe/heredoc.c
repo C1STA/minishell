@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
+/*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 19:16:50 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/23 02:41:29 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/23 21:53:41 by imoumini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern int	g_exit_status;
 
-static bool	free_heredoc(t_heredoc *h, bool n)
+bool	free_heredoc(t_heredoc *h, bool n)
 {
 	if (access(h->file_name, W_OK) == -1)
 	{
@@ -62,19 +62,8 @@ static bool	init_heredoc(char *env[], t_redir *redir, int i, int j)
 	if (h->fd == -1)
 		return (free_heredoc(h, false));
 	redir = redir->next;
-	while (1)
-	{
-		h->input = readline("> ");
-		if (!ft_strcmp(h->input, redir->txt))
-			break ;
-		if (!redir->quotes)
-			h->input = heredoc_expand(h, env, false);
-		h->reader = write(h->fd, h->input, ft_strlen(h->input));
-		if (h->reader == -1)
-			return (free_heredoc(h, false));
-		h->reader = write(h->fd, "\n", 1);
-		free(h->input);
-	}
+	if (!infinite_loop(env, redir, h))
+		return (false);
 	return (free_heredoc(h, true));
 }
 
@@ -113,15 +102,21 @@ bool	ft_heredoc(t_final *cmds, char *env[])
 
 	if (!is_heredoc(cmds))
 		return (true);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	pid = fork();
 	if (pid == -1)
 		return (print_perror("fork"), false);
 	if (pid == 0)
+	{
+		ft_signal(3);
 		define_heredoc(cmds, env);
+	}
 	waitpid(pid, &g_exit_status, 0);
 	if (WIFEXITED(g_exit_status))
 	{
 		g_exit_status = (WEXITSTATUS(g_exit_status));
+		ft_signal(1);
 		if (g_exit_status != 0)
 			return (false);
 	}

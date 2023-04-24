@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 21:29:02 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/23 17:12:05 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/24 16:27:56 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,23 +21,32 @@ static void	free_prompt(t_prompt *p)
 	free(p);
 }
 
-static void	get_cluster_position(t_env *env, t_prompt *p)
+static void	get_cluster_position(t_env *env, t_prompt *p, bool n)
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	p->name = (char *)malloc(sizeof(char) * 7);
-	while (env->var_value[i] && env->var_value[i] != '/')
-		i++;
-	i++;
-	j = 0;
-	while (env->var_value[i] && env->var_value[i] != '.')
+	p->i_gcp = 0;
+	if (!n)
+		p->save_len = p->len;
+	else
+		p->name = (char *)malloc(sizeof(char) * p->save_len + 1);
+	while (env->var_value[p->i_gcp] && env->var_value[p->i_gcp] != '/')
+		p->i_gcp++;
+	p->i_gcp++;
+	p->j_gcp = 0;
+	while (env->var_value[p->i_gcp] && env->var_value[p->i_gcp] != '.')
 	{
-		p->len++;
-		p->name[j++] = env->var_value[i++];
+		if (!n)
+		{
+			p->len++;
+			p->i_gcp++;
+		}
+		else
+			p->name[p->j_gcp++] = env->var_value[p->i_gcp++];
 	}
-	p->name[j] = '\0';
+	if (n)
+		p->name[p->j_gcp] = '\0';
+	else
+		return (p->save_len = p->len - p->save_len, \
+		get_cluster_position(env, p, true));
 }
 
 static void	get_len_and_names(t_env *env, t_prompt *p)
@@ -56,7 +65,7 @@ static void	get_len_and_names(t_env *env, t_prompt *p)
 			p->user = ft_strcpy(env_tmp->var_value);
 		}
 		else if (!ft_strcmp(env_tmp->var_name, "SESSION_MANAGER"))
-			get_cluster_position(env_tmp, p);
+			get_cluster_position(env_tmp, p, false);
 		else if (!ft_strcmp(env_tmp->var_name, "PWD"))
 		{
 			p->len += ft_strlen(env_tmp->var_value);
@@ -66,7 +75,7 @@ static void	get_len_and_names(t_env *env, t_prompt *p)
 	}
 }
 
-char	*default_name(void)
+static char	*default_name(void)
 {
 	char	*name;
 
