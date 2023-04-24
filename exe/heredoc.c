@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 19:16:50 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/23 21:53:41 by imoumini         ###   ########.fr       */
+/*   Updated: 2023/04/24 18:12:14 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,10 +113,10 @@ bool	ft_heredoc(t_final *cmds, char *env[])
 		define_heredoc(cmds, env);
 	}
 	waitpid(pid, &g_exit_status, 0);
+	ft_signal(1);
 	if (WIFEXITED(g_exit_status))
 	{
 		g_exit_status = (WEXITSTATUS(g_exit_status));
-		ft_signal(1);
 		if (g_exit_status != 0)
 			return (false);
 	}

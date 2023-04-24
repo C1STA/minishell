@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 21:52:52 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/24 16:18:18 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/24 18:53:48 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_prompt
 	size_t		j;
 	int			i_gcp;
 	int			j_gcp;
+	int			status;
 }	t_prompt;
 
 // structure de l'input de l'user

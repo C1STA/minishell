@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 21:29:02 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/24 16:27:56 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/24 19:23:57 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,12 @@
 
 static void	free_prompt(t_prompt *p)
 {
-	free(p->user);
-	free(p->name);
-	free(p->pwd);
+	if (p->user)
+		free(p->user);
+	if (p->name)
+		free(p->name);
+	if (p->pwd)
+		free(p->pwd);
 	free(p);
 }
 
@@ -49,7 +52,7 @@ static void	get_cluster_position(t_env *env, t_prompt *p, bool n)
 		get_cluster_position(env, p, true));
 }
 
-static void	get_len_and_names(t_env *env, t_prompt *p)
+static bool	get_len_and_names(t_env *env, t_prompt *p)
 {
 	t_env		*env_tmp;
 
@@ -57,22 +60,34 @@ static void	get_len_and_names(t_env *env, t_prompt *p)
 	p->len = 0;
 	p->i = 0;
 	p->j = 0;
+	p->status = 0;
+	p->name = NULL;
+	p->user = NULL;
+	p->pwd = NULL;
 	while (env_tmp)
 	{
 		if (!ft_strcmp(env_tmp->var_name, "USER"))
 		{
+			p->status++;
 			p->len += ft_strlen(env_tmp->var_value);
 			p->user = ft_strcpy(env_tmp->var_value);
 		}
 		else if (!ft_strcmp(env_tmp->var_name, "SESSION_MANAGER"))
+		{
+			p->status++;
 			get_cluster_position(env_tmp, p, false);
+		}
 		else if (!ft_strcmp(env_tmp->var_name, "PWD"))
 		{
+			p->status++;
 			p->len += ft_strlen(env_tmp->var_value);
 			p->pwd = ft_strcpy(env_tmp->var_value);
 		}
 		env_tmp = env_tmp->next;
 	}
+	if (p->status != 3)
+		return (free_prompt(p), false);
+	return (true);
 }
 
 static char	*default_name(void)
@@ -91,7 +106,8 @@ char	*get_prompt_name(t_env *env)
 	if (!ft_strcmp(env->var_name, "nothing"))
 		return (default_name());
 	p = (t_prompt *)malloc(sizeof(t_prompt));
-	get_len_and_names(env, p);
+	if (!get_len_and_names(env, p))
+		return (default_name());
 	dest = (char *)malloc(sizeof(char) * (p->len + 5));
 	if (!dest)
 		return (NULL);
