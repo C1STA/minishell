@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 21:52:52 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/25 14:24:13 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/25 15:13:29 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,21 @@ typedef struct env_s
 	char			*var_value;
 	struct env_s	*next;
 }	t_env;
+
+typedef struct s_main
+{
+	t_env		*mini_env;
+	t_source	*src;
+	t_info_tok	*info;
+	t_node		*root;
+	t_com		**ast;
+	t_final		*final;
+	t_env		*last_node;
+	char		*input;
+	char		**final_env;
+	char		*exit_status;
+	char		*prompt_name;
+}	t_main;
 
 /* manipulate the input*/
 char		next_char(t_source *src);

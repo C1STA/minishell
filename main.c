@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 20:57:56 by imrane            #+#    #+#             */
-/*   Updated: 2023/04/23 21:14:48 by imoumini         ###   ########.fr       */
+/*   Updated: 2023/04/25 15:13:54 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,72 +15,83 @@
 
 int	g_exit_status;
 
-int main(int argc, char *argv[], char *env[])
+void	is_args(int argc)
 {
-    t_env	*mini_env;
-	char *input;
-    t_source *src;
-    t_info_tok *info;
-    t_node *root;
-	t_com **ast;
-	t_final *final;
-	char **final_env;
-	t_env *last_node;
-	char *exit_status;
-	char	*prompt_name;
-	(void)argc;
-    (void)argv;
-	
-	ft_signal(1);
-	mini_env = copy_env(env);
-	final = NULL;
-    src = NULL;
-	info = NULL;
-	root = NULL;
-	ast = NULL;
-	final_env = NULL;
-	while (1)
+	if (argc > 1)
 	{
-		prompt_name = get_prompt_name(mini_env);
-		input = readline(prompt_name);
-		free(prompt_name);
-		if (!input)
-			ft_exit_d(&mini_env);
-		add_history(input);
-		if (single_enter(input) == 0 && does_quotes_closed(input) == 1 && check_space_append_heredoc(input) == 1)
-		{
-			root = parse_simple_command(input, &src, &info);
-			if (check_if_exist(mini_env, "?") == 1)
-				supp_env(&mini_env, "?");
-			add_node_env(mini_env);
-			last_node = last_env_node(mini_env);
-			exit_status = ft_itoa(g_exit_status);
-			fill_last_node(last_node, ft_strcpy("?"), exit_status, ft_strjoin(ft_strcpy("?="), exit_status));
-			expand_env(mini_env,root);
-			is_unset(&mini_env, root);
-			if(error_pars(root) == 1 && is_env_var(mini_env, root) == 1)
-			{
-				supp_quotes(root);
-				ast = create_ast_command_redir(root);
-				final = create_final_ast(ast);
-				ft_free_before_final_ast(&ast);
-				final_expand(final);
-				final_env = transform_env_in_double_tab(mini_env);
-				free_env(&mini_env);
-				ft_free(NULL, &root, &src, &info);
-				executor(final, final_env);
-				printf("g_exit_status = %d\n", g_exit_status);
-				mini_env = copy_env(final_env);
-				free_final_env(&final_env);
-				ft_free_final_ast(&final);
-			}
-			else
-				ft_free(NULL, &root, &src,&info);
-		}
-			else (free(input));
+		ft_putstr_fd("Invalid number of arguments\n", 2);
+		exit(1);
+	}
+	if (!isatty(0))
+	{
+		ft_putstr_fd("Error invalid STDIN\n", 2);
+		exit(1);
 	}
 }
 
+void	init_main_values(t_main *m, char *env[])
+{
+	m->final = NULL;
+	m->src = NULL;
+	m->info = NULL;
+	m->root = NULL;
+	m->ast = NULL;
+	m->final_env = NULL;
+	m->mini_env = copy_env(env);
+}
+
+int main(int argc, char *argv[], char *env[])
+{
+	t_main	*m;
+
+	is_args(argc);
+	ft_signal(1);
+	(void)argv;
+	m = (t_main *)malloc(sizeof(t_main));
+	if (!m)
+		return (1);
+	init_main_values(m, env);
+	while (1)
+	{
+		m->prompt_name = get_prompt_name(m->mini_env);
+		m->input = readline(m->prompt_name);
+		free(m->prompt_name);
+		if (!m->input)
+			ft_exit_d(&m->mini_env);
+		add_history(m->input);
+		if (single_enter(m->input) == 0 && does_quotes_closed(m->input) == 1 && check_space_append_heredoc(m->input) == 1)
+		{
+			m->root = parse_simple_command(m->input, &m->src, &m->info);
+			if (check_if_exist(m->mini_env, "?") == 1)
+				supp_env(&m->mini_env, "?");
+			add_node_env(m->mini_env);
+			m->last_node = last_env_node(m->mini_env);
+			m->exit_status = ft_itoa(g_exit_status);
+			fill_last_node(m->last_node, ft_strcpy("?"), m->exit_status, ft_strjoin(ft_strcpy("?="), m->exit_status));
+			expand_env(m->mini_env, m->root);
+			is_unset(&m->mini_env, m->root);
+			if(error_pars(m->root) == 1 && is_env_var(m->mini_env, m->root) == 1)
+			{
+				supp_quotes(m->root);
+				m->ast = create_ast_command_redir(m->root);
+				m->final = create_final_ast(m->ast);
+				ft_free_before_final_ast(&m->ast);
+				final_expand(m->final);
+				m->final_env = transform_env_in_double_tab(m->mini_env);
+				free_env(&m->mini_env);
+				ft_free(NULL, &m->root, &m->src, &m->info);
+				executor(m->final, m->final_env);
+				printf("g_exit_status = %d\n", g_exit_status);
+				m->mini_env = copy_env(m->final_env);
+				free_final_env(&m->final_env);
+				ft_free_final_ast(&m->final);
+			}
+			else
+				ft_free(NULL, &m->root, &m->src,&m->info);
+		}
+			else (free(m->input));
+	}
+}
 
 // faire ctrl c fait rien
 // faire ctr D -> quitte le shell
