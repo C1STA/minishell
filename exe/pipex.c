@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 12:59:17 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/25 17:35:29 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/25 20:20:08 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ static void	wait_childs(t_pipex *p)
 		waitpid(p->child[i], &g_exit_status, 0);
 		if (WIFEXITED(g_exit_status))
 			g_exit_status = (WEXITSTATUS(g_exit_status));
+		else if (WIFSIGNALED(g_exit_status))
+			g_exit_status = 128 + WTERMSIG(g_exit_status);
 		i++;
 	}
 	ft_signal(1);
