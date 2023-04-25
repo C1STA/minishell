@@ -46,6 +46,8 @@ SRC = main.c \
 	builtin/ft_unset.c \
 	builtin/ft_unset2.c \
 	ft_free/ft_free.c \
+	ft_free/ft_free_2.c \
+	ft_free/ft_free_3.c \
 	error_pars.c \
 	error_pars2.c \
 	exe/redir.c \
