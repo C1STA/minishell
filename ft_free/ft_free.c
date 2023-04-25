@@ -6,11 +6,35 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 22:06:18 by imrane            #+#    #+#             */
-/*   Updated: 2023/04/25 15:51:57 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/25 17:06:45 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	free_ast_conditions(t_node *ptr_node, t_node *save)
+{
+	if (ptr_node)
+	{
+		if (ptr_node -> next != NULL)
+		{
+			while (ptr_node -> next != NULL)
+			{
+				save = ptr_node -> next;
+				free(ptr_node -> txt);
+				free(ptr_node);
+				ptr_node = save;
+			}
+			free(ptr_node -> txt);
+			free(ptr_node);
+		}
+		else
+		{
+			free(ptr_node -> txt);
+			free(ptr_node);
+		}
+	}
+}
 
 void	free_ast(t_node **root)
 {
@@ -21,29 +45,11 @@ void	free_ast(t_node **root)
 	if (!root)
 		return ;
 	ptr_root = *root;
+	save = NULL;
 	if (ptr_root)
 	{
 		ptr_node = ptr_root -> first_child;
-		if (ptr_node)
-		{
-			if (ptr_node -> next != NULL)
-			{
-				while (ptr_node -> next != NULL)
-				{
-					save = ptr_node -> next;
-					free(ptr_node -> txt);
-					free(ptr_node);
-					ptr_node = save;
-				}
-				free(ptr_node -> txt);
-				free(ptr_node);
-			}
-			else
-			{
-				free(ptr_node -> txt);
-				free(ptr_node);
-			}
-		}
+		free_ast_conditions(ptr_node, save);
 		free(ptr_root);
 		root = NULL;
 	}
