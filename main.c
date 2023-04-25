@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 20:57:56 by imrane            #+#    #+#             */
-/*   Updated: 2023/04/25 15:13:54 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/25 15:34:22 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,42 @@ void	init_main_values(t_main *m, char *env[])
 	m->mini_env = copy_env(env);
 }
 
-int main(int argc, char *argv[], char *env[])
+void	ft_checker_bis(t_main *m)
+{
+	supp_quotes(m->root);
+	m->ast = create_ast_command_redir(m->root);
+	m->final = create_final_ast(m->ast);
+	ft_free_before_final_ast(&m->ast);
+	final_expand(m->final);
+	m->final_env = transform_env_in_double_tab(m->mini_env);
+	free_env(&m->mini_env);
+	ft_free(NULL, &m->root, &m->src, &m->info);
+	executor(m->final, m->final_env);
+	printf("g_exit_status = %d\n", g_exit_status);
+	m->mini_env = copy_env(m->final_env);
+	free_final_env(&m->final_env);
+	ft_free_final_ast(&m->final);
+}
+
+void	ft_checker(t_main *m)
+{
+	m->root = parse_simple_command(m->input, &m->src, &m->info);
+	if (check_if_exist(m->mini_env, "?") == 1)
+		supp_env(&m->mini_env, "?");
+	add_node_env(m->mini_env);
+	m->last_node = last_env_node(m->mini_env);
+	m->exit_status = ft_itoa(g_exit_status);
+	fill_last_node(m->last_node, ft_strcpy("?"), m->exit_status, \
+	ft_strjoin(ft_strcpy("?="), m->exit_status));
+	expand_env(m->mini_env, m->root);
+	is_unset(&m->mini_env, m->root);
+	if (error_pars(m->root) == 1 && is_env_var(m->mini_env, m->root) == 1)
+		ft_checker_bis(m);
+	else
+		ft_free(NULL, &m->root, &m->src, &m->info);
+}
+
+int	main(int argc, char *argv[], char *env[])
 {
 	t_main	*m;
 
@@ -59,37 +94,11 @@ int main(int argc, char *argv[], char *env[])
 		if (!m->input)
 			ft_exit_d(&m->mini_env);
 		add_history(m->input);
-		if (single_enter(m->input) == 0 && does_quotes_closed(m->input) == 1 && check_space_append_heredoc(m->input) == 1)
-		{
-			m->root = parse_simple_command(m->input, &m->src, &m->info);
-			if (check_if_exist(m->mini_env, "?") == 1)
-				supp_env(&m->mini_env, "?");
-			add_node_env(m->mini_env);
-			m->last_node = last_env_node(m->mini_env);
-			m->exit_status = ft_itoa(g_exit_status);
-			fill_last_node(m->last_node, ft_strcpy("?"), m->exit_status, ft_strjoin(ft_strcpy("?="), m->exit_status));
-			expand_env(m->mini_env, m->root);
-			is_unset(&m->mini_env, m->root);
-			if(error_pars(m->root) == 1 && is_env_var(m->mini_env, m->root) == 1)
-			{
-				supp_quotes(m->root);
-				m->ast = create_ast_command_redir(m->root);
-				m->final = create_final_ast(m->ast);
-				ft_free_before_final_ast(&m->ast);
-				final_expand(m->final);
-				m->final_env = transform_env_in_double_tab(m->mini_env);
-				free_env(&m->mini_env);
-				ft_free(NULL, &m->root, &m->src, &m->info);
-				executor(m->final, m->final_env);
-				printf("g_exit_status = %d\n", g_exit_status);
-				m->mini_env = copy_env(m->final_env);
-				free_final_env(&m->final_env);
-				ft_free_final_ast(&m->final);
-			}
-			else
-				ft_free(NULL, &m->root, &m->src,&m->info);
-		}
-			else (free(m->input));
+		if (single_enter(m->input) == 0 && does_quotes_closed(m->input) == 1 \
+		&& check_space_append_heredoc(m->input) == 1)
+			ft_checker(m);
+		else
+			(free(m->input));
 	}
 }
 
