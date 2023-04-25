@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 16:07:06 by imoumini          #+#    #+#             */
-/*   Updated: 2023/04/25 14:33:15 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/25 20:17:51 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,6 @@ t_com	**malloc_ast(t_com **ast, int nbr_pipe)
 	return (ast);
 }
 
-t_ast	*ft_free_save_ast(t_ast *save_ast)
-{
-	free(save_ast);
-	save_ast = NULL;
-	return (save_ast);
-}
 
 t_com	**create_while(t_com **ast, t_ast *save_ast, t_node *ptr, int nbr_pipe)
 {
@@ -57,7 +51,7 @@ t_com	**create_while(t_com **ast, t_ast *save_ast, t_node *ptr, int nbr_pipe)
 			}
 			if (ast[i])
 				ast[i]->redir = save_ast->redir;
-			save_ast = ft_free_save_ast(save_ast);
+			free(save_ast);
 			i++;
 		}
 	}
