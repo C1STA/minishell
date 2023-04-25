@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 19:58:29 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/16 09:18:55 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/25 16:50:48 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	print_perror(char *s)
 	perror("");
 }
 
-bool	print_perror_cd(char *s, bool n, t_pipex *p, t_cd *cd)
+void	print_perror_cd(char *s, bool n, t_pipex *p, t_cd *cd)
 {
 	p->exit_status = 1;
 	ft_putstr_fd("minishell: cd: ", 2);
@@ -41,7 +41,6 @@ bool	print_perror_cd(char *s, bool n, t_pipex *p, t_cd *cd)
 	if (cd->tmp)
 		free(cd->tmp);
 	free(cd);
-	return (false);
 }
 
 static bool	slash_check(char *s)

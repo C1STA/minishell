@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 22:06:18 by imrane            #+#    #+#             */
-/*   Updated: 2023/04/25 15:42:26 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/25 15:51:57 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,38 +109,4 @@ t_source **src, t_info_tok **info)
 		free_src(src);
 	if (info)
 		free_info(info);
-}
-
-void	ft_free_before_final_ast(t_com ***ast_before)
-{
-	int		i;
-	t_com	**ast;
-	t_com	*ptr;
-	t_com	*save_ptr;
-
-	i = 0;
-	if (!ast_before)
-		return ;
-	ast = *ast_before;
-	if (!ast)
-		return ;
-	while (ast[i])
-	{
-		ptr = ast[i];
-		while (ptr)
-		{
-			save_ptr = ptr -> next;
-			if (ptr -> txt)
-			{
-				free(ptr -> txt);
-				ptr -> txt = NULL;
-			}
-			free(ptr);
-			ptr = save_ptr;
-		}
-		ast[i] = NULL;
-		i++;
-	}
-	free(ast);
-	ast_before = NULL;
 }

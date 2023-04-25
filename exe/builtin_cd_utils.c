@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 13:15:00 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/20 13:31:59 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/25 16:57:34 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,12 @@ extern int	g_exit_status;
 
 void	free_cd(t_cd *cd)
 {
-	free(cd->tmp);
-	free(cd->path);
-	free(cd->cwd);
+	if (cd->tmp)
+		free(cd->tmp);
+	if (cd->path)
+		free(cd->path);
+	if (cd->cwd)
+		free(cd->cwd);
 	free(cd);
 }
 
@@ -35,18 +38,23 @@ size_t	env_finder(char *name, char **env)
 char	*get_env_input(char *variable, int j, char *env[])
 {
 	size_t	i;
+	char	*dest;
 
 	i = env_finder(variable, env);
 	if (i == ft_tablen(env))
 		return (NULL);
-	return (&env[i][j]);
+	dest = ft_strcpy(&env[i][j]);
+	return (dest);
 }
 
-void	export_env(char *variable, char *val, char *env[])
+bool	export_env(char *variable, char *val, char *env[])
 {
 	size_t	i;
 
 	i = env_finder(variable, env);
+	if (i == ft_tablen(env))
+		return (false);
 	free(env[i]);
 	env[i] = ft_strjoin_env(variable, val);
+	return (true);
 }

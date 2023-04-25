@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 15:56:53 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/24 17:14:44 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/25 16:51:04 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void	exit_exe(t_final *cmds, char *env[], t_pipex *p);
 void	print_perror(char *s);
 void	print_exec(char *s, t_pipex *p);
 void	print_exit(t_final *cmds, t_pipex *p, char *s, bool n);
-bool	print_perror_cd(char *s, bool n, t_pipex *p, t_cd *cd);
+void	print_perror_cd(char *s, bool n, t_pipex *p, t_cd *cd);
 
 //builtin.c
 bool	isbuiltin(t_final *cmds);
@@ -117,7 +117,7 @@ bool	builtin(t_final *cmds, char *env[], t_pipex *p);
 //builtin_cd.c - builtin_cd_utils.c
 void	free_cd(t_cd *cd);
 size_t	env_finder(char *name, char **env);
-void	export_env(char *variable, char *val, char *env[]);
+bool	export_env(char *variable, char *val, char *env[]);
 char	*get_env_input(char *variable, int j, char *env[]);
 bool	builtin_cd(t_final *cmds, char *env[], t_pipex *p);
 
