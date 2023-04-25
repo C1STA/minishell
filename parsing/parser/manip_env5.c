@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manip_env5.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:38:31 by imoumini          #+#    #+#             */
-/*   Updated: 2023/04/25 12:06:14 by imoumini         ###   ########.fr       */
+/*   Updated: 2023/04/25 21:47:14 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,13 @@ void	expand_job_multiple_dollar(t_node *ptr, int nbr)
 	}
 }
 
+void	free_elem(void **elem)
+{
+	if (*elem == NULL)
+		return ;
+	free(*elem);
+}
+
 void	expand_job(t_env *head, t_node *ptr)
 {
 	int		i;
@@ -49,10 +56,9 @@ void	expand_job(t_env *head, t_node *ptr)
 	char	*a_do;
 	char	*str;
 
-	i = 0;
-	a_do = NULL;
-	a_do = init_save_after_dollar(a_do);
-	while (ptr -> txt[i] != '\0')
+	i = -1;
+	a_do = ft_strdup("a");
+	while (ptr -> txt[++i] != '\0')
 	{
 		if (ptr ->txt[i] == '$')
 		{
@@ -64,10 +70,11 @@ void	expand_job(t_env *head, t_node *ptr)
 				a_do = after_dollar_deux(find_end_of_var(ptr->txt + (i + 1)));
 				str = ft_strjoin(b_do, return_matching_value(head, save_var));
 				final_txt(a_do, str, ptr, save_var);
+				a_do = NULL;
 			}
 		}
-		i++;
 	}
+	free_elem((void **)&a_do);
 }
 
 int	more_than_one_dollars_suite(t_node *ptr)
@@ -106,30 +113,4 @@ char	*after_multiple_dollar(char *str, int nbr)
 		i++;
 	}
 	return (return_after_multiple_dollar(str, i, save));
-}
-
-char	*add_nbr(int nbr)
-{
-	char	*str_nbr;
-	int		count;
-
-	count = 2;
-	while (nbr > 1)
-	{
-		if (count == 2)
-		{
-			str_nbr = malloc(sizeof(char) * 8);
-			init_str_nbr(str_nbr);
-			count--;
-			if (nbr == 2)
-				return (str_nbr);
-		}
-		if (count == 0)
-			str_nbr = ft_strjoin(str_nbr, str_nbr);
-		if (count >= 0)
-			count--;
-		if (nbr > 0)
-			nbr = nbr / 2;
-	}
-	return (str_nbr);
 }

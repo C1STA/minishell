@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 18:20:50 by imoumini          #+#    #+#             */
-/*   Updated: 2023/04/25 14:24:50 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/25 21:42:09 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,30 @@ void	if_simple_env(char *new_str, int *i, int *j, char *str)
 			*(i) = *(i) + 1;
 		}
 	}
+}
+
+char	*add_nbr(int nbr)
+{
+	char	*str_nbr;
+	int		count;
+
+	count = 2;
+	while (nbr > 1)
+	{
+		if (count == 2)
+		{
+			str_nbr = malloc(sizeof(char) * 8);
+			init_str_nbr(str_nbr);
+			count--;
+			if (nbr == 2)
+				return (str_nbr);
+		}
+		if (count == 0)
+			str_nbr = ft_strjoin(str_nbr, str_nbr);
+		if (count >= 0)
+			count--;
+		if (nbr > 0)
+			nbr = nbr / 2;
+	}
+	return (str_nbr);
 }

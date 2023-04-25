@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 20:57:56 by imrane            #+#    #+#             */
-/*   Updated: 2023/04/25 17:37:31 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/25 21:45:42 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	ft_checker_bis(t_main *m)
 	free_env(&m->mini_env);
 	ft_free(NULL, &m->root, &m->src, &m->info);
 	executor(m->final, m->final_env, m);
-	printf("g_exit_status = %d\n", g_exit_status);
 	m->mini_env = copy_env(m->final_env);
 	free_final_env(&m->final_env);
 	ft_free_final_ast(&m->final);
