@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manip_env11.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 18:20:50 by imoumini          #+#    #+#             */
-/*   Updated: 2023/04/22 20:54:54 by imoumini         ###   ########.fr       */
+/*   Updated: 2023/04/25 14:24:50 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	expand_guillemets_first(char *s, int *i_dol, int *nb_simp, int *i_simp)
 		*(i_dol) = *(i_dol) - 1;
 	}
 }
+
 void	if_double_env(char *new_str, int *i, int *j, char *str)
 {
 	if (str[*(i)] == '"')

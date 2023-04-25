@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 21:52:52 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/25 12:02:54 by imoumini         ###   ########.fr       */
+/*   Updated: 2023/04/25 14:24:13 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -328,7 +328,6 @@ t_final		*create_final_ast(t_com **ast);
 t_final		*create_list_final_ast(t_final *final, t_com *ast);
 char		**break_linked_list_in_double_tab(t_com *com);
 int			ft_com_len(t_com *com);
-void		printf_final_ast(t_final *final);
 void		final_expand(t_final *final);
 int			double_tab_as_space(char **tab);
 int			tab_as_space(char *tab);

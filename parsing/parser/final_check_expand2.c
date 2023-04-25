@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   final_check_expand2.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 17:44:38 by imoumini          #+#    #+#             */
-/*   Updated: 2023/04/25 11:52:55 by imoumini         ###   ########.fr       */
+/*   Updated: 2023/04/25 14:49:13 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	final_expand(t_final *final)
 			{
 				save = follow -> cmds;
 				follow -> cmds = recreate_tab_without_space(follow -> cmds);
-				//print_double_tab(follow -> cmds);
 				free_double_tab(save);
 			}
 		}
@@ -70,6 +69,7 @@ int	double_tab_as_space(char **tab)
 {
 	int	i;
 	int	j;
+	int	len;
 
 	i = 0;
 	j = 0;
@@ -77,9 +77,10 @@ int	double_tab_as_space(char **tab)
 		return (0);
 	while (tab[i])
 	{
-		while (tab[i][j])
+		len = ft_strlen(tab[i]);
+		while (j < len)
 		{
-			if (tab[i][j] == '-' )
+			if (tab[i][j] == '-')
 				return (1);
 			j++;
 		}

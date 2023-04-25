@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exception.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 15:57:53 by imoumini          #+#    #+#             */
-/*   Updated: 2023/04/22 16:20:14 by imoumini         ###   ########.fr       */
+/*   Updated: 2023/04/25 14:25:18 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ int	single_enter(char *input)
 	return (0);
 }
 
-int only_space(char *str)
+int	only_space(char *str)
 {
-	int i;
-	int letter;
+	int	i;
+	int	letter;
 
 	i = 0;
 	letter = 0;

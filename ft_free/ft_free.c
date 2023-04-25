@@ -3,19 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 22:06:18 by imrane            #+#    #+#             */
-/*   Updated: 2023/04/23 17:17:33 by imoumini         ###   ########.fr       */
+/*   Updated: 2023/04/25 14:20:35 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-void free_ast(t_node **root)
+
+void	free_ast(t_node **root)
 {
-	t_node *ptr_root;
-	t_node *ptr_node;
-	t_node *save;
+	t_node	*ptr_root;
+	t_node	*ptr_node;
+	t_node	*save;
+
 	if (!root)
 		return ;
 	ptr_root = *root;
@@ -44,15 +46,15 @@ void free_ast(t_node **root)
 		}
 		free(ptr_root);
 		root = NULL;
-		
 	}
 	free(root);
 	root = NULL;
 }
-void free_env(t_env **mini_env)
+
+void	free_env(t_env **mini_env)
 {
-	t_env *ptr_env;
-	t_env *save_env;
+	t_env	*ptr_env;
+	t_env	*save_env;
 
 	if (!mini_env)
 		return ;
@@ -76,12 +78,12 @@ void free_env(t_env **mini_env)
 	}
 }
 
-void free_final_env(char ***tab_env)
+void	free_final_env(char ***tab_env)
 {
-	int i;
-	char **tab;
-	i = 0;
+	int		i;
+	char	**tab;
 
+	i = 0;
 	if (!tab_env)
 		return ;
 	tab = *tab_env;
@@ -95,7 +97,9 @@ void free_final_env(char ***tab_env)
 	free(tab);
 	tab_env = NULL;
 }
-void ft_free(t_env **mini_env, t_node **root, t_source **src, t_info_tok **info) 
+
+void	ft_free(t_env **mini_env, t_node **root, \
+t_source **src, t_info_tok **info)
 {
 	if (root)
 		free_ast(root);
@@ -107,14 +111,14 @@ void ft_free(t_env **mini_env, t_node **root, t_source **src, t_info_tok **info)
 		free_info(info);
 }
 
-void ft_free_before_final_ast(t_com ***ast_before)
+void	ft_free_before_final_ast(t_com ***ast_before)
 {
-	int i;
+	int		i;
+	t_com	**ast;
+	t_com	*ptr;
+	t_com	*save_ptr;
+
 	i = 0;
-	t_com **ast;
-	t_com *ptr;
-	t_com *save_ptr;
-	
 	if (!ast_before)
 		return ;
 	ast = *ast_before;
@@ -141,18 +145,18 @@ void ft_free_before_final_ast(t_com ***ast_before)
 	ast_before = NULL;
 }
 
-void ft_free_final_ast(t_final **ast_before)
+void	ft_free_final_ast(t_final **ast_before)
 {
-	t_final *ast;
-	t_final *save_ast;
-	t_redir *save_redir;
-	
-	int i;
+	t_final	*ast;
+	t_final	*save_ast;
+	t_redir	*save_redir;
+	int		i;
+
 	if (!ast_before)
 		return ;
 	ast = *ast_before;
 	if (!ast)
-		return;
+		return ;
 	i = 0;
 	while (ast)
 	{
@@ -182,9 +186,10 @@ void ft_free_final_ast(t_final **ast_before)
 	ast_before = NULL;
 }
 
-void free_info(t_info_tok **info)
+void	free_info(t_info_tok **info)
 {
-	t_info_tok *ptr;
+	t_info_tok	*ptr;
+
 	if (info)
 	{
 		ptr = *info;
@@ -203,9 +208,11 @@ void free_info(t_info_tok **info)
 		info = NULL;
 	}
 }
-void free_src(t_source **src)
+
+void	free_src(t_source **src)
 {
-	t_source *ptr;
+	t_source	*ptr;
+
 	if (src)
 	{
 		ptr = *src;
@@ -221,10 +228,11 @@ void free_src(t_source **src)
 		src = NULL;
 	}
 }
-void free_tok(t_token **tok)
+
+void	free_tok(t_token **tok)
 {
-	t_token *ptr;
-	
+	t_token	*ptr;
+
 	if (tok)
 	{
 		ptr = *tok;
@@ -244,10 +252,11 @@ void free_tok(t_token **tok)
 		tok = NULL;
 	}
 }
-void free_info_buf(t_info_tok *info)
+
+void	free_info_buf(t_info_tok *info)
 {
-	t_info_tok *ptr;
-	
+	t_info_tok	*ptr;
+
 	if (info)
 	{
 		ptr = info;
@@ -263,7 +272,7 @@ void free_info_buf(t_info_tok *info)
 	}
 }
 
-void free_expand_job_mutiple(char *str_nbr, char *dollar, char *txt)
+void	free_expand_job_mutiple(char *str_nbr, char *dollar, char *txt)
 {
 	free(dollar);
 	free(txt);
