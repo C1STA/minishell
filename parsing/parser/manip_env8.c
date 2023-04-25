@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:45:39 by imoumini          #+#    #+#             */
-/*   Updated: 2023/04/25 14:22:49 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/25 20:46:19 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	final_txt(char *a_dol, char *new_str, t_node *ptr, char *save_var)
 		new_str = ft_strjoin(new_str, a_dol);
 	free(ptr -> txt);
 	free(save_var);
+	free(a_dol);
 	ptr -> txt = new_str;
 }
 
