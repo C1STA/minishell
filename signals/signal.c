@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 18:26:21 by imrane            #+#    #+#             */
-/*   Updated: 2023/04/25 11:51:16 by imoumini         ###   ########.fr       */
+/*   Updated: 2023/04/25 17:10:24 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,12 @@ void	ft_sigint_heredoc(int sigint)
 
 void	ft_sig_child(int sigint)
 {
-	g_exit_status += sigint;;
+	g_exit_status += sigint;
 	g_exit_status = 130;
 	ft_putstr_fd("\n", 1);
 	close(0);
 }
 
-//sigquit = ctrl + "\"
 void	ft_sig_quit(int sigint)
 {
 	g_exit_status += sigint;
@@ -52,33 +51,28 @@ void	ft_sig_quit(int sigint)
 
 void	ft_signal(int i)
 {
-	if (i == 1)//SIGNAL PARENT
+	if (i == 1)
 	{
-		//ft_putstr_fd("SIGNAL1\n", 2);
 		signal(SIGINT, ft_sigint);
 		signal(SIGQUIT, SIG_IGN);
 	}
-	if (i == 2)//SIGNAL CHILD
+	if (i == 2)
 	{
-		//ft_putstr_fd("SIGNAL2\n", 2);
 		signal(SIGINT, ft_sig_child);
 		signal(SIGQUIT, ft_sig_quit);
 	}
-	if (i == 3)//SIGNAL HEREDOC
+	if (i == 3)
 	{
-		//ft_putstr_fd("SIGNAL3\n", 2);
 		signal(SIGINT, ft_sigint_heredoc);
 		signal(SIGQUIT, SIG_IGN);
 	}
-	if (i == 4)//IGNORE LE SIGNAL
+	if (i == 4)
 	{
-		//ft_putstr_fd("SIGNAL4\n", 2);
 		signal(SIGINT, SIG_IGN);
 		signal(SIGQUIT, SIG_IGN);
 	}
-	if (i == 5)//SIGNAL DEFAULT
+	if (i == 5)
 	{
-		//ft_putstr_fd("SIGNAL5\n", 2);
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 	}
