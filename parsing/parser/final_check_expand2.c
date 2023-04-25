@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   final_check_expand2.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
+/*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 17:44:38 by imoumini          #+#    #+#             */
-/*   Updated: 2023/04/18 03:17:27 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/25 11:52:55 by imoumini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	final_expand(t_final *final)
 			{
 				save = follow -> cmds;
 				follow -> cmds = recreate_tab_without_space(follow -> cmds);
-				print_double_tab(follow -> cmds);
+				//print_double_tab(follow -> cmds);
 				free_double_tab(save);
 			}
 		}

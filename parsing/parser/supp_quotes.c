@@ -6,7 +6,7 @@
 /*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 16:14:54 by imoumini          #+#    #+#             */
-/*   Updated: 2023/04/15 18:57:29 by imoumini         ###   ########.fr       */
+/*   Updated: 2023/04/25 11:59:42 by imoumini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,9 @@ void	str_without_quotes(t_node *ptr)
 		if (!ptr)
 			break ;
 		if (ptr -> txt[i] != '\'' && ptr -> txt[i] != '"')
-		{
-			new_str[j] = ptr -> txt[i];
-			j++;
-		}
-		i++;
+			new_str[j++] = ptr -> txt[i];
+		if (ptr -> txt[i])
+			i++;
 	}
 	new_str[j] = '\0';
 	free(ptr -> txt);

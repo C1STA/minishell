@@ -6,7 +6,7 @@
 /*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 21:23:57 by imrane            #+#    #+#             */
-/*   Updated: 2023/04/23 17:15:22 by imoumini         ###   ########.fr       */
+/*   Updated: 2023/04/25 12:08:45 by imoumini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@ t_node	*new_node(t_token *tok)
 	t_node	*node;
 
 	node = malloc(sizeof(t_node));
+	node -> txt = NULL;
+	node -> after_here_doc = 0;
+	node -> quotes = 0;
+	node -> heredoc = 0;
 	if (tok)
 		node -> txt = ft_strcpy((tok -> text));
 	node -> children = 0;

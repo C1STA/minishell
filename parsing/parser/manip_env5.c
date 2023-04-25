@@ -6,7 +6,7 @@
 /*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:38:31 by imoumini          #+#    #+#             */
-/*   Updated: 2023/04/22 18:53:02 by imoumini         ###   ########.fr       */
+/*   Updated: 2023/04/25 12:06:14 by imoumini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	expand_job(t_env *head, t_node *ptr)
 
 	i = 0;
 	a_do = NULL;
-	init_save_after_dollar(a_do);
+	a_do = init_save_after_dollar(a_do);
 	while (ptr -> txt[i] != '\0')
 	{
 		if (ptr ->txt[i] == '$')

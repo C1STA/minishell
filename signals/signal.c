@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
+/*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 18:26:21 by imrane            #+#    #+#             */
-/*   Updated: 2023/04/24 23:04:37 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/25 11:51:16 by imoumini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,31 +54,31 @@ void	ft_signal(int i)
 {
 	if (i == 1)//SIGNAL PARENT
 	{
-		ft_putstr_fd("SIGNAL1\n", 2);
+		//ft_putstr_fd("SIGNAL1\n", 2);
 		signal(SIGINT, ft_sigint);
 		signal(SIGQUIT, SIG_IGN);
 	}
 	if (i == 2)//SIGNAL CHILD
 	{
-		ft_putstr_fd("SIGNAL2\n", 2);
+		//ft_putstr_fd("SIGNAL2\n", 2);
 		signal(SIGINT, ft_sig_child);
 		signal(SIGQUIT, ft_sig_quit);
 	}
 	if (i == 3)//SIGNAL HEREDOC
 	{
-		ft_putstr_fd("SIGNAL3\n", 2);
+		//ft_putstr_fd("SIGNAL3\n", 2);
 		signal(SIGINT, ft_sigint_heredoc);
 		signal(SIGQUIT, SIG_IGN);
 	}
 	if (i == 4)//IGNORE LE SIGNAL
 	{
-		ft_putstr_fd("SIGNAL4\n", 2);
+		//ft_putstr_fd("SIGNAL4\n", 2);
 		signal(SIGINT, SIG_IGN);
 		signal(SIGQUIT, SIG_IGN);
 	}
 	if (i == 5)//SIGNAL DEFAULT
 	{
-		ft_putstr_fd("SIGNAL5\n", 2);
+		//ft_putstr_fd("SIGNAL5\n", 2);
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 	}

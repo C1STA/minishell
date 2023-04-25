@@ -6,7 +6,7 @@
 /*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:45:39 by imoumini          #+#    #+#             */
-/*   Updated: 2023/04/15 17:47:13 by imoumini         ###   ########.fr       */
+/*   Updated: 2023/04/25 12:07:13 by imoumini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,12 @@ void	final_txt(char *a_dol, char *new_str, t_node *ptr, char *save_var)
 	ptr -> txt = new_str;
 }
 
-void	init_save_after_dollar(char *save_after_dollar)
+char 	*init_save_after_dollar(char *save_after_dollar)
 {
 	save_after_dollar = malloc(sizeof(char) * 2);
 	save_after_dollar[0] = 'a';
 	save_after_dollar[1] = '\0';
+	return (save_after_dollar);
 }
 
 char	*return_after_multiple_dollar(char *str, int i, int save)

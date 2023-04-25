@@ -6,7 +6,7 @@
 /*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 20:31:15 by imrane            #+#    #+#             */
-/*   Updated: 2023/04/15 15:37:59 by imoumini         ###   ########.fr       */
+/*   Updated: 2023/04/25 12:03:29 by imoumini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ t_com	**create_ast_command_redir(t_node *root)
 
 	save_ast = NULL;
 	ast = NULL;
+	ptr = NULL;
+	nbr_pipe = 0;
 	if (!root)
 		return (NULL);
 	ptr = root -> first_child;
