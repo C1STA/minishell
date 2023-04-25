@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 19:16:50 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/24 21:42:21 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/25 17:27:18 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static bool	init_heredoc(char *env[], t_redir *redir, int i, int j)
 	return (free_heredoc(h, true));
 }
 
-static void	define_heredoc(t_final *cmds, char *env[])
+static void	define_heredoc(t_final *cmds, char *env[], t_main *m)
 {
 	int		i;
 	int		j;
@@ -85,7 +85,7 @@ static void	define_heredoc(t_final *cmds, char *env[])
 			if (tmp_redir->heredoc == 1)
 			{
 				if (!init_heredoc(env, tmp_redir, i, j))
-					return (heredoc_exit(cmds, env, false));
+					return (heredoc_exit(cmds, env, false, m));
 			}
 			tmp_redir = tmp_redir->next;
 			j++;
@@ -93,10 +93,10 @@ static void	define_heredoc(t_final *cmds, char *env[])
 		i++;
 		tmp_cmds = tmp_cmds->next;
 	}
-	return (heredoc_exit(cmds, env, true));
+	return (heredoc_exit(cmds, env, true, m));
 }
 
-bool	ft_heredoc(t_final *cmds, char *env[])
+bool	ft_heredoc(t_final *cmds, char *env[], t_main *m)
 {
 	pid_t	pid;
 
@@ -109,7 +109,7 @@ bool	ft_heredoc(t_final *cmds, char *env[])
 	if (pid == 0)
 	{
 		ft_signal(3);
-		define_heredoc(cmds, env);
+		define_heredoc(cmds, env, m);
 	}
 	waitpid(pid, &g_exit_status, 0);
 	ft_signal(1);

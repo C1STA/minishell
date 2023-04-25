@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 13:01:07 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/23 01:41:20 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/25 17:35:05 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	lonely_exit(t_pipex *p, int saved_stdin, int saved_stdout)
 	free_pipex(p);
 }
 
-void	lonely_builtin(t_final *cmds, char *env[], t_pipex *p)
+void	lonely_builtin(t_final *cmds, char *env[], t_pipex *p, t_main *m)
 {
 	int	saved_stdin;
 	int	saved_stdout;
@@ -40,6 +40,6 @@ void	lonely_builtin(t_final *cmds, char *env[], t_pipex *p)
 		close(saved_stdin);
 		close(saved_stdout);
 	}
-	builtin(cmds, env, p);
+	builtin(cmds, env, p, m);
 	lonely_exit(p, saved_stdin, saved_stdout);
 }

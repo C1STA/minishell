@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 21:52:52 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/25 15:13:29 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/25 17:37:23 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,7 +263,7 @@ void		ft_sigint(int sigint);
 void		ft_signal(int i);
 
 /*builtin exit*/
-void		ft_exit_d(t_env **env);
+void		ft_exit_d(t_env **env, t_main **m);
 
 /*free*/
 void		free_info_buf(t_info_tok *info);
@@ -367,7 +367,7 @@ void		print_error_quotes(char *s);
 
 /*EXEC*/
 void		remove_heredoc(t_final *cmds);
-void		executor(t_final *cmds, char *env[]);
+void		executor(t_final *cmds, char *env[], t_main *m);
 long long	ft_atol_plus(char *str);
 long long	ft_atol_minus(char *str);
 char		*get_prompt_name(t_env *env);

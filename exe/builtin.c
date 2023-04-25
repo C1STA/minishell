@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 18:50:34 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/20 14:14:35 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/25 17:33:30 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ static bool	builtin_export_unset(t_pipex *p)
 	return (true);
 }
 
-bool	builtin(t_final *cmds, char *env[], t_pipex *p)
+bool	builtin(t_final *cmds, char *env[], t_pipex *p, t_main *m)
 {
 	if (!ft_strcmp(cmds->cmds[0], "exit"))
-		return (builtin_exit(cmds, env, p));
+		return (builtin_exit(cmds, env, p, m));
 	if (!ft_strcmp(cmds->cmds[0], "echo"))
 		return (builtin_echo(cmds, p));
 	if (!ft_strcmp(cmds->cmds[0], "$?"))

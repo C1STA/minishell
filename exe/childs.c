@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 01:57:37 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/21 04:07:42 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/25 17:34:47 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static t_final	*get_right_cmd(t_final *cmds, int i)
 	return (cmds);
 }
 
-void	child_processs(t_final *cmds, char *env[], t_pipex *p)
+void	child_processs(t_final *cmds, char *env[], t_pipex *p, t_main *m)
 {
 	t_final	*tmp_cmds;
 	t_redir	*tmp_redir;
@@ -42,8 +42,8 @@ void	child_processs(t_final *cmds, char *env[], t_pipex *p)
 	if (p->i != p->nb_cmds - 1)
 		dup2(p->fd[p->i][1], STDOUT_FILENO);
 	if (!init_redir(tmp_redir, p))
-		exit_exe(cmds, env, p);
-	if (!builtin(tmp_cmds, env, p))
+		exit_exe(cmds, env, p, m);
+	if (!builtin(tmp_cmds, env, p, m))
 	{
 		if (tmp_cmds->cmds[0])
 		{
@@ -52,5 +52,5 @@ void	child_processs(t_final *cmds, char *env[], t_pipex *p)
 				print_exec(tmp_cmds->cmds[0], p);
 		}
 	}
-	exit_exe(cmds, env, p);
+	exit_exe(cmds, env, p, m);
 }

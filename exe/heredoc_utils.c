@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:25:16 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/24 21:43:47 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/25 17:19:09 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ bool	init_values(t_heredoc *h, bool n)
 	return (true);
 }
 
-void	heredoc_exit(t_final *cmds, char *env[], bool n)
+void	heredoc_exit(t_final *cmds, char *env[], bool n, t_main *m)
 {
-	free_exe(&cmds, &env);
+	free_exe(&cmds, &env, &m);
 	close(STDIN_FILENO);
 	close(STDOUT_FILENO);
 	ft_signal(5);

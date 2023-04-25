@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 11:28:49 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/24 22:34:24 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/25 17:20:43 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern int	g_exit_status;
 
-void	free_exe(t_final **cmds, char ***env)
+void	free_exe(t_final **cmds, char ***env, t_main **m)
 {
 	t_final	*tmp_cmds;
 	t_redir	*tmp_redir;
@@ -40,9 +40,10 @@ void	free_exe(t_final **cmds, char ***env)
 		*cmds = tmp_cmds;
 	}
 	free_final_env(env);
+	free(*m);
 }
 
-void	exit_exe(t_final *cmds, char *env[], t_pipex *p)
+void	exit_exe(t_final *cmds, char *env[], t_pipex *p, t_main *m)
 {
 	if (p->i != p->nb_cmds - 1)
 	{
@@ -56,7 +57,7 @@ void	exit_exe(t_final *cmds, char *env[], t_pipex *p)
 	}
 	g_exit_status = p->exit_status;
 	free_pipex(p);
-	free_exe(&cmds, &env);
+	free_exe(&cmds, &env, &m);
 	close(STDIN_FILENO);
 	close(STDOUT_FILENO);
 	ft_signal(5);

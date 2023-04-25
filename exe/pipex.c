@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 12:59:17 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/24 22:53:43 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/25 17:35:29 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	wait_childs(t_pipex *p)
 	ft_signal(1);
 }
 
-void	pipex(t_final *cmds, char *env[])
+void	pipex(t_final *cmds, char *env[], t_main *m)
 {
 	t_pipex	*p;
 
@@ -70,10 +70,10 @@ void	pipex(t_final *cmds, char *env[])
 	p->nb_cmds = lenlist(cmds);
 	p->exit_status = cmds->exit_tmp;
 	if (p->nb_cmds == 1 && isbuiltin(cmds))
-		return (lonely_builtin(cmds, env, p));
+		return (lonely_builtin(cmds, env, p, m));
 	if (!init_pipes(p))
 		return ;
-	if (!init_forks(cmds, env, p))
+	if (!init_forks(cmds, env, p, m))
 		return ;
 	close_pipes_main(p);
 	wait_childs(p);
