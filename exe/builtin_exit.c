@@ -6,7 +6,7 @@
 /*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 13:31:22 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/25 17:37:43 by wcista           ###   ########.fr       */
+/*   Updated: 2023/04/28 19:44:08 by wcista           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,31 @@ void	ft_exit_d(t_env **env, t_main **m)
 	exit (g_exit_status);
 }
 
+static bool	exit_return(t_final *cmds, char *env[], t_pipex *p, t_main *m)
+{
+	if (p->nb_cmds == 1)
+		remove_heredoc(cmds);
+	ft_putstr_fd("exit\n", 1);
+	exit_exe(cmds, env, p, m);
+	return (true);
+}
+
 static void	builtin_exit_bis(t_final *cmds, t_pipex *p)
 {
 	long long	tmp;
 
-	ft_putstr_fd("exit\n", 1);
 	if (cmds->cmds[1][0] == '-')
 	{
+		if (ft_strlen(cmds->cmds[1]) > 20)
+			return (print_exit(cmds, p, cmds->cmds[1], false));
 		tmp = ft_atol_minus(cmds->cmds[1]);
 		if (tmp > 0)
 			return (print_exit(cmds, p, cmds->cmds[1], false));
 	}
 	else
 	{
+		if (ft_strlen(cmds->cmds[1]) > 19)
+			return (print_exit(cmds, p, cmds->cmds[1], false));
 		tmp = ft_atol_plus(cmds->cmds[1]);
 		if (tmp < 0)
 			return (print_exit(cmds, p, cmds->cmds[1], false));
@@ -42,15 +54,7 @@ static void	builtin_exit_bis(t_final *cmds, t_pipex *p)
 	p->exit_status = (int)tmp;
 	if (p->nb_cmds == 1)
 		remove_heredoc(cmds);
-}
-
-bool	exit_return(t_final *cmds, char *env[], t_pipex *p, t_main *m)
-{
-	if (p->nb_cmds == 1)
-		remove_heredoc(cmds);
 	ft_putstr_fd("exit\n", 1);
-	exit_exe(cmds, env, p, m);
-	return (true);
 }
 
 bool	builtin_exit(t_final *cmds, char *env[], t_pipex *p, t_main *m)
