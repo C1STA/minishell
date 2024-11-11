@@ -1,5 +1,6 @@
 {
-   readline_leak
+   ignore_libreadline_leaks
    Memcheck:Leak
-   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   ...
+   obj:*/libreadline.so.*
 }
