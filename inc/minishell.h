@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 21:52:52 by wcista            #+#    #+#             */
-/*   Updated: 2024/11/07 19:25:25 by wacista          ###   ########.fr       */
+/*   Updated: 2024/11/22 15:06:57 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -317,10 +317,9 @@ int			is_there_both(t_node *root);
 t_com		**create_ast_command_redir(t_node *root);
 t_node		*return_ptr(t_redir **redir, t_node *ptr);
 t_ast		*return_save_ast(t_node *ptr, t_com *com, t_redir *redir);
-t_ast		*isolate_command_redir(t_node *root);
-t_com		**malloc_ast(t_com **ast, int nbr_pipe);
-t_com		**create_while(t_com **ast, t_ast *save_ast, \
-		t_node *ptr, int nbr_pipe);
+void		isolate_command_redir(t_node **pt, t_com **com, t_redir **redir);
+t_com		**malloc_ast(int nbr_pipe);
+t_com		**create_while(t_com **ast, t_node *ptr, int nbr_pipe);
 void		print_final_ast(t_com **ast);
 void		print_command(t_com *com);
 void		print_redir(t_redir *redir);

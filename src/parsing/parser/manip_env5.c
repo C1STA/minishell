@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manip_env5.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dpinto <dpinto@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:38:31 by imoumini          #+#    #+#             */
-/*   Updated: 2024/11/07 19:29:01 by wacista          ###   ########.fr       */
+/*   Updated: 2024/11/15 00:22:12 by dpinto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,19 @@ void	expand_job_multiple_dollar(t_node *ptr, int nbr)
 	char	*new_str;
 
 	i = 0;
-	while (ptr -> txt[i] != '\0')
+	while (ptr->txt[i] != '\0')
 	{
-		if (expand_guillemets(ptr -> txt, i) == 1)
+		if (expand_guillemets(ptr->txt, i) == 1)
 		{
-			if (ptr ->txt[i] == '$')
+			if (ptr->txt[i] == '$')
 			{
-				save_before_dollar = before_dollar(ptr -> txt);
+				save_before_dollar = before_dollar(ptr->txt);
 				str_nbr = add_nbr(nbr);
-				save_after_dollar = after_multiple_dollar(ptr -> txt, nbr);
+				save_after_dollar = after_multiple_dollar(ptr->txt, nbr);
 				new_str = ft_strjoin(save_before_dollar, str_nbr);
 				new_str = ft_strjoin(new_str, save_after_dollar);
 				free_expand_job_mutiple(str_nbr, save_after_dollar, ptr->txt);
-				ptr -> txt = new_str;
+				ptr->txt = new_str;
 				return ;
 			}
 		}
@@ -58,19 +58,21 @@ void	expand_job(t_env *head, t_node *ptr)
 
 	i = -1;
 	a_do = ft_strdup("a");
-	while (ptr -> txt[++i] != '\0')
+	while (ptr->txt && ptr->txt[++i] != '\0')
 	{
-		if (ptr ->txt[i] == '$')
+		if (ptr->txt[i] == '$')
 		{
-			if (expand_guillemets(ptr -> txt, i) == 1)
+			if (expand_guillemets(ptr->txt, i) == 1)
 			{
 				free(a_do);
-				b_do = before_dollar(ptr -> txt);
+				b_do = before_dollar(ptr->txt);
 				save_var = catch_var(ptr->txt + (i + 1));
 				a_do = after_dollar_deux(find_end_of_var(ptr->txt + (i + 1)));
 				str = ft_strjoin(b_do, return_matching_value(head, save_var));
 				final_txt(a_do, str, ptr, save_var);
 				a_do = NULL;
+				free(b_do);
+				b_do = NULL;
 			}
 		}
 	}
@@ -82,7 +84,7 @@ int	more_than_one_dollars_suite(t_node *ptr)
 	int	i;
 
 	i = 0;
-	while (ptr -> txt[i])
+	while (ptr->txt[i])
 	{
 		if (ptr->txt[i] == '$')
 		{

@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 01:57:37 by wcista            #+#    #+#             */
-/*   Updated: 2024/11/07 19:26:04 by wacista          ###   ########.fr       */
+/*   Updated: 2024/11/13 21:36:04 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,18 @@ static t_final	*get_right_cmd(t_final *cmds, int i)
 	return (cmds);
 }
 
+static bool	isprintable(char *s)
+{
+	if (!s)
+		return (false);
+	while (*s)
+	{
+		if (ft_isprint(*s++))
+			return (true);
+	}
+	return (false);
+}
+
 void	child_processs(t_final *cmds, char *env[], t_pipex *p, t_main *m)
 {
 	t_final	*tmp_cmds;
@@ -45,10 +57,10 @@ void	child_processs(t_final *cmds, char *env[], t_pipex *p, t_main *m)
 		exit_exe(cmds, env, p, m);
 	if (!builtin(tmp_cmds, env, p, m))
 	{
-		if (tmp_cmds->cmds[0])
+		if (isprintable(tmp_cmds->cmds[0]))
 		{
-			is_access(tmp_cmds, env);
-			if (execve(tmp_cmds->cmds[0], tmp_cmds->cmds, env))
+			is_access(p, tmp_cmds, env);
+			if (!p->cmd_path || execve(p->cmd_path, tmp_cmds->cmds, env) == -1)
 				print_exec(tmp_cmds->cmds[0], p);
 		}
 	}

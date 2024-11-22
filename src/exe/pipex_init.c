@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 18:00:36 by wcista            #+#    #+#             */
-/*   Updated: 2024/11/07 19:26:04 by wacista          ###   ########.fr       */
+/*   Updated: 2024/11/13 19:56:29 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,15 @@ bool	init_forks(t_final *cmds, char *env[], t_pipex *p, t_main *m)
 	return (true);
 }
 
+void	set_fd_null(t_pipex *p)
+{
+	int	i;
+
+	i = 0;
+	while (i < p->nb_cmds - 1)
+		p->fd[i++] = NULL;
+}
+
 bool	init_pipes(t_pipex *p)
 {
 	int	i;
@@ -44,6 +53,7 @@ bool	init_pipes(t_pipex *p)
 	p->fd = (int **)malloc(sizeof(int *) * (p->nb_cmds - 1));
 	if (!p->fd)
 		return (print_perror("malloc"), free(p), false);
+	set_fd_null(p);
 	while (i < p->nb_cmds - 1)
 	{
 		p->fd[i] = (int *)malloc(sizeof(int) * 2);

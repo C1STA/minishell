@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 12:59:17 by wcista            #+#    #+#             */
-/*   Updated: 2024/11/07 19:26:04 by wacista          ###   ########.fr       */
+/*   Updated: 2024/11/13 21:08:53 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ void	close_unused_pipes(t_pipex *p)
 	j = 0;
 	while (j < p->nb_cmds - 1)
 	{
-		if (p->i != j)
+		if (j != p->i)
 			close(p->fd[j][1]);
-		if (p->i - 1 != j)
+		if (j + 1 != p->i)
 			close(p->fd[j][0]);
 		j++;
 	}
@@ -59,6 +59,19 @@ static void	wait_childs(t_pipex *p)
 	ft_signal(1);
 }
 
+void	init_pipex(t_pipex *p, t_final *cmds)
+{
+	if (!p)
+		return ;
+	p->i = 0;
+	p->fd = NULL;
+	p->path = NULL;
+	p->child = NULL;
+	p->cmd_path = NULL;
+	p->nb_cmds = lenlist(cmds);
+	p->exit_status = cmds->exit_tmp;
+}
+
 void	pipex(t_final *cmds, char *env[], t_main *m)
 {
 	t_pipex	*p;
@@ -66,11 +79,7 @@ void	pipex(t_final *cmds, char *env[], t_main *m)
 	p = (t_pipex *)malloc(sizeof(t_pipex));
 	if (!p)
 		return (print_perror("malloc"));
-	p->i = 0;
-	p->fd = NULL;
-	p->child = NULL;
-	p->nb_cmds = lenlist(cmds);
-	p->exit_status = cmds->exit_tmp;
+	init_pipex(p, cmds);
 	if (p->nb_cmds == 1 && isbuiltin(cmds))
 		return (lonely_builtin(cmds, env, p, m));
 	if (!init_pipes(p))

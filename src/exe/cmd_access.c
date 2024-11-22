@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 03:00:43 by wcista            #+#    #+#             */
-/*   Updated: 2024/11/07 19:26:04 by wacista          ###   ########.fr       */
+/*   Updated: 2024/11/13 21:27:03 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,72 +14,66 @@
 
 extern int	g_exit_status;
 
-static char	**get_path_tab(char *env[])
+static void	get_path(t_pipex *p, char *env[])
 {
 	int		i;
 	char	*path_line;
-	char	**path;
 
-	i = 0;
 	path_line = NULL;
-	while (env[i])
+	while (*env)
 	{
-		if (ft_strnstr(env[i], "PATH=", 5))
+		if (ft_strnstr(*env, "PATH=", 5))
 		{
-			path_line = ft_substr(env[i], 5, ft_strlen(env[i]));
+			path_line = ft_substr(*env, 5, ft_strlen(*env));
 			break ;
 		}
-		i++;
+		env++;
 	}
 	if (!path_line)
-		return (NULL);
-	path = ft_split(path_line, ':');
+		return ;
+	p->path = ft_split(path_line, ':');
+	free(path_line);
 	i = 0;
-	while (path[i])
+	while (p->path[i])
 	{
-		path[i] = ft_strjoin_free(path[i], "/");
+		p->path[i] = ft_strjoin_free(p->path[i], "/");
 		i++;
 	}
-	return (free(path_line), path);
 }
 
-static bool	raw_access(t_final *cmds)
+static bool	raw_access(t_pipex *p, t_final *cmds)
 {
 	if (!access(cmds->cmds[0], F_OK | X_OK))
+	{
+		p->cmd_path = ft_strdup(cmds->cmds[0]);
 		return (true);
+	}
 	return (false);
 }
 
-static void	init_access(t_final *cmds, char **path)
+static void	init_access(t_pipex *p, t_final *cmds)
 {
 	int		i;
-	char	*cmd_tmp;
 
+	if (!p->path)
+		return ;
 	i = 0;
-	cmd_tmp = NULL;
-	while (path[i])
+	while (p->path[i])
 	{
-		cmd_tmp = ft_strjoin(path[i], cmds->cmds[0]);
-		if (!access(cmd_tmp, F_OK | X_OK))
-			cmds->cmds[0] = ft_strcpy(cmd_tmp);
-		free(cmd_tmp);
-		cmd_tmp = NULL;
+		p->cmd_path = ft_strjoin(p->path[i], cmds->cmds[0]);
+		if (!access(p->cmd_path, F_OK | X_OK))
+			return ;
+		free(p->cmd_path);
+		p->cmd_path = NULL;
 		i++;
 	}
-	if (cmd_tmp)
-		free(cmd_tmp);
-	free(path);
 }
 
-void	is_access(t_final *cmds, char *env[])
+void	is_access(t_pipex *p, t_final *cmds, char *env[])
 {
-	char	**path;
-
-	if (!raw_access(cmds))
+	if (!raw_access(p, cmds))
 	{
-		path = get_path_tab(env);
-		if (!path)
-			return ;
-		init_access(cmds, path);
+		get_path(p, env);
+		init_access(p, cmds);
 	}
 }

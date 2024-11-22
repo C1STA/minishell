@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manip_env6.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dpinto <dpinto@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:38:49 by imoumini          #+#    #+#             */
-/*   Updated: 2024/11/07 19:27:24 by wacista          ###   ########.fr       */
+/*   Updated: 2024/11/12 00:54:51 by dpinto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,26 +19,26 @@ void	create_var_value(t_env *node)
 
 	if (!node)
 		return ;
-	if (node -> txt == NULL)
+	if (node->txt == NULL)
 		return ;
 	equal = 0;
-	while (node -> txt[equal] != '=')
+	while (node->txt[equal] != '=')
 		equal++;
 	i = equal;
-	while (node -> txt[i] != '\0')
+	while (node->txt[i] != '\0')
 		i++;
 	node->var_value = malloc((sizeof(char) * (i - equal)) + 1);
-	if (node -> var_value == NULL)
+	if (node->var_value == NULL)
 		return ;
 	i = 0;
 	equal++;
-	while (node -> txt[equal] != '\0')
+	while (node->txt[equal] != '\0')
 	{
-		node -> var_value[i] = node -> txt[equal];
+		node->var_value[i] = node->txt[equal];
 		i++;
 		equal++;
 	}
-	node ->var_value[i] = '\0';
+	node->var_value[i] = '\0';
 }
 
 int	nbr_of_dollar_suite(t_node *ptr)
@@ -70,7 +70,7 @@ void	expand_env(t_env *head, t_node *root)
 	if (!head || !root)
 		return ;
 	attribute_atfer_here_doc(attribue_here_doc(root));
-	ptr = root -> first_child;
+	ptr = root->first_child;
 	while (ptr)
 	{
 		expand = do_i_have_to_expand(ptr);
@@ -79,7 +79,7 @@ void	expand_env(t_env *head, t_node *root)
 		expand = do_i_have_to_expand(ptr);
 		if (expand)
 			expand_job(head, ptr);
-		ptr = ptr -> next;
+		ptr = ptr->next;
 	}
 }
 
@@ -90,11 +90,11 @@ int	is_it_heredoc(t_node *node)
 	if (!node)
 		return (0);
 	ptr = node;
-	if (ptr -> txt[0] == '<')
+	if (ptr->txt[0] == '<')
 	{
-		if (ptr -> next)
+		if (ptr->next)
 		{
-			if (ptr -> next -> txt[0] == '<')
+			if (ptr->next->txt[0] == '<')
 				return (1);
 		}
 	}

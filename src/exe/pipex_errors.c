@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 18:09:51 by wcista            #+#    #+#             */
-/*   Updated: 2024/11/07 19:26:04 by wacista          ###   ########.fr       */
+/*   Updated: 2024/11/13 21:21:51 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,26 @@
 
 extern int	g_exit_status;
 
+void	free_tab(char **arr)
+{
+	int	i;
+
+	i = 0;
+	if (!arr)
+		return ;
+	while (arr[i])
+		free(arr[i++]);
+	free(arr);
+}
+
 void	free_pipex(t_pipex *p)
 {
 	int	i;
 
 	i = 0;
+	free_tab(p->path);
+	if (p->cmd_path)
+		free(p->cmd_path);
 	if (p->fd)
 	{
 		while (i < p->nb_cmds - 1)
@@ -38,7 +53,6 @@ void	free_pipex(t_pipex *p)
 		p->child = NULL;
 	}
 	free(p);
-	p = NULL;
 }
 
 bool	pipe_error(t_pipex *p, int i)

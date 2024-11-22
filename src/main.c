@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dpinto <dpinto@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 20:57:56 by imrane            #+#    #+#             */
-/*   Updated: 2023/04/28 21:29:10 by wcista           ###   ########.fr       */
+/*   Updated: 2024/11/15 00:03:22 by dpinto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_exe.h"
 
-int	g_exit_status;
+int		g_exit_status;
 
 void	is_args(int argc)
 {
@@ -64,8 +64,8 @@ void	ft_checker(t_main *m)
 	add_node_env(m->mini_env);
 	m->last_node = last_env_node(m->mini_env);
 	m->exit_status = ft_itoa(g_exit_status);
-	fill_last_node(m->last_node, ft_strcpy("?"), m->exit_status, \
-	ft_strjoin(ft_strcpy("?="), m->exit_status));
+	fill_last_node(m->last_node, ft_strcpy("?"), m->exit_status,
+		ft_strjoin("?=", m->exit_status));
 	expand_env(m->mini_env, m->root);
 	is_unset(&m->mini_env, m->root);
 	if (error_pars(m->root) == 1 && is_env_var(m->mini_env, m->root) == 1)
@@ -93,8 +93,8 @@ int	main(int argc, char *argv[], char *env[])
 		if (!m->input)
 			ft_exit_d(&m->mini_env, &m);
 		add_history(m->input);
-		if (single_enter(m->input) == 0 && does_quotes_closed(m->input) == 1 \
-		&& check_space_append_heredoc(m->input) == 1)
+		if (single_enter(m->input) == 0 && does_quotes_closed(m->input) == 1
+			&& check_space_append_heredoc(m->input) == 1)
 			ft_checker(m);
 		else
 			(free(m->input));
@@ -105,12 +105,12 @@ int	main(int argc, char *argv[], char *env[])
 // faire ctr D -> quitte le shell
 // faire ctrl \ -> ne fait rien
 // regler les invalid write, conditionnal jump
-//faire norminette
+// faire norminette
 
-//signaux 
-	// qund jsuis dans la boucle while
-	// qund jsuis dans un fork (genre dans mon cat)
-	// qund jsuis dans le heredoc
+// signaux
+// qund jsuis dans la boucle while
+// qund jsuis dans un fork (genre dans mon cat)
+// qund jsuis dans le heredoc
 // etre a laffut de tous les exit status
 
 /*
@@ -118,13 +118,13 @@ int	main(int argc, char *argv[], char *env[])
 
 
 
-LEAKS : echo mathieu 
+LEAKS : echo mathieu
 
 
 
 BASH (qd on fait control D)
 imoumini@e2r9p11:~/minishell_imrane$ ^C
-imoumini@e2r9p11:~/minishell_imrane$ 
+imoumini@e2r9p11:~/minishell_imrane$
 exit
 imoumini@e2r9p11:~/minishell_imrane$ echo $?
 130
@@ -142,7 +142,7 @@ COMMAND :
 gdb
 file ./minishell
 run
-=> tape les commandes que tu veux, si ca segfault voir commande si dessous 
+=> tape les commandes que tu veux, si ca segfault voir commande si dessous
 bt
 
 

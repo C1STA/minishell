@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_exe.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 15:56:53 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/25 17:35:17 by wcista           ###   ########.fr       */
+/*   Updated: 2024/11/13 21:08:34 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ typedef struct s_pipex
 	int		nb_cmds;
 	int		i;
 	int		exit_status;
+	char	**path;
+	char	*cmd_path;
 }	t_pipex;
 
 typedef struct s_heredoc
@@ -89,7 +91,7 @@ bool	free_heredoc(t_heredoc *h, bool n);
 void	child_processs(t_final *cmds, char *env[], t_pipex *p, t_main *m);
 
 //cmd_access.c
-void	is_access(t_final *cmds, char *env[]);
+void	is_access(t_pipex *p, t_final *cmds, char *env[]);
 
 //redir.c
 bool	init_redir(t_redir *redir, t_pipex *p);

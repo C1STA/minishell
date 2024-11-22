@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manip_env8.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dpinto <dpinto@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:45:39 by imoumini          #+#    #+#             */
-/*   Updated: 2024/11/07 19:27:24 by wacista          ###   ########.fr       */
+/*   Updated: 2024/11/15 00:20:13 by dpinto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	fill_last_node(t_env *last_node, char *name, char *value, char *env)
 {
-	last_node -> var_name = name;
-	last_node -> var_value = value;
-	last_node -> txt = env;
+	last_node->var_name = name;
+	last_node->var_value = value;
+	last_node->txt = env;
 }
 
 char	*return_after(char *str, int j, int save)
@@ -45,12 +45,18 @@ char	*return_after(char *str, int j, int save)
 
 void	final_txt(char *a_dol, char *new_str, t_node *ptr, char *save_var)
 {
+	char	*tmp;
+
 	if (a_dol)
+	{
+		tmp = new_str;
 		new_str = ft_strjoin(new_str, a_dol);
-	free(ptr -> txt);
+		free(tmp);
+	}
+	free(ptr->txt);
 	free(save_var);
 	free(a_dol);
-	ptr -> txt = new_str;
+	ptr->txt = new_str;
 }
 
 char	*init_save_after_dollar(char *save_after_dollar)
