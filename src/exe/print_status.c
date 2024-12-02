@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_status.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dpinto <dpinto@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 19:58:29 by wcista            #+#    #+#             */
-/*   Updated: 2024/11/07 19:26:04 by wacista          ###   ########.fr       */
+/*   Updated: 2024/11/24 03:49:59 by dpinto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	print_exec(char *s, t_pipex *p)
 			ft_putstr_fd(": No such file or directory\n", 2);
 			p->exit_status = 127;
 		}
-	}	
+	}
 	else
 	{
 		ft_putstr_fd(": command not found\n", 2);

@@ -6,7 +6,7 @@
 /*   By: dpinto <dpinto@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:38:31 by imoumini          #+#    #+#             */
-/*   Updated: 2024/11/15 00:22:12 by dpinto           ###   ########.fr       */
+/*   Updated: 2024/11/24 03:48:11 by dpinto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,20 +60,17 @@ void	expand_job(t_env *head, t_node *ptr)
 	a_do = ft_strdup("a");
 	while (ptr->txt && ptr->txt[++i] != '\0')
 	{
-		if (ptr->txt[i] == '$')
+		if (ptr->txt[i] == '$' && expand_guillemets(ptr->txt, i) == 1)
 		{
-			if (expand_guillemets(ptr->txt, i) == 1)
-			{
-				free(a_do);
-				b_do = before_dollar(ptr->txt);
-				save_var = catch_var(ptr->txt + (i + 1));
-				a_do = after_dollar_deux(find_end_of_var(ptr->txt + (i + 1)));
-				str = ft_strjoin(b_do, return_matching_value(head, save_var));
-				final_txt(a_do, str, ptr, save_var);
-				a_do = NULL;
-				free(b_do);
-				b_do = NULL;
-			}
+			free(a_do);
+			b_do = before_dollar(ptr->txt);
+			save_var = catch_var(ptr->txt + (i + 1));
+			a_do = after_dollar_deux(find_end_of_var(ptr->txt + (i + 1)));
+			str = ft_strjoin(b_do, return_matching_value(head, save_var));
+			final_txt(a_do, str, ptr, save_var);
+			a_do = NULL;
+			free(b_do);
+			b_do = NULL;
 		}
 	}
 	free_elem((void **)&a_do);

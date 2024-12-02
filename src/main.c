@@ -6,7 +6,7 @@
 /*   By: dpinto <dpinto@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 20:57:56 by imrane            #+#    #+#             */
-/*   Updated: 2024/11/15 00:03:22 by dpinto           ###   ########.fr       */
+/*   Updated: 2024/11/25 03:00:03 by dpinto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,6 @@ void	is_args(int argc)
 	if (argc > 1)
 	{
 		ft_putstr_fd("Invalid number of arguments\n", 2);
-		exit(1);
-	}
-	if (!isatty(0))
-	{
-		ft_putstr_fd("Error invalid STDIN\n", 2);
 		exit(1);
 	}
 }

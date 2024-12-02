@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 11:28:49 by wcista            #+#    #+#             */
-/*   Updated: 2024/11/13 21:32:44 by wacista          ###   ########.fr       */
+/*   Updated: 2024/11/28 17:32:31 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	exit_exe(t_final *cmds, char *env[], t_pipex *p, t_main *m)
 	free_exe(&cmds, &env, &m);
 	close(STDIN_FILENO);
 	close(STDOUT_FILENO);
+	close(STDERR_FILENO);
 	ft_signal(5);
 	exit(g_exit_status);
 }

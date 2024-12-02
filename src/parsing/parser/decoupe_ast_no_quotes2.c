@@ -3,72 +3,67 @@
 /*                                                        :::      ::::::::   */
 /*   decoupe_ast_no_quotes2.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dpinto <dpinto@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 16:07:06 by imoumini          #+#    #+#             */
-/*   Updated: 2024/11/22 15:30:19 by wacista          ###   ########.fr       */
+/*   Updated: 2024/11/24 03:43:45 by dpinto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_com	**malloc_ast(int nbr_pipe)
+t_com	**malloc_ast(t_com **ast, int nbr_pipe)
 {
-	t_com **ast_mall;
-
 	if (nbr_pipe > 0)
 	{
-		ast_mall = malloc(sizeof(t_com *) * ((nbr_pipe + 1) + 1));
-		ast_mall[(nbr_pipe + 1)] = NULL;
+		ast = malloc(sizeof(t_com *) * ((nbr_pipe + 1) + 1));
+		ast[(nbr_pipe + 1)] = NULL;
 	}
 	else
 	{
-		ast_mall = malloc(sizeof(t_com *) * 2);
-		ast_mall[1] = NULL;
+		ast = malloc(sizeof(t_com *) * 2);
+		ast[1] = NULL;
 		nbr_pipe = 0;
 	}
-	return (ast_mall);
+	return (ast);
 }
 
-void	printnode(t_node *ptr)
+void	create_while_help(t_ast *save_ast, t_com **ast, t_node **tmp, int i)
 {
-	while (ptr)
+	if (save_ast->command)
+		ast[i] = save_ast->command;
+	else
 	{
-		printf("**%s**\n", ptr->txt);
-		ptr = ptr->next;
+		ast[i] = malloc(sizeof(t_com));
+		ast[i]->txt = NULL;
 	}
+	if (ast[i])
+		ast[i]->redir = save_ast->redir;
+	*tmp = save_ast->save_ptr;
+	free(save_ast);
+	save_ast = NULL;
 }
 
-t_com	**create_while(t_com **ast, t_node *ptr, int nbr_pipe)
+t_com	**create_while(t_com **ast, t_ast *save_ast, t_node *ptr, int nbr_pipe)
 {
 	int		i;
-	t_com	*com;
-	t_redir	*redir;
+	int		first;
+	t_node	*tmp;
 
+	first = 1;
 	i = 0;
-	com = NULL;
-	redir = NULL;
 	while (nbr_pipe-- >= 0)
 	{
-		isolate_command_redir(&ptr, &com, &redir);
-		if (ptr)
+		if (first == 0)
+			save_ast = isolate_command_redir(tmp);
+		else
 		{
-			if (com)
-			{
-				ast[i] = com;
-			}
-			else
-			{
-				ast[i] = malloc(sizeof(t_com));
-				ast[i]->txt = NULL;
-			}
-			if (ast[i])
-			{
-				if (redir)
-					ast[i]->redir = redir;
-				else
-					ast[i]->redir = NULL;
-			}
+			first = 0;
+			save_ast = isolate_command_redir(ptr);
+		}
+		if (save_ast)
+		{
+			create_while_help(save_ast, ast, &tmp, i);
 			i++;
 		}
 	}
@@ -109,7 +104,9 @@ t_ast	*return_save_ast(t_node *ptr, t_com *com, t_redir *redir)
 
 	if (ptr)
 		ptr = ptr->next;
-	save_ast = (t_ast *)malloc(sizeof(t_ast));
+	save_ast = malloc(sizeof(t_ast));
+	if (!save_ast)
+		return (NULL);
 	if (com)
 		save_ast->command = com;
 	else

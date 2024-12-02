@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 12:59:17 by wcista            #+#    #+#             */
-/*   Updated: 2024/11/13 21:08:53 by wacista          ###   ########.fr       */
+/*   Updated: 2024/11/28 17:46:54 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,27 @@ extern int	g_exit_status;
 void	close_unused_pipes(t_pipex *p)
 {
 	int	j;
+	int	fd_to_keep[1024];
 
 	j = 0;
+	ft_memset(fd_to_keep, 0, sizeof(fd_to_keep));
 	while (j < p->nb_cmds - 1)
 	{
 		if (j != p->i)
 			close(p->fd[j][1]);
+		else
+			fd_to_keep[p->fd[j][1]] = 1;
 		if (j + 1 != p->i)
 			close(p->fd[j][0]);
+		else
+			fd_to_keep[p->fd[j][0]] = 1;
+		j++;
+	}
+	j = 3;
+	while (j < 1024)
+	{
+		if (!fd_to_keep[j])
+			close(j);
 		j++;
 	}
 }

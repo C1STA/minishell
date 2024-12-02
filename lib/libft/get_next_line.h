@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dpinto <dpinto@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 10:36:37 by wacista           #+#    #+#             */
-/*   Updated: 2024/10/21 07:29:03 by wacista          ###   ########.fr       */
+/*   Updated: 2024/11/24 04:20:36 by dpinto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
+# include "libft.h"
+# include <stddef.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <stddef.h>
-# include "libft.h"
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10
+#  define BUFFER_SIZE 1
 # endif
 
 char	*get_next_line(int fd);

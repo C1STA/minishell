@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   in_out.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dpinto <dpinto@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 19:17:23 by imrane            #+#    #+#             */
-/*   Updated: 2024/11/07 19:27:24 by wacista          ###   ########.fr       */
+/*   Updated: 2024/11/24 03:47:13 by dpinto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,14 @@ int	ft_in_file_first_check(t_node *ptr)
 {
 	if (!ptr)
 		return (1);
-	if (ptr -> next)
+	if (ptr->next)
 	{
 		if (ft_in_file_first_check_wrong_arrow(ptr) == 0)
 			return (0);
-		if (ft_stcmp(ptr-> next-> txt, "<") == 1 \
-			|| ft_stcmp(ptr->next->txt, ">") == 1)
+		if (ft_stcmp(ptr->next->txt, "<") == 1 || ft_stcmp(ptr->next->txt,
+				">") == 1)
 		{
-			if (ptr -> next -> next == NULL)
+			if (ptr->next->next == NULL)
 				return (print_error_syntax("newline"), 0);
 			if (in_file_next(ptr) == 0)
 				return (0);
@@ -55,22 +55,22 @@ int	ft_in_file(t_node *head)
 	ptr = head;
 	if (!ptr)
 		return (2);
-	if (ptr -> first_child)
-		ptr = ptr -> first_child;
+	if (ptr->first_child)
+		ptr = ptr->first_child;
 	while (ptr != NULL)
 	{
-		if (ft_stcmp(ptr -> txt, "<") == 1 || ft_stcmp(ptr -> txt, ">") == 1)
+		if (ft_stcmp(ptr->txt, "<") == 1 || ft_stcmp(ptr->txt, ">") == 1)
 		{
 			if (ft_in_file_first_check(ptr) == 0)
 				return (0);
 			if (in_file_second_check(ptr) == 0)
 				return (0);
-			while (ptr && (ft_stcmp(ptr->txt, "<") == 1 \
-				|| ft_stcmp(ptr->txt, ">") == 1))
-				ptr = ptr -> next;
+			while (ptr && (ft_stcmp(ptr->txt, "<") == 1 || ft_stcmp(ptr->txt,
+						">") == 1))
+				ptr = ptr->next;
 		}
 		if (ptr && ft_stcmp(ptr->txt, "<") != 1 && ft_stcmp(ptr->txt, ">") != 1)
-			ptr = ptr -> next;
+			ptr = ptr->next;
 	}
 	return (1);
 }
@@ -81,18 +81,18 @@ int	is_here_doc(t_node *root)
 
 	if (!root)
 		return (2);
-	ptr = root -> first_child;
+	ptr = root->first_child;
 	while (ptr)
-	{	
-		if (ft_stcmp(ptr -> txt, "<"))
+	{
+		if (ft_stcmp(ptr->txt, "<"))
 		{
-			if (ptr -> next)
+			if (ptr->next)
 			{
-				if (ft_stcmp(ptr -> next -> txt, "<"))
+				if (ft_stcmp(ptr->next->txt, "<"))
 					return (1);
 			}
 		}
-		ptr = ptr ->next;
+		ptr = ptr->next;
 	}
 	return (0);
 }

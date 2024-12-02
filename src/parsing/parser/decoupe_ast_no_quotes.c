@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   decoupe_ast_no_quotes.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dpinto <dpinto@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 20:31:15 by imrane            #+#    #+#             */
-/*   Updated: 2024/11/22 15:30:10 by wacista          ###   ########.fr       */
+/*   Updated: 2024/11/15 01:35:36 by dpinto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 t_com	**create_ast_command_redir(t_node *root)
 {
 	t_com	**ast;
+	t_ast	*save_ast;
 	t_node	*ptr;
 	int		nbr_pipe;
 
+	save_ast = NULL;
 	ast = NULL;
 	ptr = NULL;
 	nbr_pipe = 0;
@@ -25,34 +27,38 @@ t_com	**create_ast_command_redir(t_node *root)
 		return (NULL);
 	ptr = root->first_child;
 	nbr_pipe = how_much_pipe(root);
-	ast = malloc_ast(nbr_pipe);
-	ast = create_while(ast, ptr, nbr_pipe);
+	ast = malloc_ast(ast, nbr_pipe);
+	ast = create_while(ast, save_ast, ptr, nbr_pipe);
 	return (ast);
 }
 
-void	isolate_command_redir(t_node **pt, t_com **com, t_redir **redir)
+t_ast	*isolate_command_redir(t_node *pt)
 {
-	if (!pt || !*pt)
-		return ;
-	*com = NULL;
-	if (*pt)
+	t_redir	*redir;
+	t_com	*com;
+
+	if (!pt)
+		return (NULL);
+	com = NULL;
+	redir = NULL;
+	if (pt)
 	{
-		while (*pt && ft_stcmp((*pt)->txt, "|") != 1)
+		while (pt && ft_stcmp(pt->txt, "|") != 1)
 		{
-			while (*pt && ft_stcmp((*pt)->txt, "|") != 1 \
-				&& ft_stcmp((*pt)->txt, "<") != 1 && ft_stcmp((*pt)->txt, ">") != 1)
+			while (pt && ft_stcmp(pt->txt, "|") != 1 && ft_stcmp(pt->txt,
+					"<") != 1 && ft_stcmp(pt->txt, ">") != 1)
 			{
-				*com = create_com_node(*com, *pt);
-				*pt = (*pt)->next;
+				com = create_com_node(com, pt);
+				pt = pt->next;
 			}
-			if (*pt)
+			if (pt)
 			{
-				if (ft_stcmp((*pt)->txt, "<") == 1 || ft_stcmp((*pt)->txt, ">") == 1)
-					*pt = return_ptr(redir, *pt);
+				if (ft_stcmp(pt->txt, "<") == 1 || ft_stcmp(pt->txt, ">") == 1)
+					pt = return_ptr(&redir, pt);
 			}
 		}
-		*pt = (*pt)->next;
 	}
+	return (return_save_ast(pt, com, redir));
 }
 
 void	print_final_ast(t_com **ast)
@@ -84,8 +90,8 @@ void	print_command(t_com *com)
 	while (ptr)
 	{
 		ft_printf("command is \n");
-		ft_printf("%s\n", ptr -> txt);
-		ptr = ptr -> next;
+		ft_printf("%s\n", ptr->txt);
+		ptr = ptr->next;
 	}
 }
 
@@ -102,7 +108,7 @@ void	print_redir(t_redir *redir)
 	while (ptr)
 	{
 		ft_printf("redir is \n");
-		ft_printf("%s\n", ptr -> txt);
-		ptr = ptr -> next;
+		ft_printf("%s\n", ptr->txt);
+		ptr = ptr->next;
 	}
 }

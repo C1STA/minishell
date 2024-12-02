@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 16:57:19 by imoumini          #+#    #+#             */
-/*   Updated: 2024/11/07 19:27:24 by wacista          ###   ########.fr       */
+/*   Updated: 2024/11/28 17:48:42 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,28 @@
 void	avance_curpos(t_source *src, char c)
 {
 	if (c != '"' && c != '\'')
-			src -> curpos++;
+		src->curpos++;
 }
 
 int	tokenize_double_quote(char c, t_source *src, t_info_tok *info)
 {
-	if (info -> tok_bufindex != -1 \
-		&& (does_str_has_double_quotes(info -> tok_buf) == 1) \
-		&& (is_single_quotes_str_closed(info -> tok_buf) == 1) \
+	if (info->tok_bufindex != -1
+		&& (does_str_has_double_quotes(info->tok_buf) == 1)
+		&& (is_single_quotes_str_closed(info->tok_buf) == 1)
 		&& (next_src_is_legit(src) == 0))
 	{
-		info -> tok_bufindex++;
+		info->tok_bufindex++;
 		add_to_buf(c, info);
-		info -> tok_bufindex++;
-		info -> tok_buf[info -> tok_bufindex] = '\0';
-		src -> curpos++;
+		info->tok_bufindex++;
+		info->tok_buf[info->tok_bufindex] = '\0';
+		src->curpos++;
 		return (1);
 	}
 	else
 	{
-		info -> tok_bufindex++;
+		info->tok_bufindex++;
 		add_to_buf(c, info);
-		src -> curpos++;
+		src->curpos++;
 		return (0);
 	}
 	return (0);
@@ -46,12 +46,12 @@ int	next_src_is_legit(t_source *src)
 {
 	if (!src)
 		return (0);
-	if (!(src -> buffer[src -> curpos + 1]))
+	if (!(src->buffer[src->curpos + 1]))
 		return (0);
-	if (src -> buffer[src -> curpos + 1])
+	if (src->buffer[src->curpos + 1])
 	{
-		if (src -> buffer[src -> curpos + 1] != ' ' \
-			&& src -> buffer[src -> curpos + 1] != '\t')
+		if (src->buffer[src->curpos + 1] != ' ' \
+		&& src->buffer[src->curpos + 1] != '\t')
 			return (1);
 	}
 	return (0);
