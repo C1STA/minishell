@@ -1,3 +1,7 @@
 valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=readline.supp --trace-children=yes --track-fds=yes ./minishell
 
 valgrind --leak-check=full --track-origins=yes --suppressions=readline.supp --trace-children=yes --track-fds=yes ./minishell
+
+fix 24, 29, 56
+
+unfix 26, 30, 32, 

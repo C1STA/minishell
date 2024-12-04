@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpinto <dpinto@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 20:57:56 by imrane            #+#    #+#             */
-/*   Updated: 2024/11/25 03:00:03 by dpinto           ###   ########.fr       */
+/*   Updated: 2024/12/03 15:46:18 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,26 @@ void	ft_checker_bis(t_main *m)
 	ft_free_final_ast(&m->final);
 }
 
+void	printnode(t_main *m)
+{
+	while (m->last_node)
+	{
+		printf("%s\n", m->last_node->var_name);
+		m->last_node = m->last_node->next;
+	}
+}
+
 void	ft_checker(t_main *m)
 {
 	m->root = parse_simple_command(m->input, &m->src, &m->info);
-	if (check_if_exist(m->mini_env, "?") == 1)
-		supp_env(&m->mini_env, "?");
-	add_node_env(m->mini_env);
-	m->last_node = last_env_node(m->mini_env);
-	m->exit_status = ft_itoa(g_exit_status);
-	fill_last_node(m->last_node, ft_strcpy("?"), m->exit_status,
-		ft_strjoin("?=", m->exit_status));
+	//if (check_if_exist(m->mini_env, "?") == 1)
+	//	supp_env(&m->mini_env, "?");
+	//add_node_env(m->mini_env);
+//	m->last_node = last_env_node(m->mini_env);
+//	m->exit_status = ft_itoa(g_exit_status);
+//	fill_last_node(m->last_node, ft_strcpy("?"), m->exit_status,
+//		ft_strjoin("?=", m->exit_status));
+//	printnode(m);
 	expand_env(m->mini_env, m->root);
 	is_unset(&m->mini_env, m->root);
 	if (error_pars(m->root) == 1 && is_env_var(m->mini_env, m->root) == 1)
@@ -73,6 +83,7 @@ int	main(int argc, char *argv[], char *env[])
 {
 	t_main	*m;
 
+	g_exit_status = 0;
 	is_args(argc);
 	ft_signal(1);
 	(void)argv;
