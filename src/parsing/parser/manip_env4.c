@@ -6,19 +6,26 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:37:52 by imoumini          #+#    #+#             */
-/*   Updated: 2024/11/07 19:27:24 by wacista          ###   ########.fr       */
+/*   Updated: 2024/12/04 19:52:51 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+extern int		g_exit_status;
+
 char	*return_matching_value(t_env *head, char *str)
 {
 	t_env	*ptr;
+	char	*exit;
 
 	ptr = head;
 	if (!ptr || !str)
 		return (NULL);
+	exit = ft_itoa(g_exit_status);
+	if (ft_stcmp(str, exit))
+		return (free(exit), str);
+	free(exit);
 	while (ptr != NULL)
 	{
 		if (ft_stcmp(str, ptr -> txt) == 1)
@@ -52,14 +59,17 @@ char	*catch_var(char *str)
 
 	if (!str)
 		return (NULL);
+	if (*str == '?')
+	{
+		var = ft_itoa(g_exit_status);
+		return (var);
+	}
 	length = 0;
 	i = 0;
-	while (str[length] != '\0' && str[length] != '$' && str[length] != ' ' \
-		&& str[length] != '\t' && str[length] != '\'' && str[length] != '"')
+	while (expand_legtimate_values(str[length]))
 		length++;
 	var = malloc(sizeof(char) * (length + 1));
-	while (str[i] != '\0' && str[i] != '$' && str[i] != ' ' \
-		&& str[i] != '\t' && str[i] != '\'' && str[i] != '"')
+	while (expand_legtimate_values(str[i]))
 	{
 		var[i] = str[i];
 		i++;

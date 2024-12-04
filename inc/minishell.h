@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 21:52:52 by wcista            #+#    #+#             */
-/*   Updated: 2024/11/07 19:25:25 by wacista          ###   ########.fr       */
+/*   Updated: 2024/12/04 20:14:33 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,7 +227,6 @@ int			expand_guillemets(char *str, int index_dol);
 void		expand_guillemets_first(char *s, int *i_dol, \
 		int *nb_simp, int *i_simp);
 char		*find_end_of_var(char *str);
-char		*after_dollar_deux(char *str);
 char		*after_dollar(char *str);
 char		*before_dollar(char *str);
 char		*catch_var(char *str);
@@ -257,6 +256,7 @@ void		print_double_tab_env(char **str);
 char		**transform_env_in_double_tab(t_env *node);
 void		free_final_env(char ***tab_env);
 int			count_nbr_env(t_env *node);
+int			expand_legtimate_values(char c);
 
 /*signals*/
 void		ft_sigint(int sigint);

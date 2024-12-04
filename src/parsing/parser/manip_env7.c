@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:45:12 by imoumini          #+#    #+#             */
-/*   Updated: 2024/11/07 19:27:24 by wacista          ###   ########.fr       */
+/*   Updated: 2024/12/04 19:54:43 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,20 +57,24 @@ void	copy_original_to_mini(char *original[], int i, t_env *ptr)
 	}
 }
 
+int	check_if_one_cmd(t_node *node)
+{
+	while (node)
+	{
+		if (ft_stcmp(node->txt, "|"))
+			return (1);
+		node = node->next;
+	}
+	return (0);
+}
+
 int	env_checks_quit(t_env **head, t_node *node)
 {
 	if (!head)
 		return (1);
 	if ((!node))
 		return (1);
-	if ((node -> next == NULL) || ft_stcmp(node -> next -> txt, "|") == 1)
+	if ((node -> next == NULL) || check_if_one_cmd(node))
 		return (1);
 	return (0);
-}
-
-void	free_in_insert_input_env(char *env, char *var_name, char *var_value)
-{
-	free(env);
-	free(var_name);
-	free(var_value);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_pars.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imoumini <imoumini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 20:50:27 by imrane            #+#    #+#             */
-/*   Updated: 2023/04/22 16:59:31 by imoumini         ###   ########.fr       */
+/*   Updated: 2024/12/04 17:53:45 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,11 @@ void	print_error_syntax_c(char c)
 int	error_pars(t_node *head)
 {
 	if (!head)
-	{
 		return (2);
-	}
 	if (ft_in_file(head) == 0)
-	{
 		return (0);
-	}
 	if (ft_pipe_check(head) == 0)
-	{
 		return (0);
-	}
 	return (1);
 }
 

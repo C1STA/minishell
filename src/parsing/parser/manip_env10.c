@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 20:01:08 by imoumini          #+#    #+#             */
-/*   Updated: 2024/11/07 19:27:24 by wacista          ###   ########.fr       */
+/*   Updated: 2024/12/04 19:52:57 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,39 +64,25 @@ void	print_double_tab_env(char **str)
 	}
 }
 
+int	expand_legtimate_values(char c)
+{
+	if (ft_isalnum(c) || c == '_')
+		return (1);
+	return (0);
+}
+
 char	*find_end_of_var(char *str)
 {
 	int	i;
 
 	if (!str)
 		return (NULL);
+	if (*str == '?')
+		return (str + 1);
 	i = 0;
-	while (str[i] != '\0' && str[i] != '$' && str[i] != ' ' \
-		&& str[i] != '\t' && str[i] != '\'' && str[i] != '"')
+	while (expand_legtimate_values(str[i]))
 		i++;
 	if (str)
 		str = str + i;
 	return (str);
-}
-
-char	*after_dollar_deux(char *str)
-{
-	int		i;
-	char	*after;
-	int		length;
-
-	if (!str)
-		return (NULL);
-	length = 0;
-	i = 0;
-	while (str[length] != '\0')
-		length++;
-	after = malloc(sizeof(char) * (length + 1));
-	while (str[i] != '\0')
-	{
-		after[i] = str[i];
-		i++;
-	}
-	after[i] = '\0';
-	return (after);
 }

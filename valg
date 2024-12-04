@@ -5,3 +5,9 @@ valgrind --leak-check=full --track-origins=yes --suppressions=readline.supp --tr
 fix 24, 29, 56
 
 unfix 26, 30, 32, 
+
+echo "$HOME $UNKNWN $PWD"
+
+export _A <- //valid
+
+export_with_option.c

@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:34:36 by imoumini          #+#    #+#             */
-/*   Updated: 2024/12/03 15:45:36 by wacista          ###   ########.fr       */
+/*   Updated: 2024/12/04 19:50:59 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,8 @@ t_node	*do_i_have_to_expand(t_node *node)
 	{
 		while (ptr -> txt[i] != '\0')
 		{
-			if (ptr -> txt[i] == '$' && ptr->txt[i + 1] != '?')
+			if (ptr -> txt[i] == '$' && (ft_isalnum(ptr->txt[i + 1]) \
+			|| ptr->txt[i + 1] == '?' || ptr->txt[i + 1] == '_'))
 				return (ptr);
 			i++;
 		}

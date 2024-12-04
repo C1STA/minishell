@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 15:41:13 by wcista            #+#    #+#             */
-/*   Updated: 2024/11/07 19:25:02 by wacista          ###   ########.fr       */
+/*   Updated: 2024/12/04 19:54:59 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,4 +101,11 @@ void	ft_free_before_final_ast(t_com ***ast_before)
 	ft_free_before_ast_loop(ast, ptr, save_ptr);
 	free(ast);
 	ast_before = NULL;
+}
+
+void	free_in_insert_input_env(char *env, char *var_name, char *var_value)
+{
+	free(env);
+	free(var_name);
+	free(var_value);
 }
