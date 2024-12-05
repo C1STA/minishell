@@ -3,3 +3,4 @@
 *.d
 *.a
 minishell
+/minishell_tester

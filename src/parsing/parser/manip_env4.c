@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:37:52 by imoumini          #+#    #+#             */
-/*   Updated: 2024/12/04 19:52:51 by wacista          ###   ########.fr       */
+/*   Updated: 2024/12/05 15:53:28 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*return_matching_value(t_env *head, char *str)
 			return (ptr -> var_value);
 		ptr = ptr -> next;
 	}
-	return (NULL);
+	return ("");
 }
 
 void	cut_dollar_sign(char *str)
