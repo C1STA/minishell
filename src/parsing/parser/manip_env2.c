@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:34:13 by imoumini          #+#    #+#             */
-/*   Updated: 2024/11/07 19:27:24 by wacista          ###   ########.fr       */
+/*   Updated: 2024/12/06 20:26:52 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,11 +95,4 @@ int	ft_stcmp(char *str1, char *str2)
 		i++;
 	}
 	return (1);
-}
-
-int	is_nbr(char c)
-{
-	if (c >= '0' && c <= '9')
-		return (1);
-	return (0);
 }

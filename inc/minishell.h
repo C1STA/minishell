@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 21:52:52 by wcista            #+#    #+#             */
-/*   Updated: 2024/12/04 20:14:33 by wacista          ###   ########.fr       */
+/*   Updated: 2024/12/06 20:27:01 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,7 +220,6 @@ t_env		*last_env_node(t_env *head);
 t_node		*do_i_have_to_expand(t_node *root);
 char		*return_matching_value(t_env *head, char *str);
 void		cut_dollar_sign(char *str);
-int			is_nbr(char c);
 int			is_here_doc(t_node *node);
 void		expand_job(t_env *head, t_node *ptr);
 int			expand_guillemets(char *str, int index_dol);

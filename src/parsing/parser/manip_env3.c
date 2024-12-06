@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:34:36 by imoumini          #+#    #+#             */
-/*   Updated: 2024/12/04 19:50:59 by wacista          ###   ########.fr       */
+/*   Updated: 2024/12/06 22:15:15 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ char	*extract_value(char *str)
 	equal = 0;
 	if (!str)
 		return (NULL);
+	printf("str: %s\n", str);
 	while (str[i] != '\0' && str[i] != '=')
 		i++;
 	equal = i;
@@ -82,6 +83,35 @@ t_env	*last_env_node(t_env *head)
 	return (ptr);
 }
 
+int	new_ext(t_env **head, t_node *node, int pipe)
+{
+	char	*var_name;
+	char	*var_value;
+	char	*env_input;
+	t_env	*last_node;
+
+	if (env_checks_quit(head, node) == 1)
+		return (1);
+	node = node->next;
+	while (node)
+	{
+		env_input = ft_strcpy_env(node->txt);
+		var_name = extract_name(node->txt);
+		var_value = extract_value(node->txt);
+		if (!pars_env_name(var_name, env_input) && !pipe && !pars_env_value(var_value, env_input) && !count_nbr_equal(env_input, env_input))
+		{
+			if (check_if_exist(*head, var_name) == 1)
+				supp_env(head, var_name);
+			add_node_env(*head);
+			last_node = last_env_node(*head);
+			fill_last_node(last_node, var_name, var_value, env_input);
+		}
+		free_in_insert_input_env(env_input, var_name, var_value);
+		node = node->next;
+	}
+	return (0);
+}
+
 int	insert_input_env(t_env **head, t_node *node, int pipe)
 {
 	char	*var_name;
@@ -94,6 +124,9 @@ int	insert_input_env(t_env **head, t_node *node, int pipe)
 	env_input = ft_strcpy_env(node -> next -> txt);
 	var_name = extract_name(node -> next -> txt);
 	var_value = extract_value(node -> next -> txt);
+	printf("env_input: %s\n", env_input);
+	printf("var_name: %s\n", var_name);
+	printf("var_value: %s\n", var_value);
 	if (pars_env_name(var_name, env_input) == 0 && (pipe == 0) \
 		&& (pars_env_value(var_value, env_input) == 0) \
 		&& count_nbr_equal(env_input, env_input) == 0)
@@ -102,6 +135,7 @@ int	insert_input_env(t_env **head, t_node *node, int pipe)
 			supp_env(head, var_name);
 		add_node_env(*head);
 		last_node = last_env_node(*head);
+		printf("OUI ICI DONC RETURN== 1\n");
 		return (fill_last_node(last_node, var_name, var_value, env_input), 1);
 	}
 	else

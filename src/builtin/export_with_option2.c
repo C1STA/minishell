@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 19:42:54 by imoumini          #+#    #+#             */
-/*   Updated: 2024/11/07 19:25:02 by wacista          ###   ########.fr       */
+/*   Updated: 2024/12/06 22:08:53 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ extern int	g_exit_status;
 
 int	pars_env_name_nb_equ(char *str, char *env_input)
 {
-	if (is_nbr(str[0]) == 1)
+	if (!ft_isalpha(*str))
 		return (print_error_export(env_input), 1);
 	if (str[0] == '=')
 		if (str[1] == '\0')

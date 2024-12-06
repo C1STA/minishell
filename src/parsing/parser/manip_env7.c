@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:45:12 by imoumini          #+#    #+#             */
-/*   Updated: 2024/12/04 19:54:43 by wacista          ###   ########.fr       */
+/*   Updated: 2024/12/06 20:22:53 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,11 @@ t_env	*env_not_exist(void)
 	mini_env->var_name = ft_strcpy("OLDPWD");
 	mini_env->var_value = ft_strcpy("null");
 	mini_env = mini_env->next;
-	mini_env->txt = ft_strcpy("PWD=null");
+	mini_env->var_value = getcwd(NULL, 0);
+	if (!mini_env->var_value)
+		mini_env->var_value = ft_strcpy("null");
+	mini_env->txt = ft_strjoin("PWD=", mini_env->var_value);
 	mini_env->var_name = ft_strcpy("PWD");
-	mini_env->var_value = ft_strcpy("null");
 	mini_env->next = NULL;
 	mini_env = start;
 	return (mini_env);

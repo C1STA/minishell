@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 09:51:34 by wcista            #+#    #+#             */
-/*   Updated: 2024/11/07 19:26:04 by wacista          ###   ########.fr       */
+/*   Updated: 2024/12/06 15:53:26 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,5 @@ getcwd: cannot access parent directories", true, p, cd), true);
 	cd->path = getcwd(cd->path, 0);
 	if (!export_env("PWD=", cd->path, env))
 		return (print_perror_cd("PWD not set", false, p, cd), true);
-	p->exit_status = 0;
-	return (free_cd(cd), true);
+	return (p->exit_status = 0, free_cd(cd), true);
 }

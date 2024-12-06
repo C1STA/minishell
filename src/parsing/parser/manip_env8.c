@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manip_env8.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpinto <dpinto@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:45:39 by imoumini          #+#    #+#             */
-/*   Updated: 2024/11/15 00:20:13 by dpinto           ###   ########.fr       */
+/*   Updated: 2024/12/06 21:19:12 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 void	fill_last_node(t_env *last_node, char *name, char *value, char *env)
 {
+/* 	last_node->var_name = ft_strdup(name);
+	last_node->var_value = ft_strdup(value);
+	last_node->txt = ft_strdup(env); */
 	last_node->var_name = name;
 	last_node->var_value = value;
 	last_node->txt = env;

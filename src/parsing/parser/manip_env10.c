@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 20:01:08 by imoumini          #+#    #+#             */
-/*   Updated: 2024/12/04 19:52:57 by wacista          ###   ########.fr       */
+/*   Updated: 2024/12/06 13:14:19 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ char	*find_end_of_var(char *str)
 	if (!str)
 		return (NULL);
 	if (*str == '?')
+		return (str + 1);
+	else if (ft_isdigit(*str))
 		return (str + 1);
 	i = 0;
 	while (expand_legtimate_values(str[i]))

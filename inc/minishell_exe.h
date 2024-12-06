@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 15:56:53 by wcista            #+#    #+#             */
-/*   Updated: 2024/11/13 21:08:34 by wacista          ###   ########.fr       */
+/*   Updated: 2024/12/06 17:27:23 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,9 @@ bool	builtin_exit(t_final *cmds, char *env[], t_pipex *p, t_main *m);
 
 //builtin_export.c
 bool	builtin_export(char *env[], t_pipex *p);
+
+//builtin_export=.c
+bool	builtin_exp_equl(t_final *cmds, t_pipex *p);
 
 //builtin_pwd.c
 bool	builtin_pwd(t_pipex *p);

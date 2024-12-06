@@ -11,3 +11,9 @@ echo "$HOME $UNKNWN $PWD"
 export _A <- //valid
 
 export_with_option.c
+
+export AAA -> ne rien faire
+
+export AAA=123 BBB=123 -> export plusieurs var
+
+export AAA=123 BBB=123 89=123 CCC=123 -> export toute les vars valides, affiche une erreur pour les var non valides -> exit_status: 1

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt_name.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wcista <wcista@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 21:29:02 by wcista            #+#    #+#             */
-/*   Updated: 2023/04/24 20:43:35 by wcista           ###   ########.fr       */
+/*   Updated: 2024/12/06 20:53:47 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static char	*default_name(void)
 {
 	char	*name;
 
-	name = ft_strcpy("minishell> ");
+	name = ft_strcpy("minishell$ ");
 	return (name);
 }
 
