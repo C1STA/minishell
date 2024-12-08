@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:45:12 by imoumini          #+#    #+#             */
-/*   Updated: 2024/12/06 20:22:53 by wacista          ###   ########.fr       */
+/*   Updated: 2024/12/08 22:52:24 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,21 @@ t_env	*env_not_exist(void)
 
 	mini_env = (t_env *)malloc(sizeof(t_env) * 4);
 	start = mini_env;
-	mini_env -> txt = ft_strcpy("nothing=nothing");
-	mini_env -> var_name = ft_strcpy("nothing");
-	mini_env -> var_value = ft_strcpy("nothing");
+	mini_env -> txt = ft_strdup("nothing=nothing");
+	mini_env -> var_name = ft_strdup("nothing");
+	mini_env -> var_value = ft_strdup("nothing");
 	add_node_env(mini_env);
 	add_node_env(mini_env);
 	mini_env = mini_env->next;
-	mini_env->txt = ft_strcpy("OLDPWD=null");
-	mini_env->var_name = ft_strcpy("OLDPWD");
-	mini_env->var_value = ft_strcpy("null");
+	mini_env->txt = ft_strdup("OLDPWD=null");
+	mini_env->var_name = ft_strdup("OLDPWD");
+	mini_env->var_value = ft_strdup("null");
 	mini_env = mini_env->next;
 	mini_env->var_value = getcwd(NULL, 0);
 	if (!mini_env->var_value)
-		mini_env->var_value = ft_strcpy("null");
+		mini_env->var_value = ft_strdup("null");
 	mini_env->txt = ft_strjoin("PWD=", mini_env->var_value);
-	mini_env->var_name = ft_strcpy("PWD");
+	mini_env->var_name = ft_strdup("PWD");
 	mini_env->next = NULL;
 	mini_env = start;
 	return (mini_env);
@@ -53,7 +53,7 @@ void	copy_original_to_mini(char *original[], int i, t_env *ptr)
 {
 	while (original[i] && ptr != NULL)
 	{
-		ptr -> txt = ft_strcpy(original[i]);
+		ptr -> txt = ft_strdup(original[i]);
 		ptr = ptr -> next;
 		i++;
 	}

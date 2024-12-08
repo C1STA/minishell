@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 21:52:52 by wcista            #+#    #+#             */
-/*   Updated: 2024/12/06 20:27:01 by wacista          ###   ########.fr       */
+/*   Updated: 2024/12/08 23:28:51 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,16 +199,14 @@ t_env		*add_node_env(t_env *head);
 t_env		*new_node_env(void);
 void		print_env(t_env *head);
 int			is_env_var(t_env *mini_env, t_node *root);
-int			insert_input_env(t_env **head, t_node *root, int pipe);
+int			insert_input_env(t_env **head, t_node *root);
 void		expand_env(t_env *head, t_node *root);
-char		*ft_strcpy(char *str);
 char		*ft_strcpy_env(char *str);
 void		if_double_env(char *new_str, int *i, int *j, char *str);
 void		if_simple_env(char *new_str, int *i, int *j, char *str);
 void		create_var_name(t_env *node);
 void		create_var_value(t_env *node);
 int			ft_stcmp(char *str1, char *str2);
-int			ft_stcmp_exit(char *str1, char *str2);
 void		final_txt(char *a_dol, char *new_str, t_node *ptr, char *save_var);
 char		*init_save_after_dollar(char *save_after_dollar);
 char		*return_after_multiple_dollar(char *str, int i, int save);
@@ -235,13 +233,6 @@ char		*after_multiple_dollar(char *str, int nbr);
 int			more_than_one_dollars_suite(t_node *ptr);
 void		expand_job_multiple_dollar(t_node *ptr, int nbr);
 int			pars_env_name(char *str, char *env_input);
-int			pars_env_name_nb_equ(char *str, char *env_input);
-int			pars_env_name_quote(char *str, char *env);
-int			pars_env_name_f_if(char *str, char *env_input, int i);
-int			pars_env_name_s_if(char *str, char *env_input, int i);
-int			pars_env_name_t_if(char *str, char *env_input, int i);
-int			pars_env_value(char *str, char *env_input);
-int			count_nbr_equal(char *str, char *env_input);
 int			check_if_exist(t_env *head, char *str);
 void		supp_env(t_env **head, char *str);
 int			supp_env_first(t_env *ptr, t_env **head, char *str);
@@ -301,7 +292,6 @@ int			how_much_pipe(t_node *root);
 /*error*/
 int			error_pars(t_node *head);
 int			end_comm(char *str, int i, int single, int double_q);
-int			nbr_in_export(t_node *head);
 
 /*guillemets*/
 int			single_quote_closed(t_node *head);

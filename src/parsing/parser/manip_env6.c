@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manip_env6.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpinto <dpinto@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:38:49 by imoumini          #+#    #+#             */
-/*   Updated: 2024/11/12 00:54:51 by dpinto           ###   ########.fr       */
+/*   Updated: 2024/12/08 23:59:11 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,30 @@ int	nbr_of_dollar_suite(t_node *ptr)
 		i++;
 	}
 	return (count);
+}
+
+t_node	*do_i_have_to_expand(t_node *node)
+{
+	t_node	*ptr;
+	int		i;
+
+	i = 0;
+	if (!node)
+		return (NULL);
+	ptr = node;
+	if (node -> after_here_doc == 1)
+		return (NULL);
+	if (ptr != NULL)
+	{
+		while (ptr -> txt[i] != '\0')
+		{
+			if (ptr -> txt[i] == '$' && (ft_isalnum(ptr->txt[i + 1]) \
+			|| ptr->txt[i + 1] == '?' || ptr->txt[i + 1] == '_'))
+				return (ptr);
+			i++;
+		}
+	}
+	return (NULL);
 }
 
 void	expand_env(t_env *head, t_node *root)

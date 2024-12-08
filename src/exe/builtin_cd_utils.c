@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 13:15:00 by wcista            #+#    #+#             */
-/*   Updated: 2024/11/07 19:26:04 by wacista          ###   ########.fr       */
+/*   Updated: 2024/12/08 22:52:24 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*get_env_input(char *variable, int j, char *env[])
 	i = env_finder(variable, env);
 	if (i == ft_tablen(env))
 		return (NULL);
-	dest = ft_strcpy(&env[i][j]);
+	dest = ft_strdup(&env[i][j]);
 	return (dest);
 }
 

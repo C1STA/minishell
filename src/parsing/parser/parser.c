@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 21:23:57 by imrane            #+#    #+#             */
-/*   Updated: 2024/11/07 19:27:24 by wacista          ###   ########.fr       */
+/*   Updated: 2024/12/08 22:52:24 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_node	*new_node(t_token *tok)
 	node -> quotes = 0;
 	node -> heredoc = 0;
 	if (tok)
-		node -> txt = ft_strcpy((tok -> text));
+		node -> txt = ft_strdup((tok -> text));
 	node -> children = 0;
 	node -> first_child = NULL;
 	node -> next = NULL;

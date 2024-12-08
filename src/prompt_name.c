@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 21:29:02 by wcista            #+#    #+#             */
-/*   Updated: 2024/12/06 20:53:47 by wacista          ###   ########.fr       */
+/*   Updated: 2024/12/08 22:52:24 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static char	*default_name(void)
 {
 	char	*name;
 
-	name = ft_strcpy("minishell$ ");
+	name = ft_strdup("minishell$ ");
 	return (name);
 }
 
@@ -57,7 +57,7 @@ static void	len_and_names_loop(t_env *env_tmp, t_prompt *p)
 		{
 			p->status++;
 			p->len += ft_strlen(env_tmp->var_value);
-			p->user = ft_strcpy(env_tmp->var_value);
+			p->user = ft_strdup(env_tmp->var_value);
 		}
 		else if (!ft_strcmp(env_tmp->var_name, "SESSION_MANAGER"))
 		{
@@ -68,7 +68,7 @@ static void	len_and_names_loop(t_env *env_tmp, t_prompt *p)
 		{
 			p->status++;
 			p->len += ft_strlen(env_tmp->var_value);
-			p->pwd = ft_strcpy(env_tmp->var_value);
+			p->pwd = ft_strdup(env_tmp->var_value);
 		}
 		env_tmp = env_tmp->next;
 	}

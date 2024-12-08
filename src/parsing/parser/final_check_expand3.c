@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 17:47:28 by imoumini          #+#    #+#             */
-/*   Updated: 2024/11/07 19:27:24 by wacista          ###   ########.fr       */
+/*   Updated: 2024/12/08 22:52:24 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,14 @@ char	**recreate_while(char **tab, char **new_tab, int i, int j)
 			broken_tab = tab_without_space(tab[i], nbr_space(tab[i]));
 			while (broken_tab && broken_tab[tab_i])
 			{
-				new_tab[j] = ft_strcpy(broken_tab[tab_i]);
+				new_tab[j] = ft_strdup(broken_tab[tab_i]);
 				tab_i++;
 				j++;
 			}
 			free_double_tab(broken_tab);
 		}
 		else
-			new_tab[j] = ft_strcpy(tab[i]);
+			new_tab[j] = ft_strdup(tab[i]);
 		i++;
 		j++;
 	}

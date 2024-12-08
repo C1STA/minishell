@@ -6,32 +6,34 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 18:47:11 by imrane            #+#    #+#             */
-/*   Updated: 2024/11/07 19:27:24 by wacista          ###   ########.fr       */
+/*   Updated: 2024/12/08 23:12:13 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_strcpy(char *str)
+int	how_many_back_slash(char *s)
 {
-	int		i;
-	int		length;
-	char	*ptr;
+	int	i;
 
-	if (!str)
-		return (NULL);
 	i = 0;
-	length = ft_strlen(str);
-	ptr = malloc((sizeof(char) * length) + 1);
-	if (!ptr)
-		return (NULL);
-	while (str[i])
-	{
-		ptr[i] = str[i];
+	while (s[i] && s[i] == '\\')
 		i++;
+	return (i);
+}
+
+void	back_slash(char *s, char *ptr, int *i, int *j)
+{
+	int	sl;
+
+	sl = how_many_back_slash(s);
+	*i += sl;
+	sl = sl / 2;
+	while (sl)
+	{
+		ptr[(*j)++] = '\\';
+		sl--;
 	}
-	ptr[i] = '\0';
-	return (ptr);
 }
 
 char	*ft_strcpy_env(char *str)
@@ -53,12 +55,11 @@ char	*ft_strcpy_env(char *str)
 		if_simple_env(ptr, &i, &j, str);
 		if (!str[i])
 			break ;
-		if (str[i] != '\'' && str[i] != '"')
-		{
-			ptr[j] = str[i];
-			j++;
-		}
-		i++;
+		if (str[i] == '\\')
+			back_slash(str + i, ptr, &i, &j);
+		else
+			if (str[i] != '\'' && str[i] != '"')
+				ptr[j++] = str[i++];
 	}
 	return (ptr[j] = '\0', ptr);
 }

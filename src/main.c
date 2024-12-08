@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 20:57:56 by imrane            #+#    #+#             */
-/*   Updated: 2024/12/06 12:26:17 by wacista          ###   ########.fr       */
+/*   Updated: 2024/12/08 23:45:15 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	ft_checker_bis(t_main *m)
 	m->mini_env = copy_env(m->final_env);
 	free_final_env(&m->final_env);
 	ft_free_final_ast(&m->final);
-	printf("ici?\n");
 }
 
 void	ft_checker(t_main *m)
@@ -58,10 +57,7 @@ void	ft_checker(t_main *m)
 	expand_env(m->mini_env, m->root);
 	is_unset(&m->mini_env, m->root);
 	if (error_pars(m->root) == 1 && is_env_var(m->mini_env, m->root) == 1)
-	{
-		printf("continue?\n");
 		ft_checker_bis(m);
-	}
 	else
 		ft_free(NULL, &m->root, &m->src, &m->info);
 }

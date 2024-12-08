@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 20:01:08 by imoumini          #+#    #+#             */
-/*   Updated: 2024/12/06 13:14:19 by wacista          ###   ########.fr       */
+/*   Updated: 2024/12/08 22:52:24 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	**transform_env_in_double_tab(t_env *node)
 	new_str[count_nbr_env(node)] = NULL;
 	while (ptr)
 	{
-		new_str[i] = ft_strcpy(ptr -> txt);
+		new_str[i] = ft_strdup(ptr -> txt);
 		i++;
 		ptr = ptr -> next;
 	}
