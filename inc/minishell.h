@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 21:52:52 by wcista            #+#    #+#             */
-/*   Updated: 2024/12/08 23:28:51 by wacista          ###   ########.fr       */
+/*   Updated: 2024/12/09 01:54:10 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,7 +238,8 @@ void		supp_env(t_env **head, char *str);
 int			supp_env_first(t_env *ptr, t_env **head, char *str);
 int			supp_env_last(t_env *ptr, char *str, t_env *before);
 int			supp_env_milieu(t_env *ptr, t_env *before, char *str);
-void		is_unset(t_env **head, t_node *root);
+int			is_unset(t_env **head, t_node *root);
+int			ft_stcmp_unset(char *str1, char *str2);
 t_node		*attribue_here_doc(t_node *root);
 void		attribute_atfer_here_doc(t_node *node);
 int			is_it_heredoc(t_node *node);

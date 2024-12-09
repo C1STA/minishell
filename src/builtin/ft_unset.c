@@ -6,32 +6,60 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 16:06:55 by imoumini          #+#    #+#             */
-/*   Updated: 2024/11/07 19:25:02 by wacista          ###   ########.fr       */
+/*   Updated: 2024/12/09 01:56:25 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	is_unset(t_env **head, t_node *root)
+int	ft_stcmp_unset(char *str1, char *str2)
+{
+	int	i;
+
+	i = 0;
+	if (!str1)
+		return (0);
+	if (!str2)
+		return (0);
+	if (str1[0] == '\0')
+		return (0);
+	if (ft_strlen(str1) != ft_strlen(str2))
+		return (0);
+	while (str1[i] != '\0')
+	{
+		if (str1[i] != str2[i])
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int	is_unset(t_env **head, t_node *root)
 {
 	t_node	*ptr;
 	int		nbr;
 
 	if (!root)
-		return ;
+		return (1);
 	nbr = how_much_pipe(root);
-	if (nbr != 0)
-		return ;
-	ptr = root -> first_child;
+	if (nbr)
+		return (0);
+	ptr = root->first_child;
 	if (ptr)
 	{
-		if (ft_stcmp(ptr -> txt, "unset") && (ptr -> next != NULL))
+		if (ft_stcmp(ptr->txt, "unset") && ptr->next)
 		{
-			if (check_if_exist(*head, ptr -> next -> txt) == 1)
-				supp_env(head, ptr -> next -> txt);
+			nbr = 1;
+			ptr = ptr->next;
+			while (ptr)
+			{
+				if (check_if_exist(*head, ptr->txt) == 1)
+					supp_env(head, ptr->txt);
+				ptr = ptr->next;
+			}
 		}
-		ptr = ptr -> next;
 	}
+	return (nbr);
 }
 
 int	check_if_exist(t_env *head, char *str)
@@ -43,7 +71,7 @@ int	check_if_exist(t_env *head, char *str)
 	ptr = head;
 	while (ptr != NULL)
 	{
-		if (ft_stcmp(str, ptr -> var_name) == 1)
+		if (ft_stcmp_unset(str, ptr -> var_name) == 1)
 			return (1);
 		ptr = ptr -> next;
 	}
