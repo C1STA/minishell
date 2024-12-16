@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manip_env7.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dpinto <dpinto@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/07 15:45:12 by imoumini          #+#    #+#             */
-/*   Updated: 2024/12/08 22:52:24 by wacista          ###   ########.fr       */
+/*   Created: 2024/12/12 18:31:03 by dpinto            #+#    #+#             */
+/*   Updated: 2024/12/12 18:31:04 by dpinto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ t_env	*env_not_exist(void)
 
 	mini_env = (t_env *)malloc(sizeof(t_env) * 4);
 	start = mini_env;
-	mini_env -> txt = ft_strdup("nothing=nothing");
-	mini_env -> var_name = ft_strdup("nothing");
-	mini_env -> var_value = ft_strdup("nothing");
+	mini_env->txt = ft_strdup("nothing=nothing");
+	mini_env->var_name = ft_strdup("nothing");
+	mini_env->var_value = ft_strdup("nothing");
 	add_node_env(mini_env);
 	add_node_env(mini_env);
 	mini_env = mini_env->next;
@@ -45,7 +45,7 @@ void	create_var_name_and_value(t_env *ptr)
 	{
 		create_var_name(ptr);
 		create_var_value(ptr);
-		ptr = ptr -> next;
+		ptr = ptr->next;
 	}
 }
 
@@ -53,8 +53,8 @@ void	copy_original_to_mini(char *original[], int i, t_env *ptr)
 {
 	while (original[i] && ptr != NULL)
 	{
-		ptr -> txt = ft_strdup(original[i]);
-		ptr = ptr -> next;
+		ptr->txt = ft_strdup(original[i]);
+		ptr = ptr->next;
 		i++;
 	}
 }
@@ -76,7 +76,7 @@ int	env_checks_quit(t_env **head, t_node *node)
 		return (1);
 	if ((!node))
 		return (1);
-	if ((node -> next == NULL) || check_if_one_cmd(node))
+	if ((node->next == NULL) || check_if_one_cmd(node))
 		return (1);
 	return (0);
 }

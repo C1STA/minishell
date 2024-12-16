@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   final_check_expand.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dpinto <dpinto@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/26 14:48:42 by imoumini          #+#    #+#             */
-/*   Updated: 2024/11/07 19:27:24 by wacista          ###   ########.fr       */
+/*   Created: 2024/12/12 18:29:49 by dpinto            #+#    #+#             */
+/*   Updated: 2024/12/12 18:29:50 by dpinto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	nbr_space(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '-' )
+		if (str[i] == '-')
 			count++;
 		i++;
 	}

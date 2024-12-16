@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/04 21:23:57 by imrane            #+#    #+#             */
-/*   Updated: 2024/12/08 22:52:24 by wacista          ###   ########.fr       */
+/*   Created: 2024/12/12 18:31:55 by dpinto            #+#    #+#             */
+/*   Updated: 2024/12/16 21:08:18 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@ t_node	*new_node(t_token *tok)
 	t_node	*node;
 
 	node = malloc(sizeof(t_node));
-	node -> txt = NULL;
-	node -> after_here_doc = 0;
-	node -> quotes = 0;
-	node -> heredoc = 0;
+	node->txt = NULL;
+	node->after_here_doc = 0;
+	node->quotes = 0;
+	node->heredoc = 0;
 	if (tok)
-		node -> txt = ft_strdup((tok -> text));
-	node -> children = 0;
-	node -> first_child = NULL;
-	node -> next = NULL;
-	node -> prev_sibling = NULL;
+		node->txt = ft_strdup((tok->text));
+	node->children = 0;
+	node->first_child = NULL;
+	node->next = NULL;
+	node->prev_sibling = NULL;
 	return (node);
 }
 
@@ -35,18 +35,18 @@ t_node	*add_node_to_ast(t_node *root, t_node *node)
 	t_node	*ptr;
 	t_node	*prev;
 
-	if (root -> first_child == NULL)
-		root -> first_child = node;
+	if (root->first_child == NULL)
+		root->first_child = node;
 	else
 	{
-		ptr = root -> first_child;
+		ptr = root->first_child;
 		while (ptr != NULL)
 		{
 			prev = ptr;
-			ptr = ptr -> next;
+			ptr = ptr->next;
 		}
-		prev -> next = node;
-		node -> prev_sibling = prev;
+		prev->next = node;
+		node->prev_sibling = prev;
 	}
 	return (root);
 }
@@ -67,9 +67,9 @@ t_node	*parse_simple_command(char *input, t_source **src, t_info_tok **info)
 	info_ft = *info;
 	if (!root)
 		return (NULL);
-	if (src_ft -> end_input != 1)
+	if (src_ft->end_input != 1)
 		tok = tokenize(src_ft, info_ft);
-	while (src_ft -> exit != 1 || tok != NULL)
+	while (src_ft->exit != 1 || tok != NULL)
 	{
 		if (!(if_tok_exist(tok, root, info)))
 			return (NULL);
@@ -78,20 +78,6 @@ t_node	*parse_simple_command(char *input, t_source **src, t_info_tok **info)
 		tok = tokenize(src_ft, info_ft);
 	}
 	return (free_tok(&tok), root);
-}
-
-void	print_ast(t_node *node)
-{
-	t_node	*ptr;
-
-	if (!node)
-		return ;
-	ptr = node -> first_child;
-	while (ptr != NULL)
-	{
-		ft_printf("%s\n", ptr -> txt);
-		ptr = ptr -> next;
-	}
 }
 
 t_node	*if_tok_exist(t_token *tok, t_node *root, t_info_tok **info)

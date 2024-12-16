@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   final_check_expand3.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dpinto <dpinto@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/06 17:47:28 by imoumini          #+#    #+#             */
-/*   Updated: 2024/12/08 22:52:24 by wacista          ###   ########.fr       */
+/*   Created: 2024/12/12 18:30:00 by dpinto            #+#    #+#             */
+/*   Updated: 2024/12/12 18:30:01 by dpinto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	**tab_without_space_while(char *str, int begin, int end, char **tab)
 	j = 0;
 	while (str[i] != '\0')
 	{
-		if (str[i] == '-' )
+		if (str[i] == '-')
 		{
 			begin = i;
 			if (begin != end)
@@ -47,7 +47,7 @@ char	**tab_without_space_while(char *str, int begin, int end, char **tab)
 			if (begin != end)
 				tab[j++] = return_right_tab(str, begin, end);
 		}
-		if (str[i] && str[i] != '-' )
+		if (str[i] && str[i] != '-')
 			i++;
 	}
 	tab[j] = NULL;
@@ -102,7 +102,7 @@ char	**recreate_tab_without_space(char **tab)
 		i++;
 		j++;
 	}
-	new_tab = malloc(sizeof(char *) *(count + 1 + j + 1));
+	new_tab = malloc(sizeof(char *) * (count + 1 + j + 1));
 	new_tab[1] = NULL;
 	i = 0;
 	j = 0;

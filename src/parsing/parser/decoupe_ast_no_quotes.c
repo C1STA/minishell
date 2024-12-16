@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   decoupe_ast_no_quotes.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpinto <dpinto@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/11 20:31:15 by imrane            #+#    #+#             */
-/*   Updated: 2024/11/15 01:35:36 by dpinto           ###   ########.fr       */
+/*   Created: 2024/12/12 18:29:10 by dpinto            #+#    #+#             */
+/*   Updated: 2024/12/16 21:05:01 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,56 +59,4 @@ t_ast	*isolate_command_redir(t_node *pt)
 		}
 	}
 	return (return_save_ast(pt, com, redir));
-}
-
-void	print_final_ast(t_com **ast)
-{
-	int	i;
-
-	i = 0;
-	while (ast[i])
-	{
-		ft_printf("------------------------\n");
-		printf("command %i is :\n", i);
-		print_command(ast[i]);
-		print_redir(ast[i]->redir);
-		ft_printf("------------------------\n");
-		i++;
-	}
-}
-
-void	print_command(t_com *com)
-{
-	t_com	*ptr;
-
-	if (!com)
-	{
-		printf("there is nos command\n");
-		return ;
-	}
-	ptr = com;
-	while (ptr)
-	{
-		ft_printf("command is \n");
-		ft_printf("%s\n", ptr->txt);
-		ptr = ptr->next;
-	}
-}
-
-void	print_redir(t_redir *redir)
-{
-	t_redir	*ptr;
-
-	if (!redir)
-	{
-		ft_printf("there is no redir for this command\n");
-		return ;
-	}
-	ptr = redir;
-	while (ptr)
-	{
-		ft_printf("redir is \n");
-		ft_printf("%s\n", ptr->txt);
-		ptr = ptr->next;
-	}
 }

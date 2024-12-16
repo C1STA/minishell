@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   manip_env4.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dpinto <dpinto@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/07 15:37:52 by imoumini          #+#    #+#             */
-/*   Updated: 2024/12/05 15:53:28 by wacista          ###   ########.fr       */
+/*   Created: 2024/12/12 18:30:47 by dpinto            #+#    #+#             */
+/*   Updated: 2024/12/12 18:30:48 by dpinto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern int		g_exit_status;
+extern int	g_exit_status;
 
 char	*return_matching_value(t_env *head, char *str)
 {
@@ -28,9 +28,9 @@ char	*return_matching_value(t_env *head, char *str)
 	free(exit);
 	while (ptr != NULL)
 	{
-		if (ft_stcmp(str, ptr -> txt) == 1)
-			return (ptr -> var_value);
-		ptr = ptr -> next;
+		if (ft_stcmp(str, ptr->txt) == 1)
+			return (ptr->var_value);
+		ptr = ptr->next;
 	}
 	return ("");
 }
@@ -47,7 +47,7 @@ void	cut_dollar_sign(char *str)
 		str[i] = str[i + 1];
 		i++;
 	}
-	length = length -1;
+	length = length - 1;
 	str[length] = '\0';
 }
 

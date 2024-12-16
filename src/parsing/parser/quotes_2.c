@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dpinto <dpinto@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/15 15:05:39 by imoumini          #+#    #+#             */
-/*   Updated: 2024/11/07 19:27:24 by wacista          ###   ########.fr       */
+/*   Created: 2024/12/12 18:31:59 by dpinto            #+#    #+#             */
+/*   Updated: 2024/12/12 18:31:59 by dpinto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ int	single_quote_closed(t_node *head)
 	count = 0;
 	if (!head)
 		return (2);
-	ptr = head -> first_child;
+	ptr = head->first_child;
 	while (ptr)
 	{
-		if (ft_stcmp(ptr -> txt, "'") == 1)
+		if (ft_stcmp(ptr->txt, "'") == 1)
 			count++;
-		ptr = ptr -> next;
+		ptr = ptr->next;
 	}
 	if (count % 2 != 0)
 		return (print_error_quotes("single quotes"), 0);
@@ -42,12 +42,12 @@ int	double_quote_closed(t_node *head)
 	count = 0;
 	if (!head)
 		return (2);
-	ptr = head -> first_child;
+	ptr = head->first_child;
 	while (ptr)
 	{
-		if (ft_stcmp(ptr -> txt, "\"") == 1)
+		if (ft_stcmp(ptr->txt, "\"") == 1)
 			count++;
-		ptr = ptr -> next;
+		ptr = ptr->next;
 	}
 	if (count % 2 != 0)
 		return (print_error_quotes("double quotes"), 0);

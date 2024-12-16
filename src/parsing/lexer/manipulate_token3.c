@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manipulate_token3.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dpinto <dpinto@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/08 18:42:55 by imoumini          #+#    #+#             */
-/*   Updated: 2024/11/07 19:27:24 by wacista          ###   ########.fr       */
+/*   Created: 2024/12/12 18:26:46 by dpinto            #+#    #+#             */
+/*   Updated: 2024/12/12 18:26:48 by dpinto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,26 @@ int	tokenize_while(t_source *src, t_info_tok *info, char c)
 {
 	if (tokenize_quotes(src, info, c) == 1)
 		return (1);
-	if ((c == ' ' || c == '\t' || c == '\n') \
-		&& (does_str_has_quotes(info -> tok_buf)) == 0)
+	if ((c == ' ' || c == '\t' || c == '\n')
+		&& (does_str_has_quotes(info->tok_buf)) == 0)
 	{
 		if (tokenize_space(c, src, info) == 1)
 			return (1);
 	}
-	else if (c == '|' && (does_str_has_quotes(info -> tok_buf)) == 0)
+	else if (c == '|' && (does_str_has_quotes(info->tok_buf)) == 0)
 	{
 		if (tokenize_pipe(c, src, info) == 1)
 			return (1);
 	}
-	else if ((c == '<' || c == '>') \
-		&& (does_str_has_quotes(info -> tok_buf)) == 0)
+	else if ((c == '<' || c == '>')
+		&& (does_str_has_quotes(info->tok_buf)) == 0)
 	{
 		if (tokenize_in_out(c, src, info) == 1)
 			return (1);
 	}
 	else if (c != '"' && c != '\'')
 	{
-		info -> tok_bufindex++;
+		info->tok_bufindex++;
 		add_to_buf(c, info);
 	}
 	return (0);
@@ -43,8 +43,8 @@ int	tokenize_while(t_source *src, t_info_tok *info, char c)
 
 void	init_buf_size(t_info_tok *info)
 {
-	info -> tok_bufsize = 1024;
-	info -> tok_buf = ft_calloc(info -> tok_bufsize, sizeof(char));
+	info->tok_bufsize = 1024;
+	info->tok_buf = ft_calloc(info->tok_bufsize, sizeof(char));
 }
 
 int	does_str_has_quotes(char *str)

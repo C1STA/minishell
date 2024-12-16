@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manip_env9.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dpinto <dpinto@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/07 15:45:52 by imoumini          #+#    #+#             */
-/*   Updated: 2024/11/07 19:27:24 by wacista          ###   ########.fr       */
+/*   Created: 2024/12/12 18:31:15 by dpinto            #+#    #+#             */
+/*   Updated: 2024/12/12 18:31:15 by dpinto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,23 +81,23 @@ t_node	*attribue_here_doc(t_node *root)
 
 	if (!root)
 		return (NULL);
-	ptr = root -> first_child;
+	ptr = root->first_child;
 	if (ptr)
-		ptr -> quotes = 0;
+		ptr->quotes = 0;
 	while (ptr)
 	{
 		if (is_it_heredoc(ptr) == 1)
 		{
-			ptr -> heredoc = 0;
-			ptr -> next -> heredoc = 1;
-			return (ptr -> next);
+			ptr->heredoc = 0;
+			ptr->next->heredoc = 1;
+			return (ptr->next);
 		}
 		else
 		{
-			ptr -> heredoc = 0;
-			ptr -> after_here_doc = 0;
+			ptr->heredoc = 0;
+			ptr->after_here_doc = 0;
 		}
-		ptr = ptr -> next;
+		ptr = ptr->next;
 	}
 	return (NULL);
 }
@@ -108,14 +108,14 @@ void	attribute_atfer_here_doc(t_node *node)
 
 	if (!node)
 		return ;
-	ptr = node -> next;
+	ptr = node->next;
 	while (ptr)
 	{
 		if (does_str_has_quotes(ptr->txt) == 1)
-			ptr -> quotes = 1;
+			ptr->quotes = 1;
 		else
-			ptr -> quotes = 0;
-		ptr -> after_here_doc = 1;
-		ptr = ptr -> next;
+			ptr->quotes = 0;
+		ptr->after_here_doc = 1;
+		ptr = ptr->next;
 	}
 }

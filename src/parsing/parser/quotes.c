@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dpinto <dpinto@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/03 19:17:11 by imrane            #+#    #+#             */
-/*   Updated: 2024/11/07 19:27:24 by wacista          ###   ########.fr       */
+/*   Created: 2024/12/12 18:32:04 by dpinto            #+#    #+#             */
+/*   Updated: 2024/12/12 18:32:05 by dpinto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ int	is_there_quotes(t_node *root)
 
 	if (!root)
 		return (2);
-	ptr = root -> first_child;
+	ptr = root->first_child;
 	while (ptr)
 	{
-		if (ft_stcmp(ptr -> txt, "\"") == 1 || ft_stcmp(ptr -> txt, "'") == 1)
+		if (ft_stcmp(ptr->txt, "\"") == 1 || ft_stcmp(ptr->txt, "'") == 1)
 			return (1);
-		ptr = ptr -> next;
+		ptr = ptr->next;
 	}
 	return (0);
 }
@@ -34,12 +34,12 @@ int	is_there_single_quotes(t_node *root)
 
 	if (!root)
 		return (2);
-	ptr = root -> first_child;
+	ptr = root->first_child;
 	while (ptr)
 	{
-		if (ft_stcmp(ptr -> txt, "'") == 1)
+		if (ft_stcmp(ptr->txt, "'") == 1)
 			return (1);
-		ptr = ptr -> next;
+		ptr = ptr->next;
 	}
 	return (0);
 }
@@ -50,12 +50,12 @@ int	is_there_double_quotes(t_node *root)
 
 	if (!root)
 		return (2);
-	ptr = root -> first_child;
+	ptr = root->first_child;
 	while (ptr)
 	{
-		if (ft_stcmp(ptr -> txt, "\"") == 1)
+		if (ft_stcmp(ptr->txt, "\"") == 1)
 			return (1);
-		ptr = ptr -> next;
+		ptr = ptr->next;
 	}
 	return (0);
 }
@@ -70,14 +70,14 @@ int	is_there_both(t_node *root)
 	double_quotes = 0;
 	if (!root)
 		return (2);
-	ptr = root -> first_child;
+	ptr = root->first_child;
 	while (ptr)
 	{
-		if (ft_stcmp(ptr -> txt, "\"") == 1)
+		if (ft_stcmp(ptr->txt, "\"") == 1)
 			simple++;
-		if (ft_stcmp(ptr -> txt, "'") == 1)
+		if (ft_stcmp(ptr->txt, "'") == 1)
 			double_quotes++;
-		ptr = ptr -> next;
+		ptr = ptr->next;
 	}
 	if (simple > 0 && double_quotes > 0)
 		return (1);

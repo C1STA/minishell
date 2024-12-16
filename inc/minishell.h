@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/15 21:52:52 by wcista            #+#    #+#             */
-/*   Updated: 2024/12/09 01:54:10 by wacista          ###   ########.fr       */
+/*   Created: 2024/12/16 20:38:55 by wacista           #+#    #+#             */
+/*   Updated: 2024/12/16 21:08:13 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,6 @@ t_node		*parse_simple_command(char *input, t_source **src, \
 t_node		*new_node(t_token *tok);
 t_node		*if_tok_exist(t_token *tok, t_node *root, t_info_tok **info);
 t_node		*add_node_to_ast(t_node *root, t_node *node);
-void		print_ast(t_node *node);
 int			single_enter(char *input);
 int			check_space_append_heredoc(char *str);
 int			only_space(char *str);
@@ -197,7 +196,6 @@ void		free_in_insert_input_env(char *env, \
 		char *var_name, char *var_value);
 t_env		*add_node_env(t_env *head);
 t_env		*new_node_env(void);
-void		print_env(t_env *head);
 int			is_env_var(t_env *mini_env, t_node *root);
 int			insert_input_env(t_env **head, t_node *root);
 void		expand_env(t_env *head, t_node *root);
@@ -243,7 +241,6 @@ int			ft_stcmp_unset(char *str1, char *str2);
 t_node		*attribue_here_doc(t_node *root);
 void		attribute_atfer_here_doc(t_node *node);
 int			is_it_heredoc(t_node *node);
-void		print_double_tab_env(char **str);
 char		**transform_env_in_double_tab(t_env *node);
 void		free_final_env(char ***tab_env);
 int			count_nbr_env(t_env *node);
@@ -311,9 +308,6 @@ t_ast		*isolate_command_redir(t_node *root);
 t_com		**malloc_ast(t_com **ast, int nbr_pipe);
 t_com		**create_while(t_com **ast, t_ast *save_ast, \
 		t_node *ptr, int nbr_pipe);
-void		print_final_ast(t_com **ast);
-void		print_command(t_com *com);
-void		print_redir(t_redir *redir);
 void		init_redir_if(t_redir *ptr, t_node *node);
 void		init_redir_else(t_redir *ptr);
 void		ft_heredoc_redir(t_redir *ptr);

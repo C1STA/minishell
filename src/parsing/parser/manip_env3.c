@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manip_env3.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dpinto <dpinto@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/07 15:34:36 by imoumini          #+#    #+#             */
-/*   Updated: 2024/12/08 23:58:50 by wacista          ###   ########.fr       */
+/*   Created: 2024/12/12 18:30:42 by dpinto            #+#    #+#             */
+/*   Updated: 2024/12/12 18:30:43 by dpinto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ t_env	*last_env_node(t_env *head)
 	ptr = head;
 	if (!ptr)
 		return (NULL);
-	while (ptr -> next != NULL)
-		ptr = ptr -> next;
+	while (ptr->next != NULL)
+		ptr = ptr->next;
 	return (ptr);
 }
 

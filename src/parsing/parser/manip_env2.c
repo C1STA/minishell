@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/07 15:34:13 by imoumini          #+#    #+#             */
-/*   Updated: 2024/12/06 20:26:52 by wacista          ###   ########.fr       */
+/*   Created: 2024/12/12 18:30:37 by dpinto            #+#    #+#             */
+/*   Updated: 2024/12/16 21:07:46 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,21 @@ void	create_var_name(t_env *node)
 
 	if (!node)
 		return ;
-	if (node -> txt == NULL)
+	if (node->txt == NULL)
 		return ;
 	i = 0;
-	while (node -> txt[i] != '=')
+	while (node->txt[i] != '=')
 		i++;
-	node -> var_name = malloc((sizeof(char)) * i + 1);
-	if (node -> var_name == NULL)
+	node->var_name = malloc((sizeof(char)) * i + 1);
+	if (node->var_name == NULL)
 		return ;
 	i = 0;
-	while (node -> txt[i] != '=')
+	while (node->txt[i] != '=')
 	{
-		node -> var_name[i] = node -> txt[i];
+		node->var_name[i] = node->txt[i];
 		i++;
 	}
-	node ->var_name[i] = '\0';
+	node->var_name[i] = '\0';
 }
 
 t_env	*copy_env(char *original[])
@@ -47,7 +47,7 @@ t_env	*copy_env(char *original[])
 	mini_env = malloc(sizeof(t_env));
 	if (mini_env == NULL)
 		return (NULL);
-	mini_env -> next = NULL;
+	mini_env->next = NULL;
 	while (original[i])
 		i++;
 	while (i > 1)
@@ -61,20 +61,6 @@ t_env	*copy_env(char *original[])
 	ptr = mini_env;
 	create_var_name_and_value(ptr);
 	return (mini_env);
-}
-
-void	print_env(t_env *head)
-{
-	t_env	*ptr;
-
-	if (!head)
-		return ;
-	ptr = head;
-	while (ptr != NULL)
-	{
-		ft_printf("%s\n", ptr -> txt);
-		ptr = ptr -> next;
-	}
 }
 
 int	ft_stcmp(char *str1, char *str2)

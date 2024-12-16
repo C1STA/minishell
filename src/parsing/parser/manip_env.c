@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manip_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dpinto <dpinto@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/19 18:47:11 by imrane            #+#    #+#             */
-/*   Updated: 2024/12/08 23:12:13 by wacista          ###   ########.fr       */
+/*   Created: 2024/12/12 18:30:30 by dpinto            #+#    #+#             */
+/*   Updated: 2024/12/12 18:30:30 by dpinto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*ft_strcpy_env(char *str)
 		return (NULL);
 	i = 0;
 	j = 0;
-	ptr = malloc(sizeof(char) *(ft_strlen(str) + 1));
+	ptr = malloc(sizeof(char) * (ft_strlen(str) + 1));
 	while (str[i] != '\0')
 	{
 		if_double_env(ptr, &i, &j, str);
@@ -57,9 +57,8 @@ char	*ft_strcpy_env(char *str)
 			break ;
 		if (str[i] == '\\')
 			back_slash(str + i, ptr, &i, &j);
-		else
-			if (str[i] != '\'' && str[i] != '"')
-				ptr[j++] = str[i++];
+		else if (str[i] != '\'' && str[i] != '"')
+			ptr[j++] = str[i++];
 	}
 	return (ptr[j] = '\0', ptr);
 }
@@ -71,10 +70,10 @@ t_env	*new_node_env(void)
 	node = malloc(sizeof(t_env));
 	if (!node)
 		return (NULL);
-	node -> next = NULL;
-	node -> txt = NULL;
-	node -> var_name = NULL;
-	node -> var_value = NULL;
+	node->next = NULL;
+	node->txt = NULL;
+	node->var_name = NULL;
+	node->var_value = NULL;
 	return (node);
 }
 
@@ -85,16 +84,16 @@ t_env	*add_node_env(t_env *head)
 	if (!head)
 		return (NULL);
 	ptr = head;
-	if (head -> next == NULL)
+	if (head->next == NULL)
 	{
-		head -> next = new_node_env();
+		head->next = new_node_env();
 		return (head);
 	}
 	else
 	{
-		while (ptr -> next != NULL)
-			ptr = ptr -> next;
-		ptr -> next = new_node_env();
+		while (ptr->next != NULL)
+			ptr = ptr->next;
+		ptr->next = new_node_env();
 	}
 	return (head);
 }

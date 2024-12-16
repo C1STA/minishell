@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_pars.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dpinto <dpinto@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/09 20:50:27 by imrane            #+#    #+#             */
-/*   Updated: 2024/12/04 17:53:45 by wacista          ###   ########.fr       */
+/*   Created: 2024/12/12 18:33:09 by dpinto            #+#    #+#             */
+/*   Updated: 2024/12/12 18:33:10 by dpinto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	check_space_append_heredoc(char *str)
 	{
 		if (str[i] == '<' || str[i] == '>')
 		{
-			if (str[i +1])
+			if (str[i + 1])
 			{
 				if (str[i + 1] == ' ' || str[i + 1] == '\t')
 				{

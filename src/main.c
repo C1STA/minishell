@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dpinto <dpinto@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/03 20:57:56 by imrane            #+#    #+#             */
-/*   Updated: 2024/12/09 01:55:46 by wacista          ###   ########.fr       */
+/*   Created: 2024/12/12 18:24:20 by dpinto            #+#    #+#             */
+/*   Updated: 2024/12/12 18:24:24 by dpinto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,8 @@ void	ft_checker(t_main *m)
 {
 	m->root = parse_simple_command(m->input, &m->src, &m->info);
 	expand_env(m->mini_env, m->root);
-	if (error_pars(m->root) == 1 && \
-	is_env_var(m->mini_env, m->root) == 1 && \
-	!is_unset(&m->mini_env, m->root))
+	if (error_pars(m->root) == 1 && is_env_var(m->mini_env, m->root) == 1
+		&& !is_unset(&m->mini_env, m->root))
 		ft_checker_bis(m);
 	else
 		ft_free(NULL, &m->root, &m->src, &m->info);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manipulate_token4.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dpinto <dpinto@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/14 16:57:19 by imoumini          #+#    #+#             */
-/*   Updated: 2024/11/28 17:48:42 by wacista          ###   ########.fr       */
+/*   Created: 2024/12/12 18:26:56 by dpinto            #+#    #+#             */
+/*   Updated: 2024/12/12 18:40:47 by dpinto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ int	next_src_is_legit(t_source *src)
 		return (0);
 	if (src->buffer[src->curpos + 1])
 	{
-		if (src->buffer[src->curpos + 1] != ' ' \
-		&& src->buffer[src->curpos + 1] != '\t')
+		if (src->buffer[src->curpos + 1] != ' '
+			&& src->buffer[src->curpos + 1] != '\t')
 			return (1);
 	}
 	return (0);

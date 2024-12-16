@@ -5,26 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/06 17:44:38 by imoumini          #+#    #+#             */
-/*   Updated: 2024/11/07 19:27:24 by wacista          ###   ########.fr       */
+/*   Created: 2024/12/12 18:29:55 by dpinto            #+#    #+#             */
+/*   Updated: 2024/12/16 21:05:49 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	print_double_tab(char **str)
-{
-	int	i;
-
-	i = 0;
-	if (!str)
-		return ;
-	while (str[i])
-	{
-		ft_printf("%s\n", str[i]);
-		i++;
-	}
-}
 
 int	double_tab_as_export(char **tab)
 {
@@ -52,12 +38,12 @@ void	final_expand(t_final *final)
 	follow = final;
 	while (follow)
 	{
-		if (double_tab_as_export(follow -> cmds) == 0)
+		if (double_tab_as_export(follow->cmds) == 0)
 		{
-			if (double_tab_as_space(follow -> cmds) == 1)
+			if (double_tab_as_space(follow->cmds) == 1)
 			{
-				save = follow -> cmds;
-				follow -> cmds = recreate_tab_without_space(follow -> cmds);
+				save = follow->cmds;
+				follow->cmds = recreate_tab_without_space(follow->cmds);
 				free_double_tab(save);
 			}
 		}
@@ -96,7 +82,7 @@ int	tab_as_space(char *tab)
 	i = 0;
 	while (tab[i])
 	{
-		if (tab[i] == '-' )
+		if (tab[i] == '-')
 			return (1);
 		i++;
 	}

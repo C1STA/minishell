@@ -1,6 +1,4 @@
 /.vscode
-*.o
-*.d
-*.a
+**/.config/
+**.a
 minishell
-/minishell_tester
