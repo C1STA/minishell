@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 20:31:25 by wacista           #+#    #+#             */
-/*   Updated: 2024/12/16 20:31:26 by wacista          ###   ########.fr       */
+/*   Updated: 2025/01/09 20:56:00 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ bool	builtin(t_final *cmds, char *env[], t_pipex *p, t_main *m)
 		return (builtin_export_unset(p));
 	if ((!ft_strcmp(cmds->cmds[0], "env")) && !cmds->cmds[1])
 		return (builtin_env(env, p));
-	if (!ft_strncmp(cmds->cmds[0], "export=\
-", 7) || !ft_strncmp(cmds->cmds[0], "unset=", 6))
+	if (cmds->cmds[0] && (!ft_strncmp(cmds->cmds[0], "export=\
+", 7) || !ft_strncmp(cmds->cmds[0], "unset=", 6)))
 	{
 		if (!builtin_exp_equl(cmds, p))
 			return (builtin(cmds, env, p, m));

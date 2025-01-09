@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   decoupe_ast_no_quotes2.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpinto <dpinto@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 18:29:21 by dpinto            #+#    #+#             */
-/*   Updated: 2024/12/12 18:29:22 by dpinto           ###   ########.fr       */
+/*   Updated: 2025/01/09 20:43:39 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	create_while_help(t_ast *save_ast, t_com **ast, t_node **tmp, int i)
 		ast[i] = save_ast->command;
 	else
 	{
-		ast[i] = malloc(sizeof(t_com));
+		ast[i] = ft_calloc(1, sizeof(t_com));
 		ast[i]->txt = NULL;
 	}
 	if (ast[i])

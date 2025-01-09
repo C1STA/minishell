@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 20:35:39 by wacista           #+#    #+#             */
-/*   Updated: 2024/12/16 20:35:40 by wacista          ###   ########.fr       */
+/*   Updated: 2025/01/09 18:24:23 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*ft_strjoin_free(char *s1, char *s2)
 	while (s2 && *s2)
 		dest[i++] = *s2++;
 	dest[i] = '\0';
-	if (s1)
+	if (s1 && *s1)
 		free(s1);
 	return (dest);
 }
