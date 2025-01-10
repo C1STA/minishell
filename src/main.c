@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpinto <dpinto@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 18:24:20 by dpinto            #+#    #+#             */
-/*   Updated: 2024/12/12 18:24:24 by dpinto           ###   ########.fr       */
+/*   Updated: 2025/01/10 21:33:05 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 
 int		g_exit_status;
 
-void	is_args(int argc)
+void	is_args(int ac, char **av)
 {
-	if (argc > 1)
+	if (ac > 1)
 	{
-		ft_putstr_fd("Invalid number of arguments\n", 2);
+		ft_printf("%s: no argument accepted, received %d\n", &av[0][2], ac - 1);
 		exit(1);
 	}
 }
@@ -41,7 +41,6 @@ void	ft_checker_bis(t_main *m)
 	m->ast = create_ast_command_redir(m->root);
 	m->final = create_final_ast(m->ast);
 	ft_free_before_final_ast(&m->ast);
-	final_expand(m->final);
 	m->final_env = transform_env_in_double_tab(m->mini_env);
 	free_env(&m->mini_env);
 	ft_free(NULL, &m->root, &m->src, &m->info);
@@ -66,9 +65,8 @@ int	main(int argc, char *argv[], char *env[])
 {
 	t_main	*m;
 
-	is_args(argc);
+	is_args(argc, argv);
 	ft_signal(1);
-	(void)argv;
 	m = (t_main *)malloc(sizeof(t_main));
 	if (!m)
 		return (1);

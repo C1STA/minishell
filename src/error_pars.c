@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_pars.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpinto <dpinto@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 18:33:09 by dpinto            #+#    #+#             */
-/*   Updated: 2024/12/12 18:33:10 by dpinto           ###   ########.fr       */
+/*   Updated: 2025/01/10 21:08:01 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,17 @@ int	error_pars(t_node *head)
 	return (1);
 }
 
+void	skip_quote(char *s, char c, int *i)
+{
+	if (!s)
+		return ;
+	(*i)++;
+	while (s[*i] && s[*i] != c)
+		(*i)++;
+	if (s[*i] == c)
+		(*i)++;
+}
+
 int	check_space_append_heredoc(char *str)
 {
 	int	i;
@@ -40,7 +51,9 @@ int	check_space_append_heredoc(char *str)
 	i = 0;
 	while (str[i] != '\0')
 	{
-		if (str[i] == '<' || str[i] == '>')
+		if (str[i] == '"' || str[i] == '\'')
+			skip_quote(str, str[i], &i);
+		if (str[i] && (str[i] == '<' || str[i] == '>'))
 		{
 			if (str[i + 1])
 			{
@@ -54,7 +67,8 @@ int	check_space_append_heredoc(char *str)
 				}
 			}
 		}
-		i++;
+		if (str[i])
+			i++;
 	}
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 20:38:55 by wacista           #+#    #+#             */
-/*   Updated: 2024/12/16 21:08:13 by wacista          ###   ########.fr       */
+/*   Updated: 2025/01/10 20:54:59 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -327,20 +327,6 @@ t_final		*create_final_ast(t_com **ast);
 t_final		*create_list_final_ast(t_final *final, t_com *ast);
 char		**break_linked_list_in_double_tab(t_com *com);
 int			ft_com_len(t_com *com);
-void		final_expand(t_final *final);
-int			double_tab_as_space(char **tab);
-int			tab_as_space(char *tab);
-void		free_double_tab(char **str);
-int			nbr_space(char *str);
-char		*return_right_tab(char *str, int begin, int end);
-char		*return_right_tab_begin_sup(char *str, int begin, int end);
-char		*return_right_tab_begin_inf(char *str, int begin, int end);
-char		**tab_without_space(char *str, int nbr);
-char		**tab_without_space_while(char *str, \
-		int begin, int end, char **tab);
-char		**recreate_while(char **tab, char **new_tab, int i, int j);
-char		**recreate_tab_without_space(char **tab);
-int			double_tab_as_export(char **tab);
 int			is_double_quotes_str_closed(char *str);
 int			is_single_quotes_str_closed(char *str);
 
