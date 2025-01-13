@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 20:29:58 by wacista           #+#    #+#             */
-/*   Updated: 2024/12/16 20:29:59 by wacista          ###   ########.fr       */
+/*   Updated: 2025/01/13 20:21:59 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	is_unset(t_env **head, t_node *root)
 	ptr = root->first_child;
 	if (ptr)
 	{
-		if (ft_stcmp(ptr->txt, "unset") && ptr->next)
+		if (!ft_strcmp(ptr->txt, "unset") && ptr->next)
 		{
 			nbr = 1;
 			ptr = ptr->next;

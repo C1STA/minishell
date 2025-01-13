@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 20:29:48 by wacista           #+#    #+#             */
-/*   Updated: 2024/12/16 20:29:49 by wacista          ###   ########.fr       */
+/*   Updated: 2025/01/13 20:21:24 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	is_env_var(t_env *mini_env, t_node *root)
 	ptr = root -> first_child;
 	if (ptr)
 	{
-		if (ft_stcmp(ptr -> txt, "export") && (ptr -> next != NULL))
+		if (!ft_strcmp(ptr->txt, "export") && (ptr -> next != NULL))
 		{
 			if (insert_input_env(&mini_env, ptr) == 0)
 				return (0);

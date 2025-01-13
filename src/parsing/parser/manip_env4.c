@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manip_env4.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpinto <dpinto@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 18:30:47 by dpinto            #+#    #+#             */
-/*   Updated: 2024/12/12 18:30:48 by dpinto           ###   ########.fr       */
+/*   Updated: 2025/01/13 20:59:23 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ char	*return_matching_value(t_env *head, char *str)
 	free(exit);
 	while (ptr != NULL)
 	{
-		if (ft_stcmp(str, ptr->txt) == 1)
+		if (ft_stcmp(str, ptr->txt) == 1 && ptr->txt[ft_strlen(str)] == '=')
 			return (ptr->var_value);
 		ptr = ptr->next;
 	}
-	return ("");
+	return (NULL);
 }
 
 void	cut_dollar_sign(char *str)
