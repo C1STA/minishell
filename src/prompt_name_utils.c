@@ -6,11 +6,22 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 20:38:06 by wacista           #+#    #+#             */
-/*   Updated: 2024/12/16 20:38:07 by wacista          ###   ########.fr       */
+/*   Updated: 2025/01/27 05:58:59 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*get_env(t_env	*env, char *var)
+{
+	while (env)
+	{
+		if (!ft_strcmp(env->var_name, var))
+			return (env->var_value);
+		env = env->next;
+	}
+	return (NULL);
+}
 
 void	free_prompt(t_prompt *p)
 {
@@ -32,4 +43,25 @@ void	init_to_null(t_prompt *p)
 	p->name = NULL;
 	p->user = NULL;
 	p->pwd = NULL;
+}
+
+static int	ft_is_print(int c)
+{
+	if (c == '\t')
+		return (1);
+	if (c > 32 && c <= 126)
+		return (1);
+	return (0);
+}
+
+bool	is_printable(char *s)
+{
+	if (!s)
+		return (false);
+	while (*s)
+	{
+		if (ft_is_print(*s++))
+			return (true);
+	}
+	return (false);
 }

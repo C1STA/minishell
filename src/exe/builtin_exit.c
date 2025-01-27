@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 20:30:54 by wacista           #+#    #+#             */
-/*   Updated: 2024/12/16 20:30:55 by wacista          ###   ########.fr       */
+/*   Updated: 2025/01/16 04:07:19 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ extern int	g_exit_status;
 void	ft_exit_d(t_env **env, t_main **m)
 {
 	free_env(env);
+	if ((*m)->pwd)
+		free((*m)->pwd);
 	free(*m);
 	ft_putstr_fd("exit\n", 1);
 	exit (g_exit_status);

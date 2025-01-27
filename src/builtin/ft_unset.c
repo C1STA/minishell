@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 20:29:58 by wacista           #+#    #+#             */
-/*   Updated: 2025/01/13 20:21:59 by wacista          ###   ########.fr       */
+/*   Updated: 2025/01/19 06:28:13 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,32 +34,40 @@ int	ft_stcmp_unset(char *str1, char *str2)
 	return (1);
 }
 
-int	is_unset(t_env **head, t_node *root)
+static void	unset_del(t_env **head, t_node *ptr, t_main *m)
+{
+	while (ptr)
+	{
+		if (check_if_exist(*head, ptr->txt) == 1)
+		{
+			if (!ft_strcmp(ptr->txt, "PWD"))
+				if (!m->pwd)
+					m->pwd = getpwd(*head);
+			supp_env(head, ptr->txt);
+		}
+		ptr = ptr->next;
+	}
+}
+
+int	is_unset(t_env **head, t_node *root, t_main *m)
 {
 	t_node	*ptr;
-	int		nbr;
 
 	if (!root)
 		return (1);
-	nbr = how_much_pipe(root);
-	if (nbr)
+	if (how_much_pipe(root))
 		return (0);
 	ptr = root->first_child;
 	if (ptr)
 	{
-		if (!ft_strcmp(ptr->txt, "unset") && ptr->next)
+		if (!ft_strcmp(ptr->txt, "unset") && ptr->next && !is_empty(ptr, 1))
 		{
-			nbr = 1;
 			ptr = ptr->next;
-			while (ptr)
-			{
-				if (check_if_exist(*head, ptr->txt) == 1)
-					supp_env(head, ptr->txt);
-				ptr = ptr->next;
-			}
+			unset_del(head, ptr, m);
+			return (update_cmd(head, root->first_child), 1);
 		}
 	}
-	return (nbr);
+	return (0);
 }
 
 int	check_if_exist(t_env *head, char *str)

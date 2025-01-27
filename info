@@ -1,0 +1,19 @@
+builtin exit $fjhjwekh env $fjkwehfwjekh ... ✓
+
+cd .. -> cd maj pwd IMPORTANT
+
+save HOME pour cd ~ si: unset HOME, comme pwd
+
+./minishell <dev/... protect write ✗
+
+maj $_ dans child
+
+$fkjhedfjkhsd --> segfault --> FIXED ✓
+
+history blank ✓
+
+fix permission denied, command not found etc. -> FIXED ✓
+
+isatty
+
+env not setup (env -i) (mini_env)

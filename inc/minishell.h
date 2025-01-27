@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 20:38:55 by wacista           #+#    #+#             */
-/*   Updated: 2025/01/10 20:54:59 by wacista          ###   ########.fr       */
+/*   Updated: 2025/01/27 05:59:23 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,11 @@
 # include <fcntl.h>
 # include <stddef.h>
 # include <stdbool.h>
-# include <sys/wait.h>
+# include <sys/stat.h>
 # include <sys/types.h>
+# include <sys/wait.h>
 # include <limits.h>
+# include <errno.h>
 
 typedef struct s_prompt
 {
@@ -142,6 +144,7 @@ typedef struct s_main
 	char		**final_env;
 	char		*exit_status;
 	char		*prompt_name;
+	char		*pwd;
 }	t_main;
 
 /* manipulate the input*/
@@ -150,6 +153,7 @@ void		unget_char(t_source *src);// recule de 1 car dans linput
 char		peek_char(t_source *src);// return le next char sans update pos 
 void		skip_white_spaces(t_source *src);
 t_source	**init_src(t_source **src, char *input);// init input struct
+bool		is_printable(char *s);
 
 /* manipulate the token*/
 t_info_tok	**init_global_info_token(t_info_tok **info);
@@ -184,8 +188,8 @@ int			check_space_append_heredoc(char *str);
 int			only_space(char *str);
 
 /*env*/
-t_env		*copy_env(char *original[]);
-t_env		*env_not_exist(void);
+t_env		*copy_env(char *original[], char **argv);
+t_env		*env_not_exist(char **argv);
 void		create_var_name_and_value(t_env *ptr);
 void		copy_original_to_mini(char *original[], int i, t_env *ptr);
 int			env_checks_quit(t_env **head, t_node *node);
@@ -196,8 +200,8 @@ void		free_in_insert_input_env(char *env, \
 		char *var_name, char *var_value);
 t_env		*add_node_env(t_env *head);
 t_env		*new_node_env(void);
-int			is_env_var(t_env *mini_env, t_node *root);
-int			insert_input_env(t_env **head, t_node *root);
+int			is_env_var(t_env *mini_env, t_node *root, t_main *m);
+int			insert_input_env(t_env **head, t_node *root, t_main *m);
 void		expand_env(t_env *head, t_node *root);
 char		*ft_strcpy_env(char *str);
 void		if_double_env(char *new_str, int *i, int *j, char *str);
@@ -236,7 +240,8 @@ void		supp_env(t_env **head, char *str);
 int			supp_env_first(t_env *ptr, t_env **head, char *str);
 int			supp_env_last(t_env *ptr, char *str, t_env *before);
 int			supp_env_milieu(t_env *ptr, t_env *before, char *str);
-int			is_unset(t_env **head, t_node *root);
+int			is_unset(t_env **head, t_node *root, t_main *m);
+char		*getpwd(t_env *head);
 int			ft_stcmp_unset(char *str1, char *str2);
 t_node		*attribue_here_doc(t_node *root);
 void		attribute_atfer_here_doc(t_node *node);
@@ -245,6 +250,9 @@ char		**transform_env_in_double_tab(t_env *node);
 void		free_final_env(char ***tab_env);
 int			count_nbr_env(t_env *node);
 int			expand_legtimate_values(char c);
+int			update_cmd(t_env **mini_env, t_node *child);
+int			is_empty(t_node *root, int empty);
+int			check_if_one_cmd(t_node *node);
 
 /*signals*/
 void		ft_sigint(int sigint);
@@ -340,8 +348,9 @@ void		remove_heredoc(t_final *cmds);
 void		executor(t_final *cmds, char *env[], t_main *m);
 long long	ft_atol_plus(char *str);
 long long	ft_atol_minus(char *str);
-char		*get_prompt_name(t_env *env);
+char		*get_prompt_name(t_env *env, t_main *m);
 void		free_prompt(t_prompt *p);
 void		init_to_null(t_prompt *p);
+char		*get_env(t_env	*env, char *var);
 
 #endif

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   manip_env7.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpinto <dpinto@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 18:31:03 by dpinto            #+#    #+#             */
-/*   Updated: 2024/12/12 18:31:04 by dpinto           ###   ########.fr       */
+/*   Updated: 2025/01/17 23:28:37 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env	*env_not_exist(void)
+t_env	*env_not_exist(char **argv)
 {
 	t_env	*mini_env;
 	t_env	*start;
@@ -22,6 +22,7 @@ t_env	*env_not_exist(void)
 	mini_env->txt = ft_strdup("nothing=nothing");
 	mini_env->var_name = ft_strdup("nothing");
 	mini_env->var_value = ft_strdup("nothing");
+	add_node_env(mini_env);
 	add_node_env(mini_env);
 	add_node_env(mini_env);
 	mini_env = mini_env->next;
@@ -34,6 +35,10 @@ t_env	*env_not_exist(void)
 		mini_env->var_value = ft_strdup("null");
 	mini_env->txt = ft_strjoin("PWD=", mini_env->var_value);
 	mini_env->var_name = ft_strdup("PWD");
+	mini_env = mini_env->next;
+	mini_env->var_name = ft_strdup("_");
+	mini_env->var_value = ft_strdup(*argv);
+	mini_env->txt = ft_strjoin("_=", mini_env->var_value);
 	mini_env->next = NULL;
 	mini_env = start;
 	return (mini_env);

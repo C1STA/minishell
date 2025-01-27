@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   final_ast.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpinto <dpinto@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 18:29:43 by dpinto            #+#    #+#             */
-/*   Updated: 2024/12/12 18:29:44 by dpinto           ###   ########.fr       */
+/*   Updated: 2025/01/20 04:42:12 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	**break_linked_list_in_double_tab(t_com *com)
 	tab = malloc(sizeof(char *) * (ft_com_len(com) + 1));
 	while (follow)
 	{
-		if (follow->txt)
+		if (follow->txt && *follow->txt)
 		{
 			tab[i] = malloc(sizeof(char) * (ft_strlen(follow->txt) + 1));
 			ft_strlcpy(tab[i], follow->txt, (ft_strlen(follow->txt) + 1));

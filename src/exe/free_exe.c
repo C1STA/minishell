@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 20:32:10 by wacista           #+#    #+#             */
-/*   Updated: 2024/12/16 20:32:11 by wacista          ###   ########.fr       */
+/*   Updated: 2025/01/16 03:40:25 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ void	exit_exe(t_final *cmds, char *env[], t_pipex *p, t_main *m)
 		close(p->fd[p->i - 1][0]);
 	g_exit_status = p->exit_status;
 	free_pipex(p);
+	if (m->pwd)
+		free(m->pwd);
 	free_exe(&cmds, &env, &m);
 	close(STDIN_FILENO);
 	close(STDOUT_FILENO);

@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 18:30:37 by dpinto            #+#    #+#             */
-/*   Updated: 2024/12/16 21:07:46 by wacista          ###   ########.fr       */
+/*   Updated: 2025/01/23 12:45:48 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,36 @@ void	create_var_name(t_env *node)
 	node->var_name[i] = '\0';
 }
 
-t_env	*copy_env(char *original[])
+void	edit_pwd(t_env *mini_env, char **argv)
+{
+	t_env	*ptr;
+	t_env	*last_node;
+	char	*pwd;
+	char	*full;
+
+	if (!argv)
+		return ;
+	ptr = mini_env;
+	pwd = getcwd(NULL, 0);
+	while (ptr)
+	{
+		if (!ft_strncmp(ptr->txt, "PWD", 3) && ptr->txt[3] == '=')
+		{
+			free(ptr->var_value);
+			ptr->var_value = ft_strdup(pwd);
+			free(ptr->txt);
+			ptr->txt = ft_strjoin("PWD=", ptr->var_value);
+			return (free(pwd));
+		}
+		ptr = ptr->next;
+	}
+	full = ft_strjoin("PWD=", pwd);
+	add_node_env(mini_env);
+	last_node = last_env_node(mini_env);
+	return (fill_last_node(last_node, "PWD", pwd, full), free(full), free(pwd));
+}
+
+t_env	*copy_env(char *original[], char **argv)
 {
 	int		i;
 	t_env	*mini_env;
@@ -43,7 +72,7 @@ t_env	*copy_env(char *original[])
 
 	i = 0;
 	if (!original || original[0] == NULL)
-		return (env_not_exist());
+		return (env_not_exist(argv));
 	mini_env = malloc(sizeof(t_env));
 	if (mini_env == NULL)
 		return (NULL);
@@ -60,6 +89,7 @@ t_env	*copy_env(char *original[])
 	copy_original_to_mini(original, i, ptr);
 	ptr = mini_env;
 	create_var_name_and_value(ptr);
+	edit_pwd(ptr, argv);
 	return (mini_env);
 }
 

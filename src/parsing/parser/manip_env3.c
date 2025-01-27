@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manip_env3.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpinto <dpinto@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 18:30:42 by dpinto            #+#    #+#             */
-/*   Updated: 2024/12/12 18:30:43 by dpinto           ###   ########.fr       */
+/*   Updated: 2025/01/26 16:49:18 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,19 +62,17 @@ char	*extract_value(char *str)
 	return (ptr);
 }
 
-t_env	*last_env_node(t_env *head)
+static void	del_env(t_env **head, char *var_name, t_main *m)
 {
-	t_env	*ptr;
-
-	ptr = head;
-	if (!ptr)
-		return (NULL);
-	while (ptr->next != NULL)
-		ptr = ptr->next;
-	return (ptr);
+	if (!ft_strcmp(var_name, "PWD"))
+	{
+		if (!m->pwd)
+			m->pwd = getpwd(*head);
+	}
+	supp_env(head, var_name);
 }
 
-int	insert_input_env(t_env **head, t_node *node)
+int	insert_input_env(t_env **head, t_node *node, t_main *m)
 {
 	char	*var_name;
 	char	*var_value;
@@ -92,7 +90,7 @@ int	insert_input_env(t_env **head, t_node *node)
 		if (!pars_env_name(var_name, env_input) && is_there_equal(env_input))
 		{
 			if (check_if_exist(*head, var_name) == 1)
-				supp_env(head, var_name);
+				del_env(head, var_name, m);
 			add_node_env(*head);
 			last_node = last_env_node(*head);
 			fill_last_node(last_node, var_name, var_value, env_input);

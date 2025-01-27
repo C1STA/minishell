@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 20:31:19 by wacista           #+#    #+#             */
-/*   Updated: 2024/12/16 20:31:20 by wacista          ###   ########.fr       */
+/*   Updated: 2025/01/19 06:33:50 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,25 @@
 
 extern int	g_exit_status;
 
-bool	builtin_pwd(t_pipex *p)
+char	*get_pwd(char *env[])
 {
-	char	*pwd;
-
-	pwd = NULL;
-	pwd = getcwd(NULL, 0);
-	if (!pwd)
+	if (!env)
+		return (NULL);
+	while (*env)
 	{
-		p->exit_status = 1;
-		print_perror("error retrieving current directory: \
-pwd: cannot access parent directories");
-		return (true);
+		if (!ft_strncmp(*env, "PWD", 3) && (*env)[3] == '=')
+			return (&(*env)[4]);
+		env++;
 	}
-	ft_putstr_fd(pwd, 1);
-	ft_putstr_fd("\n", 1);
-	free(pwd);
+	return (NULL);
+}
+
+bool	builtin_pwd(t_pipex *p, t_main *m, char *env[])
+{
 	p->exit_status = 0;
+	if (m->pwd)
+		return (printf("%s\n", m->pwd), true);
+	else
+		return (printf("%s\n", get_pwd(env)), true);
 	return (true);
 }

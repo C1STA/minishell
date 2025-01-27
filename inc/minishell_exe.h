@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 20:39:04 by wacista           #+#    #+#             */
-/*   Updated: 2024/12/16 20:39:05 by wacista          ###   ########.fr       */
+/*   Updated: 2025/01/20 04:27:34 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,9 +108,18 @@ void	exit_exe(t_final *cmds, char *env[], t_pipex *p, t_main *m);
 
 //print_status.c
 void	print_perror(char *s);
-void	print_exec(char *s, t_pipex *p);
 void	print_exit(t_final *cmds, t_pipex *p, char *s, bool n);
 void	print_perror_cd(char *s, bool n, t_pipex *p, t_cd *cd);
+
+//print_exec.c
+void	print_exec(char *s, t_pipex *p);
+
+//print_exec_utils.c
+void	permission_denied(char *err_msg, int *exit_status);
+void	command_not_found(char *err_msg, int *exit_status);
+void	is_a_directory(char *err_msg, int *exit_status);
+void	not_a_directory(char *err_msg, int *exit_status);
+void	no_such_file_or_directory(char *err_msg, int *exit_status);
 
 //builtin.c
 bool	isbuiltin(t_final *cmds);
@@ -139,7 +148,7 @@ bool	builtin_export(char *env[], t_pipex *p);
 bool	builtin_exp_equl(t_final *cmds, t_pipex *p);
 
 //builtin_pwd.c
-bool	builtin_pwd(t_pipex *p);
+bool	builtin_pwd(t_pipex *p, t_main *m, char *env[]);
 
 //utils
 int		lenlist(t_final *L);
