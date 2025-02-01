@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 20:38:55 by wacista           #+#    #+#             */
-/*   Updated: 2025/01/27 05:59:23 by wacista          ###   ########.fr       */
+/*   Updated: 2025/02/01 21:41:32 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -349,6 +349,7 @@ void		executor(t_final *cmds, char *env[], t_main *m);
 long long	ft_atol_plus(char *str);
 long long	ft_atol_minus(char *str);
 char		*get_prompt_name(t_env *env, t_main *m);
+char		*get_pwd_format(t_env *env, t_prompt *p, char	*pwd);
 void		free_prompt(t_prompt *p);
 void		init_to_null(t_prompt *p);
 char		*get_env(t_env	*env, char *var);

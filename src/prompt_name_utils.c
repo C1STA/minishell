@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 20:38:06 by wacista           #+#    #+#             */
-/*   Updated: 2025/01/27 05:58:59 by wacista          ###   ########.fr       */
+/*   Updated: 2025/02/01 21:41:08 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,24 @@ char	*get_env(t_env	*env, char *var)
 		env = env->next;
 	}
 	return (NULL);
+}
+
+char	*get_pwd_format(t_env *env, t_prompt *p, char	*pwd)
+{
+	char	*home;
+
+	home = get_env(env, "HOME");
+	if (!home)
+		return (p->len += ft_strlen(pwd), p->pwd = ft_strdup(pwd));
+	if (!ft_strncmp(pwd, home, ft_strlen(home)) && \
+	((pwd[ft_strlen(home)] == '/') || (pwd[ft_strlen(home)]) == '\0'))
+	{
+		p->pwd = ft_strjoin("~", pwd + ft_strlen(home));
+		if (!p->pwd)
+			return (p->len += ft_strlen(pwd), p->pwd = ft_strdup(pwd));
+		return (p->len += ft_strlen(p->pwd), p->pwd);
+	}
+	return (p->len += ft_strlen(pwd), p->pwd = ft_strdup(pwd));
 }
 
 void	free_prompt(t_prompt *p)
@@ -43,25 +61,4 @@ void	init_to_null(t_prompt *p)
 	p->name = NULL;
 	p->user = NULL;
 	p->pwd = NULL;
-}
-
-static int	ft_is_print(int c)
-{
-	if (c == '\t')
-		return (1);
-	if (c > 32 && c <= 126)
-		return (1);
-	return (0);
-}
-
-bool	is_printable(char *s)
-{
-	if (!s)
-		return (false);
-	while (*s)
-	{
-		if (ft_is_print(*s++))
-			return (true);
-	}
-	return (false);
 }

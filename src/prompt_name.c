@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 20:38:15 by wacista           #+#    #+#             */
-/*   Updated: 2025/01/31 16:38:38 by wacista          ###   ########.fr       */
+/*   Updated: 2025/02/01 21:41:01 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static char	*default_name(void)
 	return (name);
 }
 
-/* static void	get_cluster_position(t_env *env, t_prompt *p, bool n)
+static void	get_cluster_position(t_env *env, t_prompt *p, bool n)
 {
 	p->i_gcp = 0;
 	if (!n)
@@ -30,7 +30,8 @@ static char	*default_name(void)
 		p->name = (char *)malloc(sizeof(char) * p->save_len + 1);
 	while (env->var_value[p->i_gcp] && env->var_value[p->i_gcp] != '/')
 		p->i_gcp++;
-	p->i_gcp++;
+	if (env->var_value[p->i_gcp])
+		p->i_gcp++;
 	p->j_gcp = 0;
 	while (env->var_value[p->i_gcp] && env->var_value[p->i_gcp] != '.')
 	{
@@ -47,24 +48,6 @@ static char	*default_name(void)
 	else
 		return (p->save_len = p->len - p->save_len, \
 		get_cluster_position(env, p, true));
-} */
-
-static char	*get_pwd_format(t_env *env, t_prompt *p, char	*pwd)
-{
-	char	*home;
-
-	home = get_env(env, "HOME");
-	if (!home)
-		return (p->len += ft_strlen(pwd), p->pwd = ft_strdup(pwd));
-	if (!ft_strncmp(pwd, home, ft_strlen(home)) && \
-	((pwd[ft_strlen(home)] == '/') || (pwd[ft_strlen(home)]) == '\0'))
-	{
-		p->pwd = ft_strjoin("~", pwd + ft_strlen(home));
-		if (!p->pwd)
-			return (p->len += ft_strlen(pwd), p->pwd = ft_strdup(pwd));
-		return (p->len += ft_strlen(p->pwd), p->pwd);
-	}
-	return (p->len += ft_strlen(pwd), p->pwd = ft_strdup(pwd));
 }
 
 static void	len_and_names_loop(t_env *env_tmp, t_prompt *p)
@@ -80,12 +63,10 @@ static void	len_and_names_loop(t_env *env_tmp, t_prompt *p)
 			p->len += ft_strlen(env_tmp->var_value);
 			p->user = ft_strdup(env_tmp->var_value);
 		}
-		else if (!ft_strcmp(env_tmp->var_name, "NAME"))
+		else if (!ft_strcmp(env_tmp->var_name, "SESSION_MANAGER"))
 		{
 			p->status++;
-			p->len += ft_strlen(env_tmp->var_value);
-			p->name = ft_strdup(env_tmp->var_value);
-			//get_cluster_position(env_tmp, p, false);
+			get_cluster_position(env_tmp, p, false);
 		}
 		else if (!ft_strcmp(env_tmp->var_name, "PWD"))
 		{

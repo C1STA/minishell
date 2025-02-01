@@ -31,3 +31,5 @@ mini output = (wcista@DESKTOP-NP9P9HL:/home/wcista/Documents/42/Projects/minishe
 bash output = ()
 mini exit code = wcista@DESKTOP-NP9P9HL:/home/wcista/Documents/42/Projects/minishell/minishell_tester$ exit
 bash exit code = 0
+
+get_cluster_position -> invalid read of size ✓
