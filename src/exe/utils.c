@@ -6,29 +6,13 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 20:35:39 by wacista           #+#    #+#             */
-/*   Updated: 2025/01/09 18:24:23 by wacista          ###   ########.fr       */
+/*   Updated: 2025/01/31 16:25:48 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_exe.h"
 
 extern int	g_exit_status;
-
-int	ft_strcmp(const char *s1, const char *s2)
-{
-	size_t	i;
-
-	if (ft_strlen(s1) != ft_strlen(s2))
-		return (1);
-	i = 0;
-	while (s1[i] != '\0')
-	{
-		if (s1[i] != s2[i])
-			return (1);
-		i++;
-	}
-	return (0);
-}
 
 void	ft_free_str(char **str)
 {

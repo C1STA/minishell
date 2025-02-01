@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 20:39:04 by wacista           #+#    #+#             */
-/*   Updated: 2025/01/20 04:27:34 by wacista          ###   ########.fr       */
+/*   Updated: 2025/01/31 16:25:16 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ typedef struct s_heredoc
 
 typedef struct s_cd
 {
-	char	*cwd;
+	char	*pwd;
 	char	*path;
-	char	*tmp;
+	char	*cwd;
 }	t_cd;
 
 typedef struct s_export
@@ -128,9 +128,9 @@ bool	builtin(t_final *cmds, char *env[], t_pipex *p, t_main *m);
 //builtin_cd.c - builtin_cd_utils.c
 void	free_cd(t_cd *cd);
 size_t	env_finder(char *name, char **env);
-bool	export_env(char *variable, char *val, char *env[]);
+char	**export_env(char *variable, char *val, char *env[], t_main *m);
 char	*get_env_input(char *variable, int j, char *env[]);
-bool	builtin_cd(t_final *cmds, char *env[], t_pipex *p);
+bool	builtin_cd(t_final *cmds, char *env[], t_pipex *p, t_main *m);
 
 //builtin_echo.c
 bool	builtin_echo(t_final *cmds, t_pipex *p);
@@ -157,7 +157,6 @@ void	ft_free_str(char **str);
 char	*ft_strjoin_env(char *s1, char *s2);
 char	*ft_strjoin_free(char *s1, char *s2);
 char	*ft_strjoin_s2(char *s1, char *s2);
-int		ft_strcmp(const char *s1, const char *s2);
 size_t	ft_tablen(char **t);
 int		ft_strcmp_e(char *s1, char *s2);
 

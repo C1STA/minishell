@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 20:34:47 by wacista           #+#    #+#             */
-/*   Updated: 2025/01/20 04:23:50 by wacista          ###   ########.fr       */
+/*   Updated: 2025/01/31 14:42:29 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ void	print_perror_cd(char *s, bool n, t_pipex *p, t_cd *cd)
 		free(cd->path);
 	if (cd->cwd)
 		free(cd->cwd);
-	if (cd->tmp)
-		free(cd->tmp);
+	if (cd->pwd)
+		free(cd->pwd);
 	free(cd);
 }
 

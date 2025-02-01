@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 04:25:26 by wacista           #+#    #+#             */
-/*   Updated: 2025/01/20 04:29:21 by wacista          ###   ########.fr       */
+/*   Updated: 2025/01/30 05:54:16 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,13 @@ void	permission_denied(char *err_msg, int *exit_status)
 
 void	command_not_found(char *err_msg, int *exit_status)
 {
-	err_msg = ft_strjoin_free(err_msg, ": command not found\n");
-	write(STDERR_FILENO, err_msg, ft_strlen(err_msg));
-	*exit_status = 127;
+	char	*msg;
+
+	msg = ft_strjoin(&err_msg[11], ": command not found\n");
 	free(err_msg);
+	write(STDERR_FILENO, msg, ft_strlen(msg));
+	free(msg);
+	*exit_status = 127;
 }
 
 void	is_a_directory(char *err_msg, int *exit_status)

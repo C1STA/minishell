@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 20:38:15 by wacista           #+#    #+#             */
-/*   Updated: 2025/01/27 06:01:34 by wacista          ###   ########.fr       */
+/*   Updated: 2025/01/31 16:38:38 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,8 +118,6 @@ char	*get_prompt_name(t_env *env, t_main *m)
 	t_prompt	*p;
 	char		*dest;
 
-	if (!ft_strcmp(env->var_name, "nothing"))
-		return (default_name());
 	p = (t_prompt *)malloc(sizeof(t_prompt));
 	if (!get_len_and_names(env, p, m))
 		return (default_name());

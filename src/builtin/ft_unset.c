@@ -6,11 +6,13 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 20:29:58 by wacista           #+#    #+#             */
-/*   Updated: 2025/01/19 06:28:13 by wacista          ###   ########.fr       */
+/*   Updated: 2025/01/31 16:09:52 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_exit_status;
 
 int	ft_stcmp_unset(char *str1, char *str2)
 {
@@ -64,6 +66,7 @@ int	is_unset(t_env **head, t_node *root, t_main *m)
 		{
 			ptr = ptr->next;
 			unset_del(head, ptr, m);
+			g_exit_status = 0;
 			return (update_cmd(head, root->first_child), 1);
 		}
 	}

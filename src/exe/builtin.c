@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 20:31:25 by wacista           #+#    #+#             */
-/*   Updated: 2025/01/16 18:29:06 by wacista          ###   ########.fr       */
+/*   Updated: 2025/02/01 13:07:34 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ bool	builtin(t_final *cmds, char *env[], t_pipex *p, t_main *m)
 	if (!ft_strcmp(cmds->cmds[0], "unset"))
 		return (builtin_export_unset(p));
 	if (!ft_strcmp(cmds->cmds[0], "cd"))
-		return (builtin_cd(cmds, env, p));
+		return (builtin_cd(cmds, env, p, m));
 	if (!ft_strcmp(cmds->cmds[0], "pwd"))
 		return (builtin_pwd(p, m, env));
 	if (!ft_strcmp(cmds->cmds[0], "export\
@@ -62,6 +62,12 @@ bool	builtin(t_final *cmds, char *env[], t_pipex *p, t_main *m)
 bool	isbuiltin(t_final *cmds)
 {
 	if (!ft_strcmp(cmds->cmds[0], "exit"))
+		return (true);
+	if (!ft_strcmp(cmds->cmds[0], "echo"))
+		return (true);
+	if (!ft_strcmp(cmds->cmds[0], "$?"))
+		return (true);
+	if (!ft_strcmp(cmds->cmds[0], "unset"))
 		return (true);
 	if (!ft_strcmp(cmds->cmds[0], "cd"))
 		return (true);
