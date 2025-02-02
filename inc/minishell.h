@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 20:38:55 by wacista           #+#    #+#             */
-/*   Updated: 2025/02/01 21:41:32 by wacista          ###   ########.fr       */
+/*   Updated: 2025/02/02 23:12:11 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ typedef struct s_main
 	char		*exit_status;
 	char		*prompt_name;
 	char		*pwd;
+	int			ex;
 }	t_main;
 
 /* manipulate the input*/
@@ -202,6 +203,7 @@ t_env		*add_node_env(t_env *head);
 t_env		*new_node_env(void);
 int			is_env_var(t_env *mini_env, t_node *root, t_main *m);
 int			insert_input_env(t_env **head, t_node *root, t_main *m);
+bool		isequ(char *s, int *status);
 void		expand_env(t_env *head, t_node *root);
 char		*ft_strcpy_env(char *str);
 void		if_double_env(char *new_str, int *i, int *j, char *str);
@@ -234,7 +236,7 @@ char		*add_nbr(int nbr);
 char		*after_multiple_dollar(char *str, int nbr);
 int			more_than_one_dollars_suite(t_node *ptr);
 void		expand_job_multiple_dollar(t_node *ptr, int nbr);
-int			pars_env_name(char *str, char *env_input);
+int			pars_name(char *str, char *env_input, int *status);
 int			check_if_exist(t_env *head, char *str);
 void		supp_env(t_env **head, char *str);
 int			supp_env_first(t_env *ptr, t_env **head, char *str);

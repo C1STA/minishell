@@ -2,17 +2,11 @@ builtin exit $fjhjwekh env $fjkwehfwjekh ... ✓
 
 cd .. -> cd maj pwd IMPORTANT ✓
 
-save HOME pour cd ~ si: unset HOME, comme pwd ✗
-
-./minishell <dev/... protect write ✗
-
 maj $_ dans child ✗
 
 $fkjhedfjkhsd --> segfault --> FIXED ✓
 
 history blank ✓
-
-history same cmd as before
 
 fix permission denied, command not found etc. -> FIXED ✓
 
@@ -20,16 +14,10 @@ isatty ✗
 
 env not setup (env -i) (mini_env) ✓
 
-char *env[] -> char **env ✗
+export -> exit_status ✓
 
-export -> exit_status
+export dans un pipe: export 76gdasj | cat -> cense envoyer le code erreur d'export ✗
 
 builtin -> lonely_child
-
-Test  36: ❌ unset HOME
-mini output = (wcista@DESKTOP-NP9P9HL:/home/wcista/Documents/42/Projects/minishell/minishell_tester$ exit)
-bash output = ()
-mini exit code = wcista@DESKTOP-NP9P9HL:/home/wcista/Documents/42/Projects/minishell/minishell_tester$ exit
-bash exit code = 0
 
 get_cluster_position -> invalid read of size ✓

@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 20:29:48 by wacista           #+#    #+#             */
-/*   Updated: 2025/01/19 06:29:19 by wacista          ###   ########.fr       */
+/*   Updated: 2025/02/02 23:11:20 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int	is_env_var(t_env *mini_env, t_node *root, t_main *m)
 	{
 		if (!ft_strcmp(ptr->txt, "export") && ptr->next && !is_empty(ptr, 1))
 		{
+			m->ex = 0;
 			if (insert_input_env(&mini_env, ptr, m) == 0)
 			{
 				update_cmd(&mini_env, ptr);
@@ -81,17 +82,41 @@ int	is_env_var(t_env *mini_env, t_node *root, t_main *m)
 	return (1);
 }
 
-int	pars_env_name(char *str, char *env_input)
+int	pars_name(char *str, char *env_input, int *status)
 {
 	if (!str || !env_input)
+	{
+		*status = 1;
 		return (1);
+	}
 	if (!ft_isalpha(*str))
+	{
+		*status = 1;
 		return (print_error_export(env_input), 1);
+	}
 	while (*str)
 	{
 		if (!ft_isalnum(*str))
+		{
+			*status = 1;
 			return (print_error_export(env_input), 1);
+		}
 		str++;
 	}
 	return (0);
+}
+
+bool	isequ(char *s, int *status)
+{
+	if (!s)
+		return (false);
+	while (*s)
+	{
+		if (*s == '=')
+			return (true);
+		s++;
+	}
+	if (!*status)
+		g_exit_status = 0;
+	return (false);
 }
