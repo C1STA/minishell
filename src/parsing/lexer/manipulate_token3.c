@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manipulate_token3.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpinto <dpinto@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 18:26:46 by dpinto            #+#    #+#             */
-/*   Updated: 2024/12/12 18:26:48 by dpinto           ###   ########.fr       */
+/*   Updated: 2025/02/08 11:46:21 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ int	tokenize_while(t_source *src, t_info_tok *info, char c)
 	return (0);
 }
 
-void	init_buf_size(t_info_tok *info)
+void	init_buf_size(t_info_tok *info, long bufsize)
 {
-	info->tok_bufsize = 1024;
+	info->tok_bufsize = (int)bufsize + 1024;
 	info->tok_buf = ft_calloc(info->tok_bufsize, sizeof(char));
 }
 

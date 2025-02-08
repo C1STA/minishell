@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 18:30:47 by dpinto            #+#    #+#             */
-/*   Updated: 2025/01/13 20:59:23 by wacista          ###   ########.fr       */
+/*   Updated: 2025/02/08 02:12:20 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,11 @@ char	*return_matching_value(t_env *head, char *str)
 	while (ptr != NULL)
 	{
 		if (ft_stcmp(str, ptr->txt) == 1 && ptr->txt[ft_strlen(str)] == '=')
+		{
+			if (!ft_strlen(ptr->var_value))
+				return (NULL);
 			return (ptr->var_value);
+		}
 		ptr = ptr->next;
 	}
 	return (NULL);
@@ -81,21 +85,24 @@ char	*catch_var(char *str)
 char	*before_dollar(char *str)
 {
 	int		i;
-	int		length;
-	char	*before;
+	char	*dest;
 
 	i = 0;
-	length = 0;
-	while (str[length] != '$')
-		length++;
-	before = malloc(sizeof(char) * (length + 1));
-	while (str[i] != '$')
+	if (!str)
+		return (NULL);
+	while (str[i] && str[i] != '$')
+		i++;
+	dest = (char *)malloc(sizeof(char) * (i + 1));
+	if (!dest)
+		return (NULL);
+	i = 0;
+	while (str[i] && str[i] != '$')
 	{
-		before[i] = str[i];
+		dest[i] = str[i];
 		i++;
 	}
-	before[i] = '\0';
-	return (before);
+	dest[i] = '\0';
+	return (dest);
 }
 
 char	*after_dollar(char *str)

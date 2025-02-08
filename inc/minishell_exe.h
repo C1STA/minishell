@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 20:39:04 by wacista           #+#    #+#             */
-/*   Updated: 2025/01/31 16:25:16 by wacista          ###   ########.fr       */
+/*   Updated: 2025/02/08 04:31:16 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void	child_processs(t_final *cmds, char *env[], t_pipex *p, t_main *m);
 
 //cmd_access.c
 void	is_access(t_pipex *p, t_final *cmds, char *env[]);
+void	update_cmd_exe(t_pipex *p, t_final *cmd, char *env[]);
 
 //redir.c
 bool	init_redir(t_redir *redir, t_pipex *p);
@@ -145,7 +146,7 @@ bool	builtin_exit(t_final *cmds, char *env[], t_pipex *p, t_main *m);
 bool	builtin_export(char *env[], t_pipex *p);
 
 //builtin_export=.c
-bool	builtin_exp_equl(t_final *cmds, t_pipex *p);
+void	builtin_exp_equl(t_final *cmds);
 
 //builtin_pwd.c
 bool	builtin_pwd(t_pipex *p, t_main *m, char *env[]);

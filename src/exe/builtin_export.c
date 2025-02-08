@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 20:31:01 by wacista           #+#    #+#             */
-/*   Updated: 2024/12/16 20:31:02 by wacista          ###   ########.fr       */
+/*   Updated: 2025/02/08 10:07:59 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static char	**dup_env(char *env[])
 	int		len;
 	char	**env_copy;
 
+	if (!env)
+		return (NULL);
 	len = ft_tablen(env);
 	env_copy = (char **)malloc(sizeof(char *) * (len + 1));
 	if (!env_copy)
@@ -40,6 +42,8 @@ static void	sort_env(char *env[])
 {
 	t_export	*e;
 
+	if (!env)
+		return ;
 	e = (t_export *)malloc(sizeof(t_export));
 	if (!e)
 		return (print_perror("malloc"));
@@ -64,16 +68,19 @@ static void	sort_env(char *env[])
 
 static void	print_env_cpy(char **str)
 {
-	int	i;
+	int		i;
+	char	*tmp;
 
 	i = 0;
 	if (!str)
 		return ;
 	while (str[i])
 	{
-		ft_putstr_fd("declare -x ", 1);
-		ft_putstr_fd(str[i], 1);
-		ft_putstr_fd("\n", 1);
+		tmp = ft_strjoin("declare -x ", str[i]);
+		tmp = ft_strjoin_free(tmp, "\n");
+		write(1, tmp, ft_strlen(tmp));
+		free(tmp);
+		tmp = NULL;
 		i++;
 	}
 }

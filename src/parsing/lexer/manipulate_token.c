@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manipulate_token.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpinto <dpinto@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 18:26:31 by dpinto            #+#    #+#             */
-/*   Updated: 2024/12/12 18:26:32 by dpinto           ###   ########.fr       */
+/*   Updated: 2025/02/08 11:36:19 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_token	*tokenize(t_source *src, t_info_tok *info)
 	if (!src || !src->buffer || !src->bufsize)
 		return (NULL);
 	if (!(info->tok_buf))
-		init_buf_size(info);
+		init_buf_size(info, src->bufsize);
 	info->tok_buf[0] = '\0';
 	c = src->buffer[src->curpos];
 	while (c)

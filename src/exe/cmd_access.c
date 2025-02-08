@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 20:31:50 by wacista           #+#    #+#             */
-/*   Updated: 2024/12/16 20:31:51 by wacista          ###   ########.fr       */
+/*   Updated: 2025/02/08 04:31:20 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,13 @@ static void	init_access(t_pipex *p, t_final *cmds)
 
 void	is_access(t_pipex *p, t_final *cmds, char *env[])
 {
+	if (cmds->cmds[0] && (!ft_strncmp(cmds->cmds[0], "export=\
+", 7) || !ft_strncmp(cmds->cmds[0], "unset=", 6)))
+		builtin_exp_equl(cmds);
 	if (!raw_access(p, cmds))
 	{
 		get_path(p, env);
 		init_access(p, cmds);
 	}
+	update_cmd_exe(p, cmds, env);
 }

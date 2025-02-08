@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 20:30:54 by wacista           #+#    #+#             */
-/*   Updated: 2025/01/16 04:07:19 by wacista          ###   ########.fr       */
+/*   Updated: 2025/02/04 02:28:13 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ void	ft_exit_d(t_env **env, t_main **m)
 		free((*m)->pwd);
 	free(*m);
 	ft_putstr_fd("exit\n", 1);
+	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
+	close(STDERR_FILENO);
 	exit (g_exit_status);
 }
 

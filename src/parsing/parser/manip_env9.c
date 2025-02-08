@@ -3,48 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   manip_env9.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpinto <dpinto@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 18:31:15 by dpinto            #+#    #+#             */
-/*   Updated: 2024/12/12 18:31:15 by dpinto           ###   ########.fr       */
+/*   Updated: 2025/02/08 12:56:46 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	after_multiple_dollar_while(int nbr, int *i, int *save)
-{
-	if (nbr % 2 == 0)
-	{
-		while (nbr)
-		{
-			*(i) = *(i) + 1;
-			nbr--;
-		}
-		*(save) = *(i);
-	}
-	else
-	{
-		while (nbr > 1)
-		{
-			*(i) = *(i) + 1;
-			nbr--;
-		}
-		*(save) = *(i);
-	}
-}
-
-void	init_str_nbr(char *str_nbr)
-{
-	str_nbr[0] = '3';
-	str_nbr[1] = '1';
-	str_nbr[2] = '0';
-	str_nbr[3] = '5';
-	str_nbr[4] = '1';
-	str_nbr[5] = '6';
-	str_nbr[6] = '0';
-	str_nbr[7] = '\0';
-}
 
 int	expand_guillemets(char *str, int index_dol)
 {

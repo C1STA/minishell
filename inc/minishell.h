@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 20:38:55 by wacista           #+#    #+#             */
-/*   Updated: 2025/02/02 23:12:11 by wacista          ###   ########.fr       */
+/*   Updated: 2025/02/08 13:01:26 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,7 @@ bool		is_printable(char *s);
 t_info_tok	**init_global_info_token(t_info_tok **info);
 t_token		*tokenize(t_source *src, t_info_tok *info);
 int			tokenize_while(t_source *src, t_info_tok *info, char c);
-void		init_buf_size(t_info_tok *info);
+void		init_buf_size(t_info_tok *info, long bufsize);
 int			tokenize_space(char c, t_source *src, t_info_tok *info);
 int			tokenize_pipe(char c, t_source *src, t_info_tok *info);
 void		tokenize_end(char c, t_source *src, t_info_tok *info);
@@ -212,10 +212,6 @@ void		create_var_name(t_env *node);
 void		create_var_value(t_env *node);
 int			ft_stcmp(char *str1, char *str2);
 void		final_txt(char *a_dol, char *new_str, t_node *ptr, char *save_var);
-char		*init_save_after_dollar(char *save_after_dollar);
-char		*return_after_multiple_dollar(char *str, int i, int save);
-void		after_multiple_dollar_while(int nbr, int *i, int *save);
-void		init_str_nbr(char *str_nbr);
 char		*extract_name(char *str);
 char		*extract_value(char *str);
 t_env		*last_env_node(t_env *head);
@@ -231,11 +227,6 @@ char		*find_end_of_var(char *str);
 char		*after_dollar(char *str);
 char		*before_dollar(char *str);
 char		*catch_var(char *str);
-int			nbr_of_dollar_suite(t_node *ptr);
-char		*add_nbr(int nbr);
-char		*after_multiple_dollar(char *str, int nbr);
-int			more_than_one_dollars_suite(t_node *ptr);
-void		expand_job_multiple_dollar(t_node *ptr, int nbr);
 int			pars_name(char *str, char *env_input, int *status);
 int			check_if_exist(t_env *head, char *str);
 void		supp_env(t_env **head, char *str);
@@ -252,9 +243,10 @@ char		**transform_env_in_double_tab(t_env *node);
 void		free_final_env(char ***tab_env);
 int			count_nbr_env(t_env *node);
 int			expand_legtimate_values(char c);
-int			update_cmd(t_env **mini_env, t_node *child);
+void		update_cmd(t_env **mini_env, t_node *child);
 int			is_empty(t_node *root, int empty);
 int			check_if_one_cmd(t_node *node);
+char		*join_cmd(char const *s1, char const *s2);
 
 /*signals*/
 void		ft_sigint(int sigint);
@@ -274,7 +266,6 @@ void		ft_free(t_env **mini_env, t_node **root, \
 		t_source **src, t_info_tok **info);
 void		ft_free_before_final_ast(t_com ***ast);
 void		ft_free_final_ast(t_final **ast);
-void		free_expand_job_mutiple(char *str_nbr, char *dollar, char *txt);
 
 /*in and out redirection*/
 int			ft_in_file_first_check(t_node *ptr);
@@ -355,5 +346,6 @@ char		*get_pwd_format(t_env *env, t_prompt *p, char	*pwd);
 void		free_prompt(t_prompt *p);
 void		init_to_null(t_prompt *p);
 char		*get_env(t_env	*env, char *var);
+void		edit_pwd(t_env *mini_env, char **argv);
 
 #endif

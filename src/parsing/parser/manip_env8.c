@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manip_env8.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpinto <dpinto@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 18:31:09 by dpinto            #+#    #+#             */
-/*   Updated: 2024/12/12 18:31:10 by dpinto           ###   ########.fr       */
+/*   Updated: 2025/02/08 12:59:40 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,42 +50,14 @@ void	final_txt(char *a_dol, char *new_str, t_node *ptr, char *save_var)
 {
 	char	*tmp;
 
-	if (a_dol)
+	if (a_dol && *a_dol)
 	{
 		tmp = new_str;
-		new_str = ft_strjoin(new_str, a_dol);
+		new_str = join_cmd(new_str, a_dol);
 		free(tmp);
 	}
 	free(ptr->txt);
 	free(save_var);
 	free(a_dol);
 	ptr->txt = new_str;
-}
-
-char	*init_save_after_dollar(char *save_after_dollar)
-{
-	save_after_dollar = malloc(sizeof(char) * 2);
-	save_after_dollar[0] = 'a';
-	save_after_dollar[1] = '\0';
-	return (save_after_dollar);
-}
-
-char	*return_after_multiple_dollar(char *str, int i, int save)
-{
-	int		count;
-	char	*after;
-
-	while (str[i] != '\0')
-		i++;
-	count = i - save;
-	after = malloc(sizeof(char) * (count + 1));
-	i = 0;
-	while (str[save] != '\0')
-	{
-		after[i] = str[save];
-		i++;
-		save++;
-	}
-	after[i] = '\0';
-	return (after);
 }

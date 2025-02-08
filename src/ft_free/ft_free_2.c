@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 20:35:52 by wacista           #+#    #+#             */
-/*   Updated: 2024/12/16 20:35:53 by wacista          ###   ########.fr       */
+/*   Updated: 2025/02/08 12:58:14 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,11 +96,4 @@ void	free_info_buf(t_info_tok *info)
 			ptr -> tok_buf = NULL;
 		}
 	}
-}
-
-void	free_expand_job_mutiple(char *str_nbr, char *dollar, char *txt)
-{
-	free(dollar);
-	free(txt);
-	free (str_nbr);
 }

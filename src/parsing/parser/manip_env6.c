@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manip_env6.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpinto <dpinto@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 18:30:58 by dpinto            #+#    #+#             */
-/*   Updated: 2024/12/12 18:47:34 by dpinto           ###   ########.fr       */
+/*   Updated: 2025/02/08 13:01:18 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,27 +39,6 @@ void	create_var_value(t_env *node)
 		equal++;
 	}
 	node->var_value[i] = '\0';
-}
-
-int	nbr_of_dollar_suite(t_node *ptr)
-{
-	int	i;
-	int	count;
-
-	i = 0;
-	count = 0;
-	while (ptr->txt[i] != '\0')
-	{
-		while (ptr->txt[i] == '$')
-		{
-			count++;
-			i++;
-			if (ptr->txt[i] != '$')
-				return (count);
-		}
-		i++;
-	}
-	return (count);
 }
 
 t_node	*do_i_have_to_expand(t_node *node)
@@ -97,9 +76,6 @@ void	expand_env(t_env *head, t_node *root)
 	ptr = root->first_child;
 	while (ptr)
 	{
-		expand = do_i_have_to_expand(ptr);
-		while (more_than_one_dollars_suite(ptr) == 1)
-			expand_job_multiple_dollar(ptr, nbr_of_dollar_suite(ptr));
 		expand = do_i_have_to_expand(ptr);
 		if (expand)
 			expand_job(head, ptr);

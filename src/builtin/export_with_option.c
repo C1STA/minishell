@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 20:29:48 by wacista           #+#    #+#             */
-/*   Updated: 2025/02/02 23:11:20 by wacista          ###   ########.fr       */
+/*   Updated: 2025/02/08 12:41:39 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	is_empty(t_node *root, int empty)
 	}
 	while (ptr)
 	{
-		if (!ptr->txt)
+		if (!ptr->txt || !*ptr->txt)
 			empty++;
 		ptr = ptr->next;
 	}
@@ -84,11 +84,8 @@ int	is_env_var(t_env *mini_env, t_node *root, t_main *m)
 
 int	pars_name(char *str, char *env_input, int *status)
 {
-	if (!str || !env_input)
-	{
-		*status = 1;
+	if (!env_input || !*env_input)
 		return (1);
-	}
 	if (!ft_isalpha(*str))
 	{
 		*status = 1;

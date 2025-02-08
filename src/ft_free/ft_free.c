@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 20:36:08 by wacista           #+#    #+#             */
-/*   Updated: 2024/12/16 20:36:09 by wacista          ###   ########.fr       */
+/*   Updated: 2025/02/06 03:05:52 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,20 +67,15 @@ void	free_env(t_env **mini_env)
 	ptr_env = *mini_env;
 	if (ptr_env)
 	{
-		while (ptr_env -> next != NULL)
+		while (ptr_env)
 		{
-			save_env = ptr_env -> next;
-			free(ptr_env -> txt);
-			free(ptr_env -> var_name);
-			free(ptr_env -> var_value);
+			save_env = ptr_env->next;
+			free(ptr_env->txt);
+			free(ptr_env->var_name);
+			free(ptr_env->var_value);
 			free(ptr_env);
 			ptr_env = save_env;
 		}
-		free(ptr_env -> txt);
-		free(ptr_env -> var_name);
-		free(ptr_env -> var_value);
-		free(ptr_env);
-		mini_env = NULL;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 18:31:03 by dpinto            #+#    #+#             */
-/*   Updated: 2025/01/31 16:42:40 by wacista          ###   ########.fr       */
+/*   Updated: 2025/02/06 03:00:43 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,18 @@
 t_env	*env_not_exist(char **argv)
 {
 	t_env	*mini_env;
-	t_env	*start;
 
-	mini_env = (t_env *)malloc(sizeof(t_env) * 2);
+	mini_env = (t_env *)malloc(sizeof(t_env));
 	if (!mini_env)
 		return (NULL);
-	start = mini_env;
-	add_node_env(mini_env);
-	add_node_env(mini_env);
-	mini_env->var_value = getcwd(NULL, 0);
-	if (!mini_env->var_value)
-		mini_env->var_value = ft_strdup("null");
-	mini_env->txt = ft_strjoin("PWD=", mini_env->var_value);
-	mini_env->var_name = ft_strdup("PWD");
-	mini_env = mini_env->next;
+	mini_env->next = NULL;
+	mini_env = add_node_env(mini_env);
+	mini_env->next = NULL;
 	mini_env->var_name = ft_strdup("_");
 	mini_env->var_value = ft_strdup(*argv);
 	mini_env->txt = ft_strjoin("_=", mini_env->var_value);
-	mini_env->next = NULL;
-	return (start);
+	edit_pwd(mini_env, argv);
+	return (mini_env);
 }
 
 void	create_var_name_and_value(t_env *ptr)

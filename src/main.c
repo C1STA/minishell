@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 18:24:20 by dpinto            #+#    #+#             */
-/*   Updated: 2025/01/27 06:28:11 by wacista          ###   ########.fr       */
+/*   Updated: 2025/02/08 10:12:22 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,7 @@ void	ft_checker_bis(t_main *m)
 	m->ast = create_ast_command_redir(m->root);
 	m->final = create_final_ast(m->ast);
 	ft_free_before_final_ast(&m->ast);
-	if (!is_empty(m->root->first_child, 0) && \
-	!check_if_one_cmd(m->root->first_child))
+	if (!check_if_one_cmd(m->root->first_child))
 		update_cmd(&m->mini_env, m->root->first_child);
 	m->final_env = transform_env_in_double_tab(m->mini_env);
 	free_env(&m->mini_env);

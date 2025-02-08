@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exception.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpinto <dpinto@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 18:29:33 by dpinto            #+#    #+#             */
-/*   Updated: 2024/12/12 18:32:26 by dpinto           ###   ########.fr       */
+/*   Updated: 2025/02/08 10:11:14 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@ int	single_enter(char *input)
 		return (1);
 	if (ft_strlen(input) <= 0)
 		return (1);
+	if (ft_strlen(input) >= 131072)
+	{
+		ft_printf("minishell: command-not-found: Argument list too long\n");
+		return (1);
+	}
 	if (input[0] == '\n')
 		return (1);
 	if (only_space(input) == 1)

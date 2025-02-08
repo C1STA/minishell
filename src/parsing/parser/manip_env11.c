@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manip_env11.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpinto <dpinto@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 18:31:25 by dpinto            #+#    #+#             */
-/*   Updated: 2024/12/12 18:36:42 by dpinto           ###   ########.fr       */
+/*   Updated: 2025/02/08 12:55:12 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,30 +65,4 @@ void	if_simple_env(char *new_str, int *i, int *j, char *str)
 			*(i) = *(i) + 1;
 		}
 	}
-}
-
-char	*add_nbr(int nbr)
-{
-	char	*str_nbr;
-	int		count;
-
-	count = 2;
-	while (nbr > 1)
-	{
-		if (count == 2)
-		{
-			str_nbr = malloc(sizeof(char) * 8);
-			init_str_nbr(str_nbr);
-			count--;
-			if (nbr == 2)
-				return (str_nbr);
-		}
-		if (count == 0)
-			str_nbr = ft_strjoin(str_nbr, str_nbr);
-		if (count >= 0)
-			count--;
-		if (nbr > 0)
-			nbr = nbr / 2;
-	}
-	return (str_nbr);
 }

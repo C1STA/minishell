@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 18:30:37 by dpinto            #+#    #+#             */
-/*   Updated: 2025/01/23 12:45:48 by wacista          ###   ########.fr       */
+/*   Updated: 2025/02/06 02:45:06 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,15 @@ void	create_var_name(t_env *node)
 	node->var_name[i] = '\0';
 }
 
-void	edit_pwd(t_env *mini_env, char **argv)
+void	edit_pwd(t_env *ptr, char **argv)
 {
-	t_env	*ptr;
-	t_env	*last_node;
 	char	*pwd;
-	char	*full;
+	t_env	*head;
 
 	if (!argv)
 		return ;
-	ptr = mini_env;
 	pwd = getcwd(NULL, 0);
+	head = ptr;
 	while (ptr)
 	{
 		if (!ft_strncmp(ptr->txt, "PWD", 3) && ptr->txt[3] == '=')
@@ -58,10 +56,12 @@ void	edit_pwd(t_env *mini_env, char **argv)
 		}
 		ptr = ptr->next;
 	}
-	full = ft_strjoin("PWD=", pwd);
-	add_node_env(mini_env);
-	last_node = last_env_node(mini_env);
-	return (fill_last_node(last_node, "PWD", pwd, full), free(full), free(pwd));
+	ptr = add_node_env(head);
+	ptr = last_env_node(ptr);
+	ptr->var_name = ft_strdup("PWD");
+	ptr->var_value = ft_strdup(pwd);
+	ptr->txt = ft_strjoin("PWD=", pwd);
+	return (free(pwd));
 }
 
 t_env	*copy_env(char *original[], char **argv)
